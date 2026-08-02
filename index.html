@@ -228,7 +228,7 @@ body {
 .toast { position:fixed; top:70px; left:50%; transform:translateX(-50%); background:#1a1a2e; color:#fff; padding:8px 16px; border-radius:20px; font-size:12px; z-index:999; animation:fadeInOut 2.5s ease; pointer-events:none; }
 @keyframes fadeInOut { 0%{opacity:0;transform:translate(-50%,-10px);} 15%{opacity:1;transform:translate(-50%,0);} 75%{opacity:1;} 100%{opacity:0;} }
 </style>
-  <script src="data.js?v=2"></script>
+  <script src="data.js?v=3"></script>
 </head>
 <body>
 <div class="app" id="app">
@@ -350,6 +350,16 @@ const Store = {
 
 // ==================== API 数据获取 ====================
 async function fetchIndices() {
+  // 优先使用 data.js 静态数据
+  if (typeof window.fundData !== 'undefined' && window.fundData.indices && window.fundData.indices.length > 0) {
+    Store.indices = window.fundData.indices.map(it => ({
+      name: it.name, code: it.code, value: it.value || 0, change: it.change || 0,
+      changePct: it.changePct || '0.00%',
+      high: it.high || 0, low: it.low || 0, volume: it.volume || 0, amount: it.amount || 0
+    }));
+    return true;
+  }
+  // 实时API兜底
   const secids = ['1.000001','0.399001','0.399006','1.000688','1.000300','1.000905'];
   try {
     const d = await jsonp('https://push2.eastmoney.com/api/qt/ulist.np/get?fltt=2&fields=f2,f3,f4,f12,f14,f5,f6,f15,f16,f17&secids=' + secids.join(','));
@@ -366,6 +376,24 @@ async function fetchIndices() {
 }
 
 async function fetchMarketKPIs() {
+  // 优先使用 data.js 静态数据
+  if (typeof window.fundData !== 'undefined' && window.fundData.marketKPIs) {
+    const dk = window.fundData.marketKPIs;
+    if (dk.totalAmount) {
+      Store.marketKPIs.totalAmount = { val: dk.totalAmount.val, label: '成交额', raw: dk.totalAmount.rawAmount ? dk.totalAmount.rawAmount/1e8 : null };
+    }
+    if (dk.upDown) {
+      Store.marketKPIs.upDown = { val: dk.upDown.val, label: '涨/跌家数', upCount: dk.upDown.rawUp || 0, downCount: dk.upDown.rawDown || 0 };
+    }
+    if (dk.northFlow) {
+      Store.marketKPIs.northFlow = {
+        val: dk.northFlow.val || '--', label: '北向资金',
+        northNet: dk.northFlow.northNet || 0, shNet: dk.northFlow.shNet || 0, szNet: dk.northFlow.szNet || 0, available: true
+      };
+    }
+    return true;
+  }
+  // 实时API兜底
   try {
     const d = await jsonp('https://push2.eastmoney.com/api/qt/clist/get?pn=1&pz=5000&po=1&np=1&fltt=2&invt=2&fs=m:0+t:6,m:0+t:80,m:1+t:2,m:1+t:23&fields=f2,f3,f12,f14');
     if (d && d.data && d.data.diff) {
@@ -374,7 +402,6 @@ async function fetchMarketKPIs() {
       const down = stocks.filter(s => s.f3 < 0).length;
       Store.marketKPIs.upDown = { val: up + '/' + down, label: '涨/跌家数', upCount: up, downCount: down };
 
-      // 成交额汇总
       if (Store.indices.length >= 2) {
         let totalAmt = 0;
         for (const idx of Store.indices) {
@@ -397,6 +424,18 @@ async function fetchMarketKPIs() {
 }
 
 async function fetchNorthBound() {
+  // fetchMarketKPIs 可能已从 data.js 设置
+  if (Store.marketKPIs.northFlow && Store.marketKPIs.northFlow.available) return true;
+  // 尝试 data.js 兜底
+  if (typeof window.fundData !== 'undefined' && window.fundData.marketKPIs?.northFlow) {
+    const nf = window.fundData.marketKPIs.northFlow;
+    Store.marketKPIs.northFlow = {
+      val: nf.val || '--', label: '北向资金',
+      northNet: nf.northNet || 0, shNet: nf.shNet || 0, szNet: nf.szNet || 0, available: true
+    };
+    return true;
+  }
+  // 实时API兜底
   try {
     const d = await jsonp('https://push2.eastmoney.com/api/qt/kamt/get?fields1=f1,f2,f3,f4&fields2=f51,f52,f53,f54,f55,f56');
     if (d && d.data) {
@@ -416,6 +455,16 @@ async function fetchNorthBound() {
 }
 
 async function fetchSectorFlow() {
+  // 优先使用 data.js 静态数据
+  if (typeof window.fundData !== 'undefined' && window.fundData.sectorFlow && window.fundData.sectorFlow.length > 0) {
+    Store.sectorFlow = window.fundData.sectorFlow.map(it => ({
+      name: it.name, inflow: it.inflow || 0, pct: it.pct || 0, change: it.change || 0, trend: 1
+    }));
+    const totalFlow = Store.sectorFlow.reduce((s, x) => s + x.inflow, 0);
+    Store.capitalFlow = { netFlow: parseFloat(totalFlow.toFixed(2)), northBound: { net: Store.marketKPIs.northFlow?.northNet||0, available: true } };
+    return true;
+  }
+  // 实时API兜底
   try {
     const d = await jsonp('https://push2.eastmoney.com/api/qt/clist/get?fid=f62&po=1&pz=20&pn=1&np=1&fltt=2&invt=2&fs=m:90+t:2&fields=f12,f14,f62,f184,f3');
     if (d && d.data && d.data.diff) {
@@ -431,6 +480,15 @@ async function fetchSectorFlow() {
 }
 
 async function fetchSectors() {
+  // 优先使用 data.js 静态数据
+  if (typeof window.fundData !== 'undefined' && window.fundData.sectors && window.fundData.sectors.length > 0) {
+    Store.sectors = window.fundData.sectors.map(it => ({
+      name: it.name, code: it.code || '', change: it.changePct || 0, chgVal: it.change || 0,
+      turnover: it.turnover || 0, type: it.type || '行业', hot: Math.abs(it.changePct || 0) >= 3
+    }));
+    return true;
+  }
+  // 实时API兜底
   try {
     const [indD, conD] = await Promise.all([
       jsonp('https://push2.eastmoney.com/api/qt/clist/get?fid=f3&po=1&pz=50&pn=1&np=1&fltt=2&invt=2&fs=m:90+t:2&fields=f2,f3,f4,f8,f12,f14'),
@@ -446,6 +504,15 @@ async function fetchSectors() {
 }
 
 async function fetchETFFlow() {
+  // 优先使用 data.js 静态数据
+  if (typeof window.fundData !== 'undefined' && window.fundData.etfFlow && window.fundData.etfFlow.length > 0) {
+    Store.etfFlow = window.fundData.etfFlow.map(it => ({
+      name: it.name, code: it.code, price: it.price || 0, change: it.changePct || 0,
+      amount: it.amount || 0, inflow: it.netFlow || 0, inPct: 0
+    }));
+    return true;
+  }
+  // 实时API兜底
   try {
     const d = await jsonp('https://push2.eastmoney.com/api/qt/clist/get?fid=f62&po=1&pz=30&pn=1&np=1&fltt=2&invt=2&fs=b:MK0021,MK0022,MK0023,MK0024&fields=f12,f14,f2,f3,f6,f62,f184');
     if (d?.data?.diff) {
@@ -462,6 +529,16 @@ async function fetchETFFlow() {
 }
 
 async function fetchNationalTeamETFs() {
+  // 优先使用 data.js 静态数据
+  if (typeof window.fundData !== 'undefined' && window.fundData.nationalTeamETF && window.fundData.nationalTeamETF.length > 0) {
+    Store.nationalTeamETF = window.fundData.nationalTeamETF.map(it => ({
+      name: it.name, code: it.code,
+      price: it.price || 0, change: parseFloat(it.changePct) || 0,
+      amount: it.amount || 0, totalValue: 0, shares: 0, totalShares: 0, available: true
+    }));
+    return true;
+  }
+  // 实时API兜底
   const etfs = [
     { name: '华泰柏瑞沪深300ETF', code: '510300', secid: '1.510300' },
     { name: '华夏上证50ETF', code: '510050', secid: '1.510050' },
@@ -498,7 +575,6 @@ async function fetchNationalTeamETFs() {
         r.shareChangePct = ((r.shares - prev[r.code]) / prev[r.code] * 100);
       }
     });
-    // 保存当前份额
     const curr = {};
     results.forEach(r => { if (r.available !== false && r.shares > 0) curr[r.code] = r.shares; });
     localStorage.setItem('fundWorkbench_etfShares', JSON.stringify(curr));
@@ -507,12 +583,22 @@ async function fetchNationalTeamETFs() {
 }
 
 async function fetchSectorCrowding() {
-  // 获取前20个行业板块，计算近5年换手率分位
+  // 优先使用 data.js 静态数据
+  if (typeof window.fundData !== 'undefined' && window.fundData.sectorCrowding && window.fundData.sectorCrowding.length > 0) {
+    Store.sectorCrowding = window.fundData.sectorCrowding.map(it => ({
+      name: it.name, code: '', change: '', turnover: it.turnover || 0,
+      percentile5y: it.percentile !== undefined ? it.percentile.toString() : '--',
+      status: it.status || it.level || '正常',
+      cls: (it.level === '高') ? 'high' : (it.level === '低') ? 'low' : 'mid'
+    }));
+    return true;
+  }
+  // 实时API兜底
   const targetSectors = (Store.sectors || []).filter(s => s.type === '行业').slice(0, 20);
   if (targetSectors.length === 0) { Store.sectorCrowding = []; return false; }
 
   const results = [];
-  const begDate = '20210801'; // 近5年
+  const begDate = '20210801';
   const endDate = '20261231';
 
   for (const sector of targetSectors) {
@@ -525,12 +611,7 @@ async function fetchSectorCrowding() {
           const parts = k.split(',');
           if (parts.length >= 7) {
             const vol = parseFloat(parts[5])||0;
-            const amt = parseFloat(parts[6])||0;
-            if (vol > 0) {
-              // 用成交量作为换手率的代理指标（板块换手率 = 成交量/流通股本）
-              // 由于无法直接获取流通股本，用标准化成交量作为代理
-              turnovers.push(vol);
-            }
+            if (vol > 0) turnovers.push(vol);
           }
         }
         if (turnovers.length > 100) {
@@ -563,7 +644,16 @@ async function fetchSectorCrowding() {
 }
 
 async function fetchFundPremium() {
-  // LOF/QDII基金折溢价
+  // 优先使用 data.js 静态数据
+  if (typeof window.fundData !== 'undefined' && window.fundData.fundPremium && window.fundData.fundPremium.length > 0) {
+    Store.fundPremium = window.fundData.fundPremium.map(it => ({
+      name: it.name, code: it.code, nav: it.nav || 0, price: it.price || 0,
+      premium: parseFloat(it.discount) || 0, amount: 0,
+      type: (parseFloat(it.discount) > 0) ? '溢价' : '折价'
+    }));
+    return true;
+  }
+  // 实时API兜底
   try {
     const d = await jsonp('https://push2.eastmoney.com/api/qt/clist/get?fid=f3&po=1&pz=30&pn=1&np=1&fltt=2&invt=2&fs=b:MK0406,b:MK0407,b:MK0408&fields=f12,f14,f2,f3,f6,f164,f165,f168,f169');
     if (d?.data?.diff) {
@@ -750,6 +840,15 @@ async function fetchFundRiskSignals() {
 }
 
 async function fetchNews() {
+  // 优先使用 data.js 静态数据
+  if (typeof window.fundData !== 'undefined' && window.fundData.news && window.fundData.news.length > 0) {
+    Store.news = window.fundData.news.map(it => ({
+      title: it.title || '', tag: it.tag || '快讯', source: it.source || '东方财富',
+      time: it.time || '', impact: it.impact || 'neutral'
+    }));
+    return true;
+  }
+  // 实时API兜底
   try {
     const d = await jsonp('https://np-listapi.eastmoney.com/comm/web/getNewsByColumns?client=web&biz=web_news_channel&column=350&order=1&needInteractData=0&page_index=1&page_size=10&req_trace=1');
     if (d?.data?.list) {
