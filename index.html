@@ -62,6 +62,7 @@ body {
 .index-change { font-size:11px; margin-top:2px; }
 .up { color:var(--red); }
 .down { color:var(--green); }
+.fund-ret { font-weight:700; }
 .neutral-color { color:var(--text-muted); }
 
 .tag { display:inline-block; padding:2px 7px; border-radius:8px; font-size:9px; font-weight:500; margin-right:3px; margin-bottom:3px; }
@@ -227,6 +228,7 @@ body {
 .toast { position:fixed; top:70px; left:50%; transform:translateX(-50%); background:#1a1a2e; color:#fff; padding:8px 16px; border-radius:20px; font-size:12px; z-index:999; animation:fadeInOut 2.5s ease; pointer-events:none; }
 @keyframes fadeInOut { 0%{opacity:0;transform:translate(-50%,-10px);} 15%{opacity:1;transform:translate(-50%,0);} 75%{opacity:1;} 100%{opacity:0;} }
 </style>
+  <script src="data.js"></script>
 </head>
 <body>
 <div class="app" id="app">
@@ -603,6 +605,79 @@ async function fetchFundEstimate(code) {
   });
 }
 
+
+// ==================== 基金排行数据获取 ====================
+async function fetchFundRankingRaw(ft, pn) {
+  return new Promise((resolve) => {
+    const script = document.createElement('script');
+    const t = Date.now();
+    script.src = 'https://fundapi.eastmoney.com/fundtradenew.aspx?ft='+ft+'&sc=1y&st=desc&pi=1&pn='+pn+'&cp=&ct=&cd=&ms=&fr=&plevel=&fst=&ftype=&fr1=&fl=0&isab=&_=' + t;
+    script.onerror = () => resolve([]);
+    let done = false;
+    const check = () => {
+      if (done) return;
+      if (window.rankData && window.rankData.data1) {
+        done = true;
+        if (script.parentNode) script.parentNode.removeChild(script);
+        const list = window.rankData.data1.map(s => {
+          const p = s.split('|');
+          return {
+            code: p[0] || '',
+            name: p[1] || '',
+            type: (p[2] || '').replace('型',''),
+            nav: parseFloat(p[4]) || 0,
+            ret1w: parseFloat(p[6]) || 0,
+            ret1m: parseFloat(p[7]) || 0,
+            ret3m: parseFloat(p[8]) || 0,
+            ret6m: parseFloat(p[9]) || 0,
+            ret1y: parseFloat(p[10]) || 0
+          };
+        }).filter(f => f.code && f.name);
+        window.rankData = null;
+        resolve(list);
+      }
+    };
+    script.onload = () => { setTimeout(check, 50); setTimeout(() => { if(!done){done=true;resolve([]);} }, 3000); };
+    document.head.appendChild(script);
+    setTimeout(() => { if(!done){done=true;if(script.parentNode)script.parentNode.removeChild(script);resolve([]);} }, 5000);
+  });
+}
+
+async function fetchFunds() {
+  // 先尝试从 data.js 读取
+  if (typeof window.fundData !== 'undefined' && window.fundData.funds && window.fundData.funds.length > 0) {
+    const valid = window.fundData.funds.filter(f => f.name && f.name !== '--');
+    if (valid.length > 0) {
+      Store.funds = valid;
+      return;
+    }
+  }
+  // 否则从东方财富排行 API 获取
+  try {
+    const all = [];
+    const types = [
+      {ft:'all', pn:50, mapType:null},
+      {ft:'hh', pn:15, mapType:'混合型'},
+      {ft:'gp', pn:15, mapType:'股票型'},
+      {ft:'zq', pn:10, mapType:'债券型'},
+      {ft:'qdii', pn:10, mapType:'QDII'},
+      {ft:'zs', pn:10, mapType:'指数型'}
+    ];
+    for (const t of types) {
+      try {
+        const list = await fetchFundRankingRaw(t.ft, t.pn);
+        for (const f of list) {
+          if (t.mapType) f.type = t.mapType;
+          if (!all.find(x => x.code === f.code)) all.push(f);
+        }
+      } catch(e){}
+    }
+    Store.funds = all;
+  } catch(e) {
+    Store.funds = [];
+  }
+}
+
 async function fetchFundMaxDrawdown() {
   // 获取基金数据并计算风险指标（选取前20只规模较大的基金）
   const targetFunds = (Store.funds || []).filter(f => f.type !== '债券型').slice(0, 20);
@@ -719,6 +794,7 @@ async function loadData() {
     fetchIndices(),
     fetchNorthBound(),
     fetchSectors(),
+    fetchFunds(),
     fetchETFFlow(),
     fetchNews(),
     fetchMarginBalance()
@@ -1185,7 +1261,7 @@ function renderFunds() {
   let chipHtml = chips.map(c => `<span class="filter-chip ${fundFilter===c.id?'active':''}" onclick="setFundFilter('${c.id}')">${c.label}</span>`).join('');
 
   let fundTableHtml = filtered.map((f,i) => `
-    <tr><td class="rank ${i<3?'top3':''}">${i+1}</td>
+    <tr onclick="showFundDetail('${f.code}')" style="cursor:pointer;"><td class="rank ${i<3?'top3':''}">${i+1}</td>
       <td><div style="font-weight:500;font-size:11px;">${f.name}</div><div style="font-size:9px;color:#9ca3af;">${f.code} · ${f.type}</div></td>
       <td class="${colorV(f.ret1w)}">${signV(f.ret1w)}${f.ret1w.toFixed(2)}%</td>
       <td class="${colorV(f.ret1m)}">${signV(f.ret1m)}${f.ret1m.toFixed(2)}%</td>
@@ -1548,6 +1624,132 @@ setInterval(() => {
     if (currentTab === 'funds') render();
   }, 3000);
 })();
+
+let currentFundHistory = [];
+let currentFundChartRange = 180;
+
+function showFundDetail(code) {
+  const fund = Store.funds?.find(f => f.code === code);
+  if (!fund) { showToast('未找到基金数据'); return; }
+  const modal = document.getElementById('fundDetailModal');
+  document.getElementById('fdName').textContent = fund.name || '--';
+  document.getElementById('fdCode').textContent = fund.code ? (fund.code + ' · ' + (fund.type||'--')) : '--';
+  document.getElementById('fdNav').textContent = fund.nav ? fund.nav.toFixed(4) : '--';
+  const ret1yEl = document.getElementById('fdRet1y');
+  if (fund.ret1y !== undefined && fund.ret1y !== null) {
+    ret1yEl.textContent = (fund.ret1y >= 0 ? '+' : '') + fund.ret1y.toFixed(2) + '%';
+    ret1yEl.className = 'fund-ret ' + (fund.ret1y >= 0 ? 'up' : 'down');
+  } else {
+    ret1yEl.textContent = '--';
+    ret1yEl.className = '';
+  }
+  document.getElementById('fdInfo').innerHTML = `
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+      <div>近1周: <span class="${colorV(fund.ret1w)}">${signV(fund.ret1w)}${(fund.ret1w||0).toFixed(2)}%</span></div>
+      <div>近1月: <span class="${colorV(fund.ret1m)}">${signV(fund.ret1m)}${(fund.ret1m||0).toFixed(2)}%</span></div>
+      <div>近3月: <span class="${colorV(fund.ret3m)}">${signV(fund.ret3m)}${(fund.ret3m||0).toFixed(2)}%</span></div>
+      <div>近6月: <span class="${colorV(fund.ret6m)}">${signV(fund.ret6m)}${(fund.ret6m||0).toFixed(2)}%</span></div>
+    </div>
+    <div style="margin-top:8px;font-size:10px;color:var(--text-muted);">数据来源：东方财富基金排行API，历史净值仅供参考</div>
+  `;
+  modal.style.display = 'flex';
+  currentFundChartRange = 180;
+  loadFundHistory(code);
+}
+function closeFundDetail() {
+  document.getElementById('fundDetailModal').style.display = 'none';
+}
+function setFundChartRange(days) {
+  currentFundChartRange = days;
+  drawFundChart();
+}
+async function loadFundHistory(code) {
+  currentFundHistory = [];
+  try {
+    const d = await jsonp('https://api.fund.eastmoney.com/f10/lsjz?fundCode='+code+'&pageIndex=1&pageSize=400');
+    if (d?.Data?.LSJZList) {
+      currentFundHistory = d.Data.LSJZList.map(it => ({
+        date: it.FSRQ,
+        nav: parseFloat(it.DWJZ) || 0
+      })).filter(x => x.nav > 0).reverse();
+    }
+  } catch(e) {}
+  drawFundChart();
+}
+function drawFundChart() {
+  const canvas = document.getElementById('fdChart');
+  if (!canvas || currentFundHistory.length < 2) return;
+  const ctx = canvas.getContext('2d');
+  const w = canvas.width, h = canvas.height;
+  ctx.clearRect(0, 0, w, h);
+  const data = currentFundHistory.slice(-currentFundChartRange);
+  const vals = data.map(d => d.nav);
+  const min = Math.min(...vals), max = Math.max(...vals);
+  const range = max - min || 1;
+  const pad = 10;
+  const start = data[0].nav;
+  const end = data[data.length-1].nav;
+  const isUp = end >= start;
+  ctx.strokeStyle = isUp ? '#e53e3e' : '#38a169';
+  ctx.lineWidth = 2;
+  ctx.beginPath();
+  data.forEach((p, i) => {
+    const x = pad + (i / (data.length - 1)) * (w - pad*2);
+    const y = h - pad - ((p.nav - min) / range) * (h - pad*2);
+    if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+  });
+  ctx.stroke();
+  ctx.lineTo(w-pad, h-pad);
+  ctx.lineTo(pad, h-pad);
+  ctx.closePath();
+  const grad = ctx.createLinearGradient(0, 0, 0, h);
+  grad.addColorStop(0, isUp ? 'rgba(229,62,62,0.15)' : 'rgba(56,161,105,0.15)');
+  grad.addColorStop(1, 'rgba(255,255,255,0)');
+  ctx.fillStyle = grad;
+  ctx.fill();
+  ctx.fillStyle = '#6b7280';
+  ctx.font = '10px sans-serif';
+  ctx.fillText(min.toFixed(3), 4, h-4);
+  ctx.fillText(max.toFixed(3), 4, 12);
+}
+document.getElementById('fundDetailModal').addEventListener('click', function(e){
+  if (e.target === this) closeFundDetail();
+});
 </script>
+
+<!-- 基金详情弹窗 -->
+<div id="fundDetailModal" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.5);z-index:200;align-items:center;justify-content:center;padding:16px;box-sizing:border-box;">
+  <div style="background:var(--card-bg);border-radius:var(--radius);width:100%;max-width:420px;max-height:85vh;overflow-y:auto;box-shadow:var(--shadow-lg);">
+    <div style="padding:14px 16px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;">
+      <div>
+        <div id="fdName" style="font-size:15px;font-weight:700;">--</div>
+        <div id="fdCode" style="font-size:11px;color:var(--text-muted);">--</div>
+      </div>
+      <div onclick="closeFundDetail()" style="width:28px;height:28px;display:flex;align-items:center;justify-content:center;cursor:pointer;border-radius:50%;background:#f3f4f6;font-size:18px;color:var(--text-secondary);">×</div>
+    </div>
+    <div style="padding:14px 16px;">
+      <div style="display:flex;gap:8px;margin-bottom:14px;">
+        <div style="flex:1;background:#f9fafb;border-radius:var(--radius-sm);padding:10px;text-align:center;">
+          <div style="font-size:9px;color:var(--text-muted);">当前净值</div>
+          <div id="fdNav" style="font-size:18px;font-weight:700;">--</div>
+        </div>
+        <div style="flex:1;background:#f9fafb;border-radius:var(--radius-sm);padding:10px;text-align:center;">
+          <div style="font-size:9px;color:var(--text-muted);">近1年收益</div>
+          <div id="fdRet1y" style="font-size:18px;font-weight:700;">--</div>
+        </div>
+      </div>
+      <div style="margin-bottom:14px;">
+        <div style="font-size:12px;font-weight:600;margin-bottom:8px;">📈 历史净值走势</div>
+        <canvas id="fdChart" width="360" height="160" style="width:100%;height:160px;background:#f9fafb;border-radius:var(--radius-sm);"></canvas>
+        <div style="display:flex;justify-content:center;gap:12px;margin-top:6px;">
+          <span style="font-size:10px;color:var(--text-muted);cursor:pointer;" onclick="setFundChartRange(90)">近3月</span>
+          <span style="font-size:10px;color:var(--text-muted);cursor:pointer;" onclick="setFundChartRange(180)">近6月</span>
+          <span style="font-size:10px;color:var(--text-muted);cursor:pointer;" onclick="setFundChartRange(365)">近1年</span>
+        </div>
+      </div>
+      <div id="fdInfo" style="font-size:11px;color:var(--text-secondary);line-height:1.8;"></div>
+    </div>
+  </div>
+</div>
 </body>
 </html>

@@ -1,0 +1,38 @@
+name: 每日更新基金工作台数据
+
+on:
+  schedule:
+    # 北京时间 18:00 = UTC 10:00
+    - cron: '0 10 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  update-data:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+
+      - name: Run data fetch script
+        run: python fetch_data.py
+        timeout-minutes: 10
+
+      - name: Commit and push updated data
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data.js
+          if git diff --cached --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "Auto update data.js - $(date +'%Y-%m-%d %H:%M')"
+            git push
+          fi
