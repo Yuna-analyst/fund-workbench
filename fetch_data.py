@@ -639,6 +639,105 @@ def read_existing_fund_codes():
     return DEFAULT_FUND_CODES
 
 
+def fetch_fund_ranking(ft='all', pn=100):
+    """从东方财富基金排行接口获取基金数据（code/name/nav/returns 一应俱全）。
+    
+    ft: all=全部, hh=混合型, gp=股票型, zq=债券型, qdii=QDII, zs=指数型
+    pn: 每页数量
+    """
+    url = (
+        'https://fund.eastmoney.com/data/rankhandler.aspx?'
+        'op=ph&dt=kf&ft={ft}&rs=&gs=0&sc=1y&st=desc&qdii=&tabSubtype=%2C%2C%2C%2C%2C'
+        '&pi=1&pn={pn}&dx=1&v=0.{ts}'
+    ).format(ft=ft, pn=pn, ts=int(time.time()))
+    headers = dict(HEADERS)
+    headers['Referer'] = 'https://fund.eastmoney.com/data/fundranking.html'
+    try:
+        req = urllib.request.Request(url, headers=headers)
+        with urllib.request.urlopen(req, timeout=TIMEOUT, context=SSL_CTX) as resp:
+            js = resp.read().decode('utf-8', errors='replace')
+    except Exception:
+        return []
+    # 解析 var rankData = {datas:[...]}（JS对象字面量，非JSON，需提取数组）
+    m = re.search(r'var rankData\s*=\s*\{[^[]*datas\s*:\s*(\[.*?\])', js, re.DOTALL)
+    if not m:
+        return []
+    try:
+        rows = json.loads(m.group(1))
+    except Exception:
+        return []
+    funds = []
+    type_map = {
+        'all': None, 'hh': '混合型', 'gp': '股票型', 'zq': '债券型',
+        'qdii': 'QDII', 'zs': '指数型'
+    }
+    mapped_type = type_map.get(ft)
+    for row in rows:
+        p = row.split(',')
+        if len(p) < 12:
+            continue
+        code = p[0].strip()
+        name = p[1].strip()
+        if not code or not name:
+            continue
+        # 字段位置: 0=code,1=name,2=pinyin,3=date,4=nav,5=accumNav,6=daily,7=1w,8=1m,9=3m,10=6m,11=1y,...
+        # 对 all 榜单做简单类型推断
+        inferred_type = mapped_type
+        if not inferred_type:
+            n = name
+            if 'QDII' in n or '美元' in n or '全球' in n or '海外' in n:
+                inferred_type = 'QDII'
+            elif '债' in n or '纯债' in n or '利' in n:
+                inferred_type = '债券型'
+            elif 'ETF' in n or '联接' in n or '指数' in n:
+                inferred_type = '指数型'
+            elif '股票' in n:
+                inferred_type = '股票型'
+            else:
+                inferred_type = '混合型'
+        fund = {
+            'code': code,
+            'name': name,
+            'type': inferred_type,
+            'nav': safe_float(p[4]) or '--',
+            'ret1w': safe_float(p[7]) if len(p) > 7 else '--',
+            'ret1m': safe_float(p[8]) if len(p) > 8 else '--',
+            'ret3m': safe_float(p[9]) if len(p) > 9 else '--',
+            'ret6m': safe_float(p[10]) if len(p) > 10 else '--',
+            'ret1y': safe_float(p[11]) if len(p) > 11 else '--',
+            'ret2y': safe_float(p[12]) if len(p) > 12 else '--',
+            'ret3y': safe_float(p[13]) if len(p) > 13 else '--',
+            '_source': 'ranking',
+        }
+        funds.append(fund)
+    return funds
+
+
+def fetch_all_fund_rankings():
+    """获取各类型基金排行并合并去重。"""
+    all_funds = []
+    seen = set()
+    configs = [
+        ('all', 100),
+        ('hh', 30),
+        ('gp', 30),
+        ('zq', 20),
+        ('qdii', 15),
+        ('zs', 15),
+    ]
+    for ft, pn in configs:
+        try:
+            part = fetch_fund_ranking(ft, pn)
+            for f in part:
+                if f['code'] not in seen:
+                    seen.add(f['code'])
+                    all_funds.append(f)
+        except Exception:
+            continue
+    return all_funds
+
+
+
 def fetch_fund_valuation(code):
     """抓取基金实时估值 (fundgz API)。"""
     ts = int(time.time() * 1000)
@@ -862,7 +961,14 @@ def fetch_single_fund(code):
 
 
 def fetch_all_funds():
-    """并发抓取所有基金数据。"""
+    """并发抓取所有基金数据。优先使用基金排行接口，失败则回退到单只抓取。"""
+    # 先尝试从排行接口一次性获取
+    print('[INFO] 尝试从基金排行接口获取基金数据...')
+    ranking_funds = fetch_all_fund_rankings()
+    if len(ranking_funds) >= 30:
+        print(f'[OK] 基金排行接口返回 {len(ranking_funds)} 只基金')
+        return ranking_funds
+    print(f'[WARN] 基金排行接口返回不足 ({len(ranking_funds)} 只)，回退到单只抓取')
     codes = read_existing_fund_codes()
     print(f'[INFO] 共 {len(codes)} 只基金需要抓取')
     funds = []
@@ -884,9 +990,10 @@ def fetch_all_funds():
                     'ret6m': '--', 'ret1y': '--', 'ret2y': '--', 'ret3y': '--',
                     '_nav_history': None,
                 })
-    # 按原始顺序排序
-    order = {code: i for i, code in enumerate(codes)}
-    funds.sort(key=lambda f: order.get(f['code'], 999))
+    # 按原始顺序排序（仅单只抓取模式）
+    if 'codes' in dir():
+        order = {code: i for i, code in enumerate(codes)}
+        funds.sort(key=lambda f: order.get(f['code'], 999))
     return funds
 
 
@@ -1515,6 +1622,7 @@ def main():
     # --- 清理基金数据中的内部字段 ---
     for f in funds:
         f.pop('_nav_history', None)
+        f.pop('_source', None)
 
     # --- 组装最终数据 ---
     fund_data = {
