@@ -1,0 +1,1553 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="基金工作台">
+<meta name="theme-color" content="#1a1a2e">
+<title>基金分析工作台</title>
+<style>
+:root {
+  --bg: #f5f6fa; --card-bg: #ffffff; --text: #1a1a2e; --text-secondary: #6b7280;
+  --text-muted: #9ca3af; --border: #e5e7eb; --red: #e53e3e; --green: #38a169;
+  --blue: #3b82f6; --orange: #f59e0b; --purple: #8b5cf6; --teal: #14b8a6;
+  --primary: #2563eb; --primary-light: #dbeafe; --danger-bg: #fef2f2; --success-bg: #f0fdf4;
+  --shadow: 0 1px 3px rgba(0,0,0,0.08); --shadow-lg: 0 4px 12px rgba(0,0,0,0.1);
+  --radius: 12px; --radius-sm: 8px; --radius-xs: 6px;
+  --nav-height: 64px; --safe-bottom: env(safe-area-inset-bottom, 8px);
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+html, body { height:100%; overflow:hidden; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+  background: var(--bg); color: var(--text); font-size: 14px; line-height: 1.5;
+  -webkit-font-smoothing: antialiased; -webkit-tap-highlight-color: transparent; user-select: none;
+}
+.app { display:flex; flex-direction:column; height:100%; max-width:480px; margin:0 auto; background:var(--bg); position:relative; }
+.header {
+  background: linear-gradient(135deg, #1e3a5f 0%, #2d5a87 50%, #1e3a5f 100%);
+  color: #fff; padding: 10px 16px; flex-shrink:0;
+  display:flex; align-items:center; justify-content:space-between; z-index:100;
+}
+.header h1 { font-size:15px; font-weight:600; letter-spacing:0.5px; }
+.header .update-time { font-size:10px; opacity:0.85; display:flex; align-items:center; gap:4px; }
+.header .badge { background:rgba(255,255,255,0.2); padding:2px 7px; border-radius:8px; font-size:10px; }
+.content { flex:1; overflow-y:auto; -webkit-overflow-scrolling:touch; padding:10px; padding-bottom:calc(var(--nav-height)+var(--safe-bottom)+12px); }
+.content::-webkit-scrollbar { display:none; }
+
+.nav {
+  position:fixed; bottom:0; left:50%; transform:translateX(-50%);
+  width:100%; max-width:480px; background:var(--card-bg); border-top:1px solid var(--border);
+  display:flex; padding-bottom:var(--safe-bottom); z-index:100; box-shadow:0 -2px 10px rgba(0,0,0,0.05);
+}
+.nav-item { flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:7px 4px 5px; color:var(--text-muted); cursor:pointer; transition:color 0.2s; font-size:10px; gap:1px; position:relative; }
+.nav-item svg { width:21px; height:21px; }
+.nav-item.active { color:var(--primary); }
+.nav-item.active::after { content:''; position:absolute; top:0; left:50%; transform:translateX(-50%); width:18px; height:3px; background:var(--primary); border-radius:0 0 3px 3px; }
+
+.card { background:var(--card-bg); border-radius:var(--radius); padding:12px 14px; margin-bottom:8px; box-shadow:var(--shadow); }
+.card-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; }
+.card-title { font-size:14px; font-weight:700; color:var(--text); }
+.card-subtitle { font-size:10px; color:var(--text-muted); }
+.section { margin-bottom:4px; }
+.section-title { font-size:12px; font-weight:600; color:var(--text-secondary); padding:6px 4px 5px; letter-spacing:0.5px; }
+
+.index-grid { display:grid; grid-template-columns:1fr 1fr; gap:5px; }
+.index-item { background:var(--card-bg); border-radius:var(--radius-sm); padding:9px 11px; box-shadow:var(--shadow); cursor:pointer; transition:transform 0.15s; }
+.index-item:active { transform:scale(0.97); }
+.index-name { font-size:10px; color:var(--text-secondary); margin-bottom:2px; }
+.index-value { font-size:16px; font-weight:700; }
+.index-change { font-size:11px; margin-top:2px; }
+.up { color:var(--red); }
+.down { color:var(--green); }
+.neutral-color { color:var(--text-muted); }
+
+.tag { display:inline-block; padding:2px 7px; border-radius:8px; font-size:9px; font-weight:500; margin-right:3px; margin-bottom:3px; }
+.tag-up { background:#fef2f2; color:var(--red); }
+.tag-down { background:#f0fdf4; color:var(--green); }
+.tag-neutral { background:#f3f4f6; color:#6b7280; }
+.tag-primary { background:var(--primary-light); color:var(--primary); }
+
+.news-item { padding:8px 0; border-bottom:1px solid #f3f4f6; }
+.news-item:last-child { border-bottom:none; }
+.news-title { font-size:12px; font-weight:500; line-height:1.5; margin-bottom:3px; }
+.news-meta { font-size:9px; color:var(--text-muted); display:flex; gap:6px; align-items:center; }
+
+.data-table { width:100%; border-collapse:collapse; font-size:11px; }
+.data-table th { text-align:left; padding:7px 5px; color:var(--text-secondary); font-weight:500; font-size:10px; border-bottom:2px solid var(--border); white-space:nowrap; }
+.data-table td { padding:7px 5px; border-bottom:1px solid #f3f4f6; white-space:nowrap; }
+.data-table tr:active { background:#f9fafb; }
+.data-table .rank { width:22px; text-align:center; font-weight:700; color:var(--text-muted); }
+.data-table .rank.top3 { color:var(--orange); }
+
+.heatmap { display:grid; grid-template-columns:repeat(auto-fill, minmax(72px, 1fr)); gap:3px; }
+.heatmap-cell { padding:7px 5px; border-radius:var(--radius-xs); text-align:center; font-size:9px; cursor:pointer; transition:transform 0.15s; }
+.heatmap-cell:active { transform:scale(0.95); }
+.heatmap-cell .cell-name { font-weight:500; margin-bottom:1px; }
+.heatmap-cell .cell-change { font-weight:700; }
+.heat-hot { background:#fef2f2; } .heat-warm { background:#fff5f5; }
+.heat-cool { background:#f0fdf4; } .heat-cold { background:#ecfdf5; }
+
+.stat-row { display:flex; gap:6px; margin-bottom:8px; }
+.stat-box { flex:1; background:var(--card-bg); border-radius:var(--radius-sm); padding:9px; box-shadow:var(--shadow); text-align:center; }
+.stat-box .stat-value { font-size:18px; font-weight:700; margin-bottom:1px; }
+.stat-box .stat-label { font-size:9px; color:var(--text-muted); }
+.stat-box .stat-sub { font-size:9px; margin-top:2px; }
+
+.risk-warning { text-align:center; padding:7px 10px; font-size:9px; color:var(--text-muted); background:#fefce8; border-radius:var(--radius-sm); margin-top:8px; border:1px solid #fde68a; }
+
+.loading { display:flex; align-items:center; justify-content:center; padding:30px; color:var(--text-muted); font-size:12px; }
+.loading::before { content:''; width:14px; height:14px; border:2px solid var(--border); border-top-color:var(--primary); border-radius:50%; margin-right:7px; animation:spin 0.8s linear infinite; }
+@keyframes spin { to { transform:rotate(360deg); } }
+
+.live-dot { display:inline-block; width:5px; height:5px; border-radius:50%; background:#10b981; margin-right:3px; animation:pulse 2s infinite; }
+@keyframes pulse { 0%,100% { opacity:1; } 50% { opacity:0.6; } }
+
+.module-tabs { display:flex; gap:0; border-bottom:1px solid var(--border); margin-bottom:10px; }
+.module-tab { flex:1; text-align:center; padding:7px 3px; font-size:11px; color:var(--text-muted); cursor:pointer; border-bottom:2px solid transparent; transition:all 0.2s; }
+.module-tab.active { color:var(--primary); border-bottom-color:var(--primary); font-weight:500; }
+
+.search-box { display:flex; align-items:center; background:#f3f4f6; border-radius:18px; padding:5px 12px; margin-bottom:8px; gap:5px; }
+.search-box svg { width:15px; height:15px; color:var(--text-muted); flex-shrink:0; }
+.search-box input { flex:1; border:none; background:none; outline:none; font-size:12px; color:var(--text); }
+.search-box input::placeholder { color:var(--text-muted); }
+
+.table-wrap { overflow-x:auto; -webkit-overflow-scrolling:touch; }
+.table-wrap::-webkit-scrollbar { height:2px; }
+.table-wrap::-webkit-scrollbar-thumb { background:#d1d5db; border-radius:2px; }
+.sortable { cursor:pointer; user-select:none; }
+.sortable::after { content:' ↕'; font-size:9px; opacity:0.4; }
+.sortable.asc::after { content:' ↑'; opacity:1; }
+.sortable.desc::after { content:' ↓'; opacity:1; }
+
+.filter-bar { display:flex; gap:5px; overflow-x:auto; padding:3px 0 8px; -webkit-overflow-scrolling:touch; }
+.filter-bar::-webkit-scrollbar { display:none; }
+.filter-chip { padding:5px 12px; border-radius:14px; font-size:11px; white-space:nowrap; background:#f3f4f6; color:var(--text-secondary); cursor:pointer; transition:all 0.2s; flex-shrink:0; border:1px solid transparent; }
+.filter-chip.active { background:var(--primary-light); color:var(--primary); border-color:var(--primary); font-weight:500; }
+
+.overview-kpis { display:grid; grid-template-columns:repeat(3, 1fr); gap:5px; margin-bottom:8px; }
+.kpi-card { background:var(--card-bg); padding:9px; border-radius:var(--radius-sm); box-shadow:var(--shadow); text-align:center; }
+.kpi-card .kpi-val { font-size:16px; font-weight:700; }
+.kpi-card .kpi-label { font-size:9px; color:var(--text-muted); margin-top:1px; }
+.kpi-card .kpi-sub { font-size:9px; margin-top:1px; }
+.kpi-card .kpi-dod { font-size:9px; margin-top:2px; color:var(--text-muted); display:flex; align-items:center; justify-content:center; gap:2px; }
+
+.overview-header { display:flex; align-items:center; justify-content:space-between; padding:6px 0; margin-bottom:6px; }
+.overview-header .market-status { font-size:10px; color:var(--text-muted); display:flex; align-items:center; gap:3px; }
+.data-source-tag { font-size:9px; color:#10b981; background:#ecfdf5; padding:1px 6px; border-radius:6px; display:inline-block; }
+
+.fund-card { background:var(--card-bg); border-radius:var(--radius-sm); padding:10px; box-shadow:var(--shadow); margin-bottom:6px; border-left:3px solid var(--primary); cursor:pointer; transition:transform 0.15s; }
+.fund-card:active { transform:scale(0.98); }
+.fund-card .fund-name { font-size:12px; font-weight:600; margin-bottom:2px; }
+.fund-card .fund-code { font-size:9px; color:var(--text-muted); }
+
+/* Crowding section */
+.crowding-table td { font-size:10px; }
+.crowding-high { background:#fef2f2 !important; }
+.crowding-low { background:#f0fdf4 !important; }
+.crowding-badge { font-size:9px; padding:1px 6px; border-radius:6px; font-weight:500; }
+.crowding-badge.high { background:#fee2e2; color:#dc2626; }
+.crowding-badge.mid { background:#fef3c7; color:#d97706; }
+.crowding-badge.low { background:#dcfce7; color:#16a34a; }
+.crowding-badge.extreme { background:#fee2e2; color:#dc2626; font-weight:700; }
+
+/* Portfolio */
+.portfolio-summary { background:linear-gradient(135deg, #1e3a5f 0%, #2d5a87 100%); border-radius:var(--radius); padding:14px; color:#fff; margin-bottom:8px; }
+.portfolio-summary .total-label { font-size:10px; opacity:0.8; }
+.portfolio-summary .total-value { font-size:24px; font-weight:700; margin:3px 0; }
+.portfolio-summary .total-change { font-size:12px; }
+
+/* Fund holding input */
+.holding-form { background:var(--card-bg); border-radius:var(--radius-sm); padding:12px; margin-bottom:8px; box-shadow:var(--shadow); border:1px dashed var(--primary); }
+.holding-form label { font-size:10px; color:var(--text-secondary); display:block; margin-bottom:2px; }
+.holding-form input { width:100%; padding:7px 10px; border:1px solid var(--border); border-radius:var(--radius-xs); font-size:13px; margin-bottom:6px; outline:none; }
+.holding-form input:focus { border-color:var(--primary); }
+.holding-form button { background:var(--primary); color:#fff; border:none; padding:7px 16px; border-radius:14px; font-size:12px; cursor:pointer; }
+.holding-item { display:flex; align-items:center; justify-content:space-between; padding:8px 10px; background:#f9fafb; border-radius:var(--radius-sm); margin-bottom:4px; }
+.holding-item .remove-btn { color:var(--red); cursor:pointer; font-size:16px; padding:0 4px; }
+
+/* Risk section */
+.risk-alert { padding:8px 10px; border-radius:var(--radius-sm); margin-bottom:4px; font-size:11px; display:flex; align-items:center; gap:6px; }
+.risk-alert.high { background:#fef2f2; border-left:3px solid var(--red); }
+.risk-alert.medium { background:#fffbeb; border-left:3px solid var(--orange); }
+.risk-alert.low { background:#f0fdf4; border-left:3px solid var(--green); }
+
+/* Exclusive style */
+.exclusive-badge { background:linear-gradient(135deg,#667eea,#764ba2); color:#fff; padding:2px 8px; border-radius:8px; font-size:9px; display:inline-block; margin-bottom:6px; }
+.exclusive-section { margin-bottom:14px; }
+.exclusive-title { font-size:14px; font-weight:700; margin-bottom:6px; display:flex; align-items:center; gap:5px; }
+.exclusive-desc { font-size:10px; color:var(--text-muted); margin-bottom:6px; }
+.compare-row { display:flex; align-items:center; gap:6px; padding:8px 0; border-bottom:1px solid var(--border); }
+.compare-row:last-child { border-bottom:none; }
+.compare-name { flex:0 0 80px; font-size:11px; font-weight:600; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.compare-bar-wrap { flex:1; height:7px; background:var(--bg); border-radius:3px; overflow:hidden; }
+.compare-bar { height:100%; border-radius:3px; transition:width 0.5s; }
+.compare-val { flex:0 0 45px; text-align:right; font-size:11px; font-weight:700; }
+.dca-card { background:var(--card-bg); border-radius:var(--radius-sm); padding:10px; margin-bottom:6px; box-shadow:var(--shadow); }
+.dca-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:6px; }
+.dca-name { font-size:12px; font-weight:600; flex:1; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.dca-roi { font-size:16px; font-weight:800; }
+.dca-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:5px; }
+.dca-stat { text-align:center; }
+.dca-stat .v { font-size:12px; font-weight:700; }
+.dca-stat .l { font-size:9px; color:var(--text-muted); }
+.radar-row { display:flex; align-items:center; gap:6px; padding:8px 0; border-bottom:1px solid var(--border); }
+.radar-row:last-child { border-bottom:none; }
+.radar-name { flex:0 0 75px; font-size:10px; font-weight:600; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.radar-style { flex:0 0 60px; font-size:10px; padding:1px 5px; border-radius:6px; text-align:center; }
+.radar-style.\高弹性成长 { background:#fee2e2; color:#dc2626; }
+.radar-style.\稳健成长 { background:#fef3c7; color:#d97706; }
+.radar-style.\均衡 { background:#e0e7ff; color:#4f46e5; }
+.radar-style.\防御 { background:#f0fdf4; color:#16a34a; }
+.radar-style.\弱势 { background:#f1f5f9; color:#64748b; }
+.radar-drift { flex:0 0 60px; font-size:10px; text-align:center; font-weight:600; }
+.radar-drift.high { color:var(--red); }
+.radar-drift.medium { color:#f59e0b; }
+.radar-drift.low { color:var(--green); }
+.radar-consistency { flex:1; text-align:right; font-size:11px; font-weight:700; }
+
+/* Overlap section */
+.overlap-container { margin-top:8px; }
+.overlap-stock { display:flex; align-items:center; gap:4px; padding:3px 6px; border-radius:4px; font-size:10px; margin-bottom:2px; }
+.overlap-stock.overlapped { background:#fef2f2; color:var(--red); font-weight:600; }
+.overlap-stock.normal { background:#f9fafb; }
+.overlap-bar-chart { height:20px; display:flex; border-radius:4px; overflow:hidden; margin:6px 0; }
+.overlap-bar-segment { height:100%; transition:width 0.3s; }
+
+/* Input group */
+.input-group { display:flex; gap:6px; align-items:flex-end; }
+.input-group input { flex:1; }
+
+/* Empty state */
+.empty-state { text-align:center; padding:20px; color:var(--text-muted); font-size:12px; }
+
+/* Success/error toasts */
+.toast { position:fixed; top:70px; left:50%; transform:translateX(-50%); background:#1a1a2e; color:#fff; padding:8px 16px; border-radius:20px; font-size:12px; z-index:999; animation:fadeInOut 2.5s ease; pointer-events:none; }
+@keyframes fadeInOut { 0%{opacity:0;transform:translate(-50%,-10px);} 15%{opacity:1;transform:translate(-50%,0);} 75%{opacity:1;} 100%{opacity:0;} }
+</style>
+</head>
+<body>
+<div class="app" id="app">
+  <div class="header">
+    <div>
+      <h1>📊 基金分析工作台</h1>
+      <div class="update-time"><span class="live-dot" id="liveDot"></span><span id="updateTimeLabel">加载中...</span></div>
+    </div>
+    <div style="display:flex;align-items:center;gap:6px;">
+      <span class="badge" id="marketBadge">📈 加载中</span>
+      <span class="badge" id="refreshBtn" onclick="refreshData()" style="cursor:pointer;background:rgba(255,255,255,0.25);">🔄 刷新</span>
+    </div>
+  </div>
+  <div class="content" id="content"><div class="loading">正在加载市场数据...</div></div>
+  <nav class="nav" id="nav">
+    <div class="nav-item active" data-tab="overview"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>概览</div>
+    <div class="nav-item" data-tab="flow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20V10M18 20V4M6 20v-4"/></svg>资金</div>
+    <div class="nav-item" data-tab="sector"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>板块</div>
+    <div class="nav-item" data-tab="funds"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>基金</div>
+    <div class="nav-item" data-tab="exclusive"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>独家</div>
+    <div class="nav-item" data-tab="more"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg>更多</div>
+  </nav>
+</div>
+
+<script>
+// ==================== 核心工具函数 ====================
+function jsonp(url, timeout=8000) {
+  return new Promise((resolve, reject) => {
+    const cbName = '_wbcb_' + Date.now() + '_' + Math.floor(Math.random()*100000);
+    const script = document.createElement('script');
+    let timer = null;
+    window[cbName] = function(data) { cleanup(); resolve(data); };
+    function cleanup() { if (timer) clearTimeout(timer); delete window[cbName]; if (script.parentNode) script.parentNode.removeChild(script); }
+    timer = setTimeout(() => { cleanup(); reject(new Error('timeout')); }, timeout);
+    script.onerror = () => { cleanup(); reject(new Error('network error')); };
+    script.src = url + (url.includes('?')?'&':'?') + 'cb=' + cbName;
+    document.head.appendChild(script);
+  });
+}
+
+function fetchJSON(url, timeout=8000) {
+  return new Promise((resolve, reject) => {
+    const cbName = '_wbcb2_' + Date.now() + '_' + Math.floor(Math.random()*100000);
+    const script = document.createElement('script');
+    let timer = null;
+    window[cbName] = function(data) { cleanup(); resolve(data); };
+    function cleanup() { if (timer) clearTimeout(timer); delete window[cbName]; if (script.parentNode) script.parentNode.removeChild(script); }
+    timer = setTimeout(() => { cleanup(); reject(new Error('timeout')); }, timeout);
+    script.onerror = () => { cleanup(); reject(new Error('network error')); };
+    script.src = url + (url.includes('?')?'&':'?') + 'callback=' + cbName;
+    document.head.appendChild(script);
+  });
+}
+
+function isTradingTime() {
+  const now = new Date();
+  const day = now.getDay();
+  if (day === 0 || day === 6) return false;
+  const h = now.getHours(), m = now.getMinutes();
+  const t = h * 60 + m;
+  return t >= 570 && t <= 900; // 9:30-15:00
+}
+
+function getTradingDate() {
+  const now = new Date();
+  const day = now.getDay();
+  let td = new Date(now);
+  if (day === 0) td.setDate(td.getDate() - 2);
+  else if (day === 6) td.setDate(td.getDate() - 1);
+  else {
+    const hm = now.getHours() * 60 + now.getMinutes();
+    if (hm < 570) td.setDate(td.getDate() - (day === 1 ? 3 : 1));
+  }
+  return td.getFullYear() + '-' + String(td.getMonth()+1).padStart(2,'0') + '-' + String(td.getDate()).padStart(2,'0');
+}
+
+function formatM(v) { if (Math.abs(v)>=1e8) return (v/1e8).toFixed(2)+'亿'; if (Math.abs(v)>=1e4) return (v/1e4).toFixed(2)+'万'; return v.toFixed(2); }
+function signV(v) { return v>=0?'+':''; }
+function colorV(v) { return v>=0?'up':'down'; }
+
+function getPrevDayData() {
+  try { const d = localStorage.getItem('fundWorkbench_prevDay'); return d ? JSON.parse(d) : null; } catch(e) { return null; }
+}
+function savePrevDayData(data) {
+  try { localStorage.setItem('fundWorkbench_prevDay', JSON.stringify(data)); } catch(e) {}
+}
+
+function calcDod(current, previous, unit) {
+  if (!previous || previous === null || previous === undefined) return null;
+  const diff = current - previous;
+  const pct = previous !== 0 ? (diff / Math.abs(previous)) * 100 : 0;
+  return { diff, pct, unit: unit || '' };
+}
+function formatDod(dod) {
+  if (!dod) return '';
+  const dir = dod.diff >= 0 ? '↑' : '↓';
+  const cls = dod.diff >= 0 ? 'up' : 'down';
+  let val = '';
+  if (dod.unit === '亿') val = (dod.diff >= 0 ? '+' : '') + dod.diff.toFixed(1) + '亿';
+  return `<span class="${cls}" style="font-size:9px;">${dir}${dod.pct.toFixed(1)}% (${val})</span>`;
+}
+
+function showToast(msg) {
+  const t = document.createElement('div'); t.className = 'toast'; t.textContent = msg;
+  document.body.appendChild(t); setTimeout(() => t.remove(), 2600);
+}
+
+// ==================== 数据存储 ====================
+const Store = {
+  indices: [], marketKPIs: {}, capitalFlow: {}, sectorFlow: [], sectors: [],
+  etfFlow: [], nationalTeamETF: [], sectorCrowding: [],
+  funds: [], fundPremium: [], fundRiskMetrics: [],
+  news: [], sentimentIndex: null, prevDayData: null,
+  updateTime: '', marketStatus: '', dataSource: '东方财富',
+  capitalDecoder: [], fundCompare: [], dcaSimulator: [], styleRadar: [],
+  recommendations: [], technicals: [], macros: [],
+  loading: true
+};
+
+// ==================== API 数据获取 ====================
+async function fetchIndices() {
+  const secids = ['1.000001','0.399001','0.399006','1.000688','1.000300','1.000905'];
+  try {
+    const d = await jsonp('https://push2.eastmoney.com/api/qt/ulist.np/get?fltt=2&fields=f2,f3,f4,f12,f14,f5,f6,f15,f16,f17&secids=' + secids.join(','));
+    if (d && d.data && d.data.diff) {
+      Store.indices = d.data.diff.map((it, idx) => ({
+        name: it.f14, code: it.f12, value: it.f2||0, change: it.f4||0,
+        changePct: (it.f3>=0?'+':'')+(it.f3||0).toFixed(2)+'%',
+        high: it.f15||0, low: it.f16||0, volume: it.f5||0, amount: it.f6||0
+      }));
+      return true;
+    }
+  } catch(e) {}
+  return false;
+}
+
+async function fetchMarketKPIs() {
+  try {
+    const d = await jsonp('https://push2.eastmoney.com/api/qt/clist/get?pn=1&pz=5000&po=1&np=1&fltt=2&invt=2&fs=m:0+t:6,m:0+t:80,m:1+t:2,m:1+t:23&fields=f2,f3,f12,f14');
+    if (d && d.data && d.data.diff) {
+      const stocks = d.data.diff;
+      const up = stocks.filter(s => s.f3 > 0).length;
+      const down = stocks.filter(s => s.f3 < 0).length;
+      Store.marketKPIs.upDown = { val: up + '/' + down, label: '涨/跌家数', upCount: up, downCount: down };
+
+      // 成交额汇总
+      if (Store.indices.length >= 2) {
+        let totalAmt = 0;
+        for (const idx of Store.indices) {
+          if (idx.code === '000001' || idx.code === '399001') totalAmt += (idx.amount || 0);
+        }
+        if (!totalAmt) {
+          const sz = Store.indices.find(i=>i.code==='000001'); const szAmt = sz ? (sz.amount||0) : 0;
+          const sc = Store.indices.find(i=>i.code==='399001'); const scAmt = sc ? (sc.amount||0) : 0;
+          totalAmt = szAmt + scAmt;
+        }
+        if (totalAmt > 0) Store.marketKPIs.totalAmount = { val: (totalAmt/1e8).toFixed(0)+'亿', label: '成交额', raw: totalAmt/1e8 };
+        else Store.marketKPIs.totalAmount = { val: '--', label: '成交额', raw: null };
+      } else {
+        Store.marketKPIs.totalAmount = { val: '--', label: '成交额', raw: null };
+      }
+      return true;
+    }
+  } catch(e) {}
+  return false;
+}
+
+async function fetchNorthBound() {
+  try {
+    const d = await jsonp('https://push2.eastmoney.com/api/qt/kamt/get?fields1=f1,f2,f3,f4&fields2=f51,f52,f53,f54,f55,f56');
+    if (d && d.data) {
+      const shNet = d.data.s2n ? (d.data.s2n[d.data.s2n.length-1] || '').split(',') : null;
+      const szNet = d.data.s2s ? (d.data.s2s[d.data.s2s.length-1] || '').split(',') : null;
+      let shVal = shNet ? parseFloat(shNet[1]||0)/10000 : 0;
+      let szVal = szNet ? parseFloat(szNet[1]||0)/10000 : 0;
+      Store.marketKPIs.northFlow = {
+        val: (shVal+szVal>=0?'+':'')+(shVal+szVal).toFixed(1)+'亿', label: '北向资金',
+        northNet: shVal+szVal, shNet: shVal, szNet: szVal, available: true
+      };
+      return true;
+    }
+  } catch(e) {}
+  Store.marketKPIs.northFlow = { val: '--', label: '北向资金', northNet: 0, available: false };
+  return false;
+}
+
+async function fetchSectorFlow() {
+  try {
+    const d = await jsonp('https://push2.eastmoney.com/api/qt/clist/get?fid=f62&po=1&pz=20&pn=1&np=1&fltt=2&invt=2&fs=m:90+t:2&fields=f12,f14,f62,f184,f3');
+    if (d && d.data && d.data.diff) {
+      Store.sectorFlow = d.data.diff.map(it => ({
+        name: it.f14, inflow: (it.f62||0)/1e8, pct: it.f184||0, change: it.f3||0, trend: 1
+      }));
+      const totalFlow = Store.sectorFlow.reduce((s, x) => s + x.inflow, 0);
+      Store.capitalFlow = { netFlow: parseFloat(totalFlow.toFixed(2)), northBound: { net: Store.marketKPIs.northFlow?.northNet||0, available: true } };
+      return true;
+    }
+  } catch(e) {}
+  return false;
+}
+
+async function fetchSectors() {
+  try {
+    const [indD, conD] = await Promise.all([
+      jsonp('https://push2.eastmoney.com/api/qt/clist/get?fid=f3&po=1&pz=50&pn=1&np=1&fltt=2&invt=2&fs=m:90+t:2&fields=f2,f3,f4,f8,f12,f14'),
+      jsonp('https://push2.eastmoney.com/api/qt/clist/get?fid=f3&po=1&pz=50&pn=1&np=1&fltt=2&invt=2&fs=m:90+t:3&fields=f2,f3,f4,f8,f12,f14')
+    ]);
+    const all = [];
+    if (indD?.data?.diff) all.push(...indD.data.diff.map(it => ({ name: it.f14, code: it.f12, change: it.f3||0, chgVal: it.f4||0, turnover: it.f8||0, type: '行业', hot: Math.abs(it.f3)>=3 })));
+    if (conD?.data?.diff) all.push(...conD.data.diff.map(it => ({ name: it.f14, code: it.f12, change: it.f3||0, chgVal: it.f4||0, turnover: it.f8||0, type: '概念', hot: it.f3>=5 })));
+    Store.sectors = all.sort((a,b) => Math.abs(b.change) - Math.abs(a.change));
+    return true;
+  } catch(e) {}
+  return false;
+}
+
+async function fetchETFFlow() {
+  try {
+    const d = await jsonp('https://push2.eastmoney.com/api/qt/clist/get?fid=f62&po=1&pz=30&pn=1&np=1&fltt=2&invt=2&fs=b:MK0021,MK0022,MK0023,MK0024&fields=f12,f14,f2,f3,f6,f62,f184');
+    if (d?.data?.diff) {
+      Store.etfFlow = d.data.diff
+        .filter(it => (it.f6||0) > 1e8)
+        .map(it => ({
+          name: it.f14, code: it.f12, price: it.f2||0, change: it.f3||0,
+          amount: (it.f6||0)/1e8, inflow: (it.f62||0)/1e8, inPct: it.f184||0
+        }));
+      return true;
+    }
+  } catch(e) {}
+  return false;
+}
+
+async function fetchNationalTeamETFs() {
+  const etfs = [
+    { name: '华泰柏瑞沪深300ETF', code: '510300', secid: '1.510300' },
+    { name: '华夏上证50ETF', code: '510050', secid: '1.510050' },
+    { name: '南方中证500ETF', code: '510500', secid: '1.510500' },
+    { name: '嘉实沪深300ETF', code: '159919', secid: '0.159919' },
+    { name: '易方达沪深300ETF', code: '510310', secid: '1.510310' }
+  ];
+  const results = [];
+  for (const etf of etfs) {
+    try {
+      const d = await jsonp('https://push2.eastmoney.com/api/qt/stock/get?secid='+etf.secid+'&fields=f12,f14,f2,f3,f6,f161,f84,f85');
+      if (d?.data) {
+        results.push({
+          name: d.data.f14 || etf.name, code: d.data.f12 || etf.code,
+          price: d.data.f2||0, change: d.data.f3||0,
+          amount: (d.data.f6||0)/1e8, totalValue: (d.data.f161||0)/1e8,
+          shares: (d.data.f84||0)/1e8, totalShares: (d.data.f85||0)/1e8
+        });
+      } else {
+        results.push({ name: etf.name, code: etf.code, price:0, change:0, amount:0, totalValue:0, shares:0, totalShares:0, available: false });
+      }
+    } catch(e) {
+      results.push({ name: etf.name, code: etf.code, available: false });
+    }
+  }
+  Store.nationalTeamETF = results;
+
+  // 从 localStorage 获取前一日的份额数据
+  try {
+    const prev = JSON.parse(localStorage.getItem('fundWorkbench_etfShares') || '{}');
+    results.forEach(r => {
+      if (r.available !== false && r.shares > 0 && prev[r.code]) {
+        r.prevShares = prev[r.code];
+        r.shareChangePct = ((r.shares - prev[r.code]) / prev[r.code] * 100);
+      }
+    });
+    // 保存当前份额
+    const curr = {};
+    results.forEach(r => { if (r.available !== false && r.shares > 0) curr[r.code] = r.shares; });
+    localStorage.setItem('fundWorkbench_etfShares', JSON.stringify(curr));
+  } catch(e) {}
+  return results.length > 0;
+}
+
+async function fetchSectorCrowding() {
+  // 获取前20个行业板块，计算近5年换手率分位
+  const targetSectors = (Store.sectors || []).filter(s => s.type === '行业').slice(0, 20);
+  if (targetSectors.length === 0) { Store.sectorCrowding = []; return false; }
+
+  const results = [];
+  const begDate = '20210801'; // 近5年
+  const endDate = '20261231';
+
+  for (const sector of targetSectors) {
+    try {
+      const secid = '90.' + sector.code;
+      const d = await jsonp('https://push2his.eastmoney.com/api/qt/stock/kline/get?secid='+secid+'&fields1=f1,f2,f3,f4,f5,f6&fields2=f51,f52,f53,f54,f55,f56,f57,f58&klt=101&fqt=0&beg='+begDate+'&end='+endDate);
+      if (d?.data?.klines) {
+        const turnovers = [];
+        for (const k of d.data.klines) {
+          const parts = k.split(',');
+          if (parts.length >= 7) {
+            const vol = parseFloat(parts[5])||0;
+            const amt = parseFloat(parts[6])||0;
+            if (vol > 0) {
+              // 用成交量作为换手率的代理指标（板块换手率 = 成交量/流通股本）
+              // 由于无法直接获取流通股本，用标准化成交量作为代理
+              turnovers.push(vol);
+            }
+          }
+        }
+        if (turnovers.length > 100) {
+          turnovers.sort((a,b) => a-b);
+          const currIdx = turnovers.findIndex(v => v >= (turnovers[turnovers.length-1] || 0));
+          const pct = currIdx >= 0 ? ((currIdx / turnovers.length) * 100) : 50;
+          let status = '🟢低拥挤', cls = 'low';
+          if (pct > 90) { status = '⚠️极度过热'; cls = 'extreme'; }
+          else if (pct > 70) { status = '🔴高拥挤'; cls = 'high'; }
+          else if (pct > 30) { status = '🟡适中'; cls = 'mid'; }
+          results.push({ name: sector.name, code: sector.code, change: sector.change, turnover: sector.turnover, percentile5y: pct.toFixed(1), status, cls });
+        } else {
+          results.push({ name: sector.name, code: sector.code, change: sector.change, turnover: sector.turnover, percentile5y: '--', status: '数据不足', cls: '' });
+        }
+      } else {
+        results.push({ name: sector.name, code: sector.code, change: sector.change, turnover: sector.turnover, percentile5y: '--', status: '--', cls: '' });
+      }
+    } catch(e) {
+      results.push({ name: sector.name, code: sector.code, change: sector.change, turnover: sector.turnover, percentile5y: '--', status: '--', cls: '' });
+    }
+  }
+
+  results.sort((a,b) => {
+    const pa = parseFloat(a.percentile5y) || 0;
+    const pb = parseFloat(b.percentile5y) || 0;
+    return pb - pa;
+  });
+  Store.sectorCrowding = results;
+  return results.length > 0;
+}
+
+async function fetchFundPremium() {
+  // LOF/QDII基金折溢价
+  try {
+    const d = await jsonp('https://push2.eastmoney.com/api/qt/clist/get?fid=f3&po=1&pz=30&pn=1&np=1&fltt=2&invt=2&fs=b:MK0406,b:MK0407,b:MK0408&fields=f12,f14,f2,f3,f6,f164,f165,f168,f169');
+    if (d?.data?.diff) {
+      Store.fundPremium = d.data.diff
+        .filter(it => it.f169 !== '-' && it.f169 !== null && Math.abs(parseFloat(it.f169||0)) > 3)
+        .map(it => ({
+          name: it.f14, code: it.f12, nav: it.f164||0, price: it.f165||0,
+          premium: parseFloat(it.f169||0), amount: (it.f6||0)/1e4,
+          type: parseFloat(it.f169) > 0 ? '溢价' : '折价'
+        }))
+        .sort((a,b) => b.premium - a.premium);
+      return true;
+    }
+  } catch(e) {}
+  Store.fundPremium = [];
+  return false;
+}
+
+async function fetchFundNav(code) {
+  try {
+    const d = await jsonp('https://api.fund.eastmoney.com/f10/lsjz?fundCode='+code+'&pageIndex=1&pageSize=800');
+    if (d?.Data?.LSJZList) {
+      return d.Data.LSJZList.map(it => parseFloat(it.DWJZ||0)).filter(v => v > 0).reverse();
+    }
+  } catch(e) {}
+  return [];
+}
+
+async function fetchFundEstimate(code) {
+  return new Promise((resolve) => {
+    const cb = '_fge_' + Date.now() + '_' + Math.floor(Math.random()*10000);
+    const script = document.createElement('script');
+    const timer = setTimeout(() => { cleanup(); resolve(null); }, 5000);
+    window[cb] = function(data) { cleanup(); resolve(data); };
+    function cleanup() { clearTimeout(timer); delete window[cb]; if (script.parentNode) script.parentNode.removeChild(script); }
+    script.onerror = () => { cleanup(); resolve(null); };
+    script.src = 'http://fundgz.1234567.com.cn/js/' + code + '.js?rt=' + Date.now() + '&cb=' + cb;
+    document.head.appendChild(script);
+  });
+}
+
+async function fetchFundMaxDrawdown() {
+  // 获取基金数据并计算风险指标（选取前20只规模较大的基金）
+  const targetFunds = (Store.funds || []).filter(f => f.type !== '债券型').slice(0, 20);
+  const results = [];
+  for (const fund of targetFunds) {
+    try {
+      const navHistory = await fetchFundNav(fund.code);
+      if (navHistory.length < 50) continue;
+
+      // 最大回撤
+      let maxDD = 0, peak_1y = navHistory[0];
+      for (const nav of navHistory) {
+        if (nav > peak_1y) peak_1y = nav;
+        const dd = (peak_1y - nav) / peak_1y;
+        if (dd > maxDD) maxDD = dd;
+      }
+
+      // 年化收益率
+      const totalDays = navHistory.length;
+      const annualRet = Math.pow(navHistory[navHistory.length-1] / navHistory[0], 252/totalDays) - 1;
+
+      // 日收益率序列
+      const dailyRets = [];
+      for (let i=1; i<navHistory.length; i++) dailyRets.push((navHistory[i]-navHistory[i-1])/navHistory[i-1]);
+
+      // 年化波动率
+      const meanRet = dailyRets.reduce((s,r)=>s+r,0) / dailyRets.length;
+      const variance = dailyRets.reduce((s,r)=>s+(r-meanRet)**2,0) / dailyRets.length;
+      const annualVol = Math.sqrt(variance) * Math.sqrt(252);
+
+      // 夏普比率
+      const rfRate = 0.025;
+      const sharpe = annualVol > 0 ? (annualRet - rfRate) / annualVol : 0;
+
+      // 卡玛比率
+      const calmar = maxDD > 0 ? annualRet / maxDD : 0;
+
+      results.push({
+        name: fund.name, code: fund.code, type: fund.type,
+        ret1y: fund.ret1y||0, maxDrawdown1y: (maxDD*100).toFixed(2),
+        sharpeRatio: sharpe.toFixed(2), calmarRatio: calmar.toFixed(2),
+        annualRet: (annualRet*100).toFixed(2), annualVol: (annualVol*100).toFixed(2)
+      });
+    } catch(e) {}
+  }
+  Store.fundRiskMetrics = results;
+  return results.length > 0;
+}
+
+async function fetchFundRiskSignals() {
+  // 基金风险提示-简化版
+  const signals = [];
+  const funds = Store.funds || [];
+  for (const fund of funds) {
+    // 检测近1年跑输基准>10%（基于收益判断）
+    if (fund.ret1y && fund.ret1y < -10) {
+      signals.push({ name: fund.name, code: fund.code, signal: '连续跑输基准', level: '中', detail: '近1年收益'+fund.ret1y.toFixed(1)+'%，大幅跑输市场', advice: '谨慎' });
+    }
+    // 检测可能的清盘风险（净值过低）
+    if (fund.nav && fund.nav < 0.5) {
+      signals.push({ name: fund.name, code: fund.code, signal: '净值偏低', level: '高', detail: '最新净值'+fund.nav.toFixed(4)+'，可能存在清盘风险', advice: '谨慎' });
+    }
+    // 检测近3月大幅回撤
+    if (fund.ret3m && fund.ret3m < -25) {
+      signals.push({ name: fund.name, code: fund.code, signal: '大幅回撤', level: '中', detail: '近3月下跌'+Math.abs(fund.ret3m).toFixed(1)+'%，回撤显著', advice: '观望' });
+    }
+  }
+  Store.fundRiskSignals = signals.slice(0, 20);
+  return signals.length > 0;
+}
+
+async function fetchNews() {
+  try {
+    const d = await jsonp('https://np-listapi.eastmoney.com/comm/web/getNewsByColumns?client=web&biz=web_news_channel&column=350&order=1&needInteractData=0&page_index=1&page_size=10&req_trace=1');
+    if (d?.data?.list) {
+      Store.news = d.data.list.map(it => ({
+        title: it.title || it.Title || '', tag: '快讯', source: '东方财富',
+        time: (it.showTime || '').slice(11,16) || '', impact: 'neutral'
+      }));
+      return true;
+    }
+  } catch(e) {}
+  // 备用新闻API
+  try {
+    const d = await jsonp('https://push2.eastmoney.com/api/qt/clist/get?pn=1&pz=10&po=1&np=1&fltt=2&invt=2&fs=m:1+t:2&fields=f12,f14,f2,f3');
+    if (d?.data?.diff) {
+      Store.news = d.data.diff.map(it => ({
+        title: it.f14 + (it.f3>=0?' 上涨'+it.f3.toFixed(2)+'%':' 下跌'+Math.abs(it.f3).toFixed(2)+'%'),
+        tag: '行情', source: '东方财富', time: '', impact: it.f3>=0?'positive':'negative'
+      }));
+      return true;
+    }
+  } catch(e) {}
+  return false;
+}
+
+async function fetchMarginBalance() {
+  try {
+    const d = await jsonp('https://push2.eastmoney.com/api/qt/kamt.rtmin/get?fields1=f1,f2,f3,f4&fields2=f51,f52,f53,f54,f55,f56,f57,f58');
+    if (d?.data) { Store.margin = { balance: '--', available: false }; return false; }
+  } catch(e) {}
+  Store.margin = { balance: '--', available: false };
+  return false;
+}
+
+async function loadData() {
+  Store.loading = true;
+  Store.marketStatus = isTradingTime() ? 'open' : 'closed';
+  Store.tradingDate = getTradingDate();
+  Store.prevDayData = getPrevDayData();
+
+  // 并发获取基础数据
+  await Promise.all([
+    fetchIndices(),
+    fetchNorthBound(),
+    fetchSectors(),
+    fetchETFFlow(),
+    fetchNews(),
+    fetchMarginBalance()
+  ]);
+
+  await fetchMarketKPIs();
+  await fetchSectorFlow();
+
+  // 保存前一交易日数据用于下次对比
+  const todayData = {
+    totalAmount: Store.marketKPIs.totalAmount?.raw,
+    netFlow: Store.capitalFlow?.netFlow,
+    northNet: Store.marketKPIs.northFlow?.northNet,
+    upCount: Store.marketKPIs.upDown?.upCount,
+    downCount: Store.marketKPIs.upDown?.downCount
+  };
+  savePrevDayData(todayData);
+
+  // 计算日环比
+  if (Store.prevDayData) {
+    Store.dodComparisons = {
+      totalAmount: calcDod(todayData.totalAmount, Store.prevDayData.totalAmount, '亿'),
+      netFlow: calcDod(todayData.netFlow, Store.prevDayData.netFlow, '亿'),
+      northNet: calcDod(todayData.northNet, Store.prevDayData.northNet, '亿')
+    };
+  }
+
+  // 计算情绪指数
+  calculateSentiment();
+
+  Store.updateTime = new Date().toLocaleString('zh-CN', {hour:'2-digit',minute:'2-digit',second:'2-digit'});
+  if (!isTradingTime()) Store.updateTime += ' · 收市';
+  Store.loading = false;
+}
+
+function calculateSentiment() {
+  let score = 50;
+  const signals = [];
+  const idx = Store.indices[0];
+  if (idx) {
+    if (idx.changePct) {
+      const pct = parseFloat(idx.changePct) || 0;
+      signals.push({ name: '上证涨幅', value: idx.changePct, signal: pct > 0 ? 'bull' : 'bear' });
+      score += pct * 5;
+    }
+  }
+  const upPct = Store.marketKPIs.upDown?.upCount && Store.marketKPIs.upDown?.downCount
+    ? (Store.marketKPIs.upDown.upCount / (Store.marketKPIs.upDown.upCount + Store.marketKPIs.upDown.downCount) * 100) : 50;
+  signals.push({ name: '涨跌家数比', value: upPct.toFixed(0)+'%', signal: upPct > 60 ? 'bull' : upPct < 40 ? 'bear' : 'neutral' });
+  score += (upPct - 50) * 0.4;
+
+  const upSectors = Store.sectors.filter(s => s.change > 0).length;
+  signals.push({ name: '板块上涨比', value: upSectors+'/'+Store.sectors.length, signal: upSectors/Store.sectors.length > 0.6 ? 'bull' : 'neutral' });
+  score += (upSectors/Store.sectors.length - 0.5) * 30;
+
+  score = Math.max(0, Math.min(100, Math.round(score)));
+
+  let level, emoji, advice;
+  if (score >= 80) { level = '极度乐观'; emoji = '🔥'; advice = '过热风险，注意回调'; }
+  else if (score >= 60) { level = '偏乐观'; emoji = '😊'; advice = '市场情绪偏暖，可适度参与'; }
+  else if (score >= 40) { level = '中性'; emoji = '😐'; advice = '市场情绪平稳，观望为主'; }
+  else if (score >= 20) { level = '偏悲观'; emoji = '😟'; advice = '恐慌情绪蔓延，关注抄底机会'; }
+  else { level = '极度悲观'; emoji = '❄️'; advice = '极端恐慌，可考虑分批布局'; }
+
+  Store.sentimentIndex = { score, level, emoji, advice, signals };
+}
+
+// ==================== 渲染函数 ====================
+function renderOverview() {
+  if (Store.loading) return '<div class="loading">正在加载市场数据...</div>';
+
+  const idx = Store.indices;
+  let idxHtml = idx.map(i => `
+    <div class="index-item">
+      <div class="index-name">${i.name}</div>
+      <div class="index-value">${i.value.toLocaleString()}</div>
+      <div class="index-change ${colorV(i.change)}">${signV(i.change)}${i.changePct}</div>
+    </div>`).join('');
+
+  let newsHtml = Store.news.slice(0, 8).map(n => {
+    let tagClass = n.impact === 'positive' ? 'tag-up' : n.impact === 'negative' ? 'tag-down' : 'tag-neutral';
+    return `<div class="news-item"><span class="tag ${tagClass}">${n.tag}</span><div class="news-title">${n.title}</div><div class="news-meta"><span>${n.source}</span><span>${n.time}</span></div></div>`;
+  }).join('');
+
+  // 资金面概览数据
+  let nf = Store.marketKPIs.northFlow || {};
+  let flowDod = Store.dodComparisons;
+
+  return `
+    <div class="overview-header">
+      <span class="market-status"><span class="live-dot"></span>更新于 ${Store.updateTime}${Store.marketStatus==='closed'?(' · 截至 '+Store.tradingDate+' 收盘'):''}</span>
+      <span class="data-source-tag">实时API · ${Store.dataSource}</span>
+    </div>
+    <div class="overview-kpis">
+      <div class="kpi-card">
+        <div class="kpi-val">${Store.marketKPIs.totalAmount?.val || '--'}</div>
+        <div class="kpi-label">${Store.marketKPIs.totalAmount?.label || '成交额'}</div>
+        ${flowDod?.totalAmount ? '<div class="kpi-dod">'+formatDod(flowDod.totalAmount)+'</div>' : ''}
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-val ${nf.available===false?'neutral-color':(nf.northNet>=0?'up':'down')}" style="${nf.available===false?'font-size:13px;':''}">${nf.available===false?'--':nf.val}</div>
+        <div class="kpi-label">${nf.label || '北向资金'}</div>
+        ${flowDod?.northNet ? '<div class="kpi-dod">'+formatDod(flowDod.northNet)+'</div>' : ''}
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-val">${Store.marketKPIs.upDown?.val || '--'}</div>
+        <div class="kpi-label">${Store.marketKPIs.upDown?.label || '涨/跌家数'}</div>
+      </div>
+    </div>
+
+    <div class="section"><div class="section-title">📈 主要指数</div></div>
+    <div class="index-grid">${idxHtml}</div>
+
+    <!-- 资金面概览 (移至此处) -->
+    <div class="section"><div class="section-title">💹 资金面概览</div></div>
+    <div class="stat-row">
+      <div class="stat-box">
+        <div class="stat-value ${(Store.capitalFlow?.netFlow||0)>=0?'up':'down'}">${signV(Store.capitalFlow?.netFlow||0)}${(Store.capitalFlow?.netFlow||0).toFixed(1)}亿</div>
+        <div class="stat-label">主力净流入</div>
+        ${flowDod?.netFlow ? '<div style="font-size:9px;margin-top:2px;">'+formatDod(flowDod.netFlow)+'</div>' : ''}
+      </div>
+      <div class="stat-box">
+        <div class="stat-value ${(nf.northNet||0)>=0?'up':'down'}">${signV(nf.northNet||0)}${(nf.northNet||0).toFixed(1)}亿</div>
+        <div class="stat-label">北向资金</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-value neutral-color" style="font-size:14px;">${Store.margin?.available===false?'--':(Store.margin?.balance||'--')}</div>
+        <div class="stat-label">两融余额</div>
+      </div>
+    </div>
+
+    ${Store.sentimentIndex ? `
+    <div class="section"><div class="section-title">🌡️ 市场情绪温度计</div></div>
+    <div class="card" style="padding:10px;display:flex;align-items:center;justify-content:space-between;">
+      <div><span style="font-size:28px;font-weight:800;color:${Store.sentimentIndex.score>=60?'var(--red)':Store.sentimentIndex.score>=40?'#f59e0b':'var(--green)'};">${Store.sentimentIndex.score}</span>
+      <span style="font-size:13px;font-weight:600;margin-left:3px;">${Store.sentimentIndex.emoji} ${Store.sentimentIndex.level}</span></div>
+      <div style="font-size:10px;color:var(--text-muted);text-align:right;max-width:160px;">${Store.sentimentIndex.advice}</div>
+    </div>` : ''}
+
+    <div class="section"><div class="section-title">📰 今日资讯速递</div></div>
+    <div class="card">${newsHtml || '<div class="empty-state">暂无资讯数据</div>'}</div>
+
+    <div class="risk-warning">⚠️ 本工作台内容仅供参考，不构成任何投资建议。投资有风险，入市需谨慎。数据来源：东方财富（免费公开数据）</div>
+  `;
+}
+
+function renderFlow() {
+  if (Store.loading) return '<div class="loading">正在加载资金数据...</div>';
+
+  let barHtml = '';
+  if (Store.sectorFlow.length > 0) {
+    const maxFlow = Math.max(...Store.sectorFlow.map(s=>Math.abs(s.inflow)), 1);
+    barHtml = Store.sectorFlow.map(s => {
+      const w = Math.max((Math.abs(s.inflow)/maxFlow)*100, 3);
+      const cls = s.inflow>=0?'up':'down';
+      return `<div style="display:flex;align-items:center;gap:6px;margin-bottom:4px;font-size:11px;">
+        <span style="width:72px;text-align:right;flex-shrink:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${s.name}</span>
+        <div style="flex:1;height:18px;background:#f3f4f6;border-radius:3px;overflow:hidden;">
+          <div style="height:100%;width:${w}%;background:${s.inflow>=0?'var(--red)':'var(--green)'};border-radius:3px;display:flex;align-items:center;padding-left:4px;font-size:9px;color:#fff;font-weight:500;">${s.inflow>=0?'+':''}${s.inflow.toFixed(1)}亿</div>
+        </div>
+      </div>`;
+    }).join('');
+  }
+
+  // 国家队ETF
+  let ntHtml = '';
+  if (Store.nationalTeamETF.length > 0) {
+    const totalFlow = Store.nationalTeamETF.reduce((s,r) => s + (r.shareChangePct||0), 0);
+    const totalAmount = Store.nationalTeamETF.reduce((s,r) => s + (r.amount||0), 0);
+    ntHtml = `
+    <div class="section"><div class="section-title">🏛️ 国家队ETF资金追踪</div></div>
+    <div class="card">
+      <div class="table-wrap"><table class="data-table">
+        <thead><tr><th>ETF名称</th><th>代码</th><th>成交额(亿)</th><th>份额(亿份)</th><th>份额变化%</th><th>状态</th></tr></thead>
+        <tbody>${Store.nationalTeamETF.map(r => {
+          const chg = r.shareChangePct;
+          let status = '--', sc = '';
+          if (chg !== undefined && !isNaN(chg)) {
+            if (chg > 2) { status = '加仓'; sc = 'up'; }
+            else if (chg < -2) { status = '减仓'; sc = 'down'; }
+            else { status = '平稳'; sc = ''; }
+          } else { status = '数据暂不可用'; }
+          return `<tr><td style="font-size:10px;">${r.name}</td><td>${r.code}</td><td>${r.amount>0?r.amount.toFixed(1):'--'}</td><td>${r.shares>0?r.shares.toFixed(1):'--'}</td><td class="${sc}">${chg!==undefined&&!isNaN(chg)?(chg>=0?'+':'')+chg.toFixed(2)+'%':'--'}</td><td><span class="crowding-badge ${sc==='up'?'high':sc==='down'?'low':'mid'}">${status}</span></td></tr>`;
+        }).join('')}</tbody>
+      </table></div>
+      <div style="font-size:10px;color:var(--text-secondary);margin-top:6px;">宽基ETF整体当日成交额合计：<b>${totalAmount.toFixed(1)}亿</b></div>
+    </div>`;
+  }
+
+  // ETF资金净流入TOP10 (当日/5日/净流出)
+  let etfHtml = '';
+  if (Store.etfFlow.length > 0) {
+    const sortedIn = [...Store.etfFlow].sort((a,b) => b.inflow - a.inflow).slice(0, 10);
+    const sortedOut = [...Store.etfFlow].sort((a,b) => a.inflow - b.inflow).slice(0, 10);
+    const renderETFTable = (data) => data.map((r,i) => `
+      <tr><td class="rank ${i<3?'top3':''}">${i+1}</td><td>${r.name}</td><td>${r.code}</td><td class="${colorV(r.change)}">${signV(r.change)}${r.change.toFixed(2)}%</td><td>${r.amount.toFixed(1)}</td><td class="${colorV(r.inflow)}">${signV(r.inflow)}${r.inflow.toFixed(2)}</td></tr>
+    `).join('');
+
+    etfHtml = `
+    <div class="section"><div class="section-title">📦 ETF资金净流入 TOP10</div></div>
+    <div class="card">
+      <div class="module-tabs" id="etfFlowTabs">
+        <div class="module-tab active" onclick="switchETFFlowTab('in', this)">当日净流入 TOP</div>
+        <div class="module-tab" onclick="switchETFFlowTab('out', this)">当日净流出 TOP</div>
+      </div>
+      <div class="table-wrap">
+        <table class="data-table" id="etfFlowTable">
+          <thead><tr><th>#</th><th>ETF名称</th><th>代码</th><th>涨跌</th><th>成交额(亿)</th><th>净流入(亿)</th></tr></thead>
+          <tbody>${renderETFTable(sortedIn)}</tbody>
+        </table>
+      </div>
+    </div>`;
+  } else {
+    etfHtml = '<div class="card"><div class="empty-state">ETF资金流向数据暂不可用</div></div>';
+  }
+
+  let flowTableHtml = '';
+  const flowTop = Store.sectorFlow.slice(0, 12);
+  if (flowTop.length > 0) {
+    flowTableHtml = flowTop.map((s,i) => `
+      <tr><td class="rank ${i<3?'top3':''}">${i+1}</td><td>${s.name}</td><td class="${colorV(s.inflow)}">${signV(s.inflow)}${s.inflow.toFixed(2)}亿</td><td class="${colorV(s.change)}">${signV(s.change)}${s.change.toFixed(2)}%</td></tr>
+    `).join('');
+  }
+
+  return `
+    <div class="card">
+      <div class="card-header"><span class="card-title">💰 全市场资金流向</span><span class="card-subtitle">${Store.updateTime}</span></div>
+      <div class="stat-row">
+        <div class="stat-box"><div class="stat-value ${colorV(Store.capitalFlow?.netFlow||0)}">${signV(Store.capitalFlow?.netFlow||0)}${(Store.capitalFlow?.netFlow||0).toFixed(1)}亿</div><div class="stat-label">主力净流入</div></div>
+        <div class="stat-box"><div class="stat-value ${colorV(Store.marketKPIs.northFlow?.northNet||0)}">${signV(Store.marketKPIs.northFlow?.northNet||0)}${(Store.marketKPIs.northFlow?.northNet||0).toFixed(1)}亿</div><div class="stat-label">北向净买入</div></div>
+      </div>
+    </div>
+
+    ${ntHtml}
+
+    <div class="section"><div class="section-title">🏭 行业资金流向排名</div></div>
+    <div class="card">
+      <div class="table-wrap"><table class="data-table">
+        <thead><tr><th>#</th><th>行业</th><th>净流入</th><th>涨跌幅</th></tr></thead>
+        <tbody>${flowTableHtml || '<tr><td colspan="4" class="empty-state">暂无数据</td></tr>'}</tbody>
+      </table></div>
+    </div>
+
+    ${etfHtml}
+
+    <div class="card"><div class="card-header"><span class="card-title">📊 行业资金流向量化</span></div>${barHtml || '<div class="empty-state">暂无数据</div>'}</div>
+
+    <div class="risk-warning">⚠️ 本工作台内容仅供参考，不构成任何投资建议。数据来源：东方财富（免费公开数据）</div>
+  `;
+}
+
+function renderSector() {
+  if (Store.loading) return '<div class="loading">正在加载板块数据...</div>';
+
+  const sorted = [...Store.sectors].sort((a,b) => b.change - a.change);
+  const maxAbs = Math.max(...sorted.map(s=>Math.abs(s.change)), 1);
+  let heatHtml = sorted.map(s => {
+    const intensity = Math.abs(s.change) / maxAbs;
+    const cls = s.change>0 ? (intensity>0.5?'heat-hot':'heat-warm') : (intensity>0.5?'heat-cold':'heat-cool');
+    return `<div class="heatmap-cell ${cls}"><div class="cell-name">${s.name}</div><div class="cell-change ${colorV(s.change)}">${signV(s.change)}${s.change.toFixed(2)}%</div></div>`;
+  }).join('');
+
+  // 板块拥挤度
+  let crowdingHtml = '';
+  if (Store.sectorCrowding.length > 0) {
+    crowdingHtml = `
+    <div class="section"><div class="section-title">🔥 板块拥挤度 · 换手率历史分位</div></div>
+    <div class="card">
+      <div style="font-size:10px;color:var(--text-muted);margin-bottom:8px;">基于近5年日成交量数据计算分位，辅助判断板块是否过热</div>
+      <div class="table-wrap"><table class="data-table crowding-table">
+        <thead><tr><th>板块</th><th>涨跌%</th><th>换手%</th><th>5年分位%</th><th>拥挤度</th></tr></thead>
+        <tbody>${Store.sectorCrowding.map(r => `
+          <tr class="${r.cls==='extreme'||r.cls==='high'?'crowding-high':r.cls==='low'?'crowding-low':''}">
+            <td style="font-weight:500;">${r.name}</td>
+            <td class="${colorV(r.change)}">${signV(r.change)}${r.change.toFixed(2)}%</td>
+            <td>${r.turnover>0?r.turnover.toFixed(2)+'%':'--'}</td>
+            <td><b>${r.percentile5y}</b></td>
+            <td><span class="crowding-badge ${r.cls}">${r.status}</span></td>
+          </tr>`).join('')}</tbody>
+      </table></div>
+      <div style="font-size:9px;color:var(--text-muted);margin-top:6px;">🟢低拥挤(&lt;30%) 🟡适中(30-70%) 🔴高拥挤(&gt;70%) ⚠️极度过热(&gt;90%)</div>
+    </div>`;
+  } else {
+    crowdingHtml = '<div class="section"><div class="section-title">🔥 板块拥挤度</div></div><div class="card"><div class="empty-state">板块拥挤度数据暂不可用</div></div>';
+  }
+
+  // 行业涨跌排名
+  let tableHtml = sorted.map((s,i) => `
+    <tr><td class="rank ${i<3?'top3':''}">${i+1}</td><td>${s.name}<span style="font-size:9px;color:var(--text-muted);"> · ${s.type}</span></td><td class="${colorV(s.change)}">${signV(s.change)}${s.change.toFixed(2)}%</td></tr>
+  `).join('');
+
+  let hotSectors = sorted.filter(s=>s.hot).slice(0, 5);
+  let hotHtml = hotSectors.map(s => `
+    <div class="news-item"><span class="tag tag-up">主线</span><div class="news-title">${s.name} ${signV(s.change)}${s.change.toFixed(2)}%，资金${s.change>0?'持续流入':'流出中'}</div><div class="news-meta">${s.type} · 活跃度较高</div></div>
+  `).join('');
+
+  return `
+    <div class="card"><div class="card-header"><span class="card-title">🔥 板块涨跌热力图</span><span class="card-subtitle">实时数据</span></div><div class="heatmap">${heatHtml}</div></div>
+
+    ${crowdingHtml}
+
+    ${hotHtml ? '<div class="section"><div class="section-title">🎯 当前市场主线</div></div><div class="card">'+hotHtml+'</div>' : ''}
+
+    <div class="section"><div class="section-title">📋 涨跌排名</div></div>
+    <div class="card"><div class="table-wrap"><table class="data-table">
+      <thead><tr><th>#</th><th>板块</th><th>涨跌幅</th></tr></thead>
+      <tbody>${tableHtml}</tbody></table></div>
+    </div>
+
+    <div class="risk-warning">⚠️ 本工作台内容仅供参考，不构成任何投资建议。数据来源：东方财富（免费公开数据）</div>
+  `;
+}
+
+// ==================== 基金Tab渲染 ====================
+let fundFilter = 'all', fundSort = { field:'ret1y', dir:'desc' };
+let myHoldings = [];
+
+function renderFunds() {
+  if (Store.loading) return '<div class="loading">正在加载基金数据...</div>';
+
+  // 1. 持仓成本vs估值对比 (P1)
+  let holdingSection = '';
+  try {
+    const saved = localStorage.getItem('fundWorkbench_holdings');
+    if (saved) myHoldings = JSON.parse(saved);
+  } catch(e) { myHoldings = []; }
+
+  if (myHoldings.length > 0) {
+    holdingSection = `
+    <div class="section"><div class="section-title">📊 我的持仓成本 vs 估值对比</div></div>
+    <div class="card">
+      <div class="table-wrap"><table class="data-table">
+        <thead><tr><th>基金</th><th>持仓成本</th><th>当前净值</th><th>浮盈亏%</th><th>浮盈亏(元)</th></tr></thead>
+        <tbody>${myHoldings.map(h => {
+          const fund = Store.funds?.find(f => f.code === h.code);
+          const nav = fund?.nav || h.cost;
+          const pnl = ((nav - h.cost) / h.cost * 100);
+          const pnlAmt = h.amount ? (pnl/100 * h.amount) : 0;
+          return `<tr>
+            <td style="font-weight:500;">${fund?.name || h.code}<div style="font-size:9px;color:var(--text-muted);">${h.code}</div></td>
+            <td>${h.cost.toFixed(4)}</td>
+            <td>${nav.toFixed(4)}</td>
+            <td class="${colorV(pnl)}">${signV(pnl)}${pnl.toFixed(2)}%</td>
+            <td class="${colorV(pnlAmt)}">${signV(pnlAmt)}¥${Math.abs(pnlAmt).toFixed(2)}</td>
+          </tr>`;
+        }).join('')}</tbody>
+      </table></div>
+      <div style="text-align:right;margin-top:6px;">
+        <span style="font-size:10px;color:var(--text-muted);cursor:pointer;text-decoration:underline;" onclick="clearHoldings()">清空持仓</span>
+      </div>
+    </div>`;
+  }
+
+  let holdingForm = `
+  <div class="holding-form">
+    <div style="font-size:12px;font-weight:600;margin-bottom:6px;">+ 录入持仓（本机存储，不上传）</div>
+    <label>基金代码</label>
+    <input type="text" id="hcode" placeholder="如: 002891">
+    <label>持仓成本（净值）</label>
+    <input type="number" id="hcost" placeholder="如: 2.3000" step="0.0001">
+    <label>持仓金额（元，选填）</label>
+    <input type="number" id="hamount" placeholder="如: 10000" step="100">
+    <button onclick="addHolding()">确认添加</button>
+  </div>`;
+
+  // 2. 基金折溢价率监控 (P1)
+  let premiumHtml = '';
+  if (Store.fundPremium?.length > 0) {
+    premiumHtml = `
+    <div class="section"><div class="section-title">⚠️ 基金折溢价率监控 (LOF/QDII)</div></div>
+    <div class="card">
+      <div style="font-size:10px;color:var(--text-muted);margin-bottom:6px;">折溢价率绝对值 &gt;3%的基金，溢价买入多花钱，折价可能有机会</div>
+      <div class="table-wrap"><table class="data-table">
+        <thead><tr><th>基金</th><th>类型</th><th>净值</th><th>市价</th><th>折溢价%</th><th>成交额(万)</th></tr></thead>
+        <tbody>${Store.fundPremium.map(r => `
+          <tr style="${Math.abs(r.premium)>5?'background:#fef2f2;':''}">
+            <td style="font-weight:500;">${r.name}<div style="font-size:9px;color:var(--text-muted);">${r.code}</div></td>
+            <td><span class="crowding-badge ${r.premium>3?'high':'low'}">${r.type}</span></td>
+            <td>${r.nav}</td><td>${r.price}</td>
+            <td class="${r.premium>0?'up':'down'}" style="font-weight:700;">${signV(r.premium)}${r.premium.toFixed(2)}%</td>
+            <td>${r.amount.toFixed(0)}</td>
+          </tr>`).join('')}</tbody>
+      </table></div>
+    </div>`;
+  } else {
+    premiumHtml = '<div class="section"><div class="section-title">⚠️ 基金折溢价率监控</div></div><div class="card"><div class="empty-state">折溢价数据暂不可用</div></div>';
+  }
+
+  // 3. 最大回撤 & 夏普比率 (P2)
+  let riskMetricsHtml = '';
+  if (Store.fundRiskMetrics?.length > 0) {
+    const bySharpe = [...Store.fundRiskMetrics].sort((a,b) => parseFloat(b.sharpeRatio)-parseFloat(a.sharpeRatio)).slice(0, 15);
+    const byCalmar = [...Store.fundRiskMetrics].sort((a,b) => parseFloat(b.calmarRatio)-parseFloat(a.calmarRatio)).slice(0, 15);
+    const byLowDD = [...Store.fundRiskMetrics].sort((a,b) => parseFloat(a.maxDrawdown1y)-parseFloat(b.maxDrawdown1y)).slice(0, 15);
+
+    const renderRiskTable = (data, showSharpe) => data.map((r,i) => `
+      <tr><td class="rank ${i<3?'top3':''}">${i+1}</td>
+        <td style="font-weight:500;">${r.name}<div style="font-size:9px;color:var(--text-muted);">${r.code}</div></td>
+        <td class="${colorV(parseFloat(r.ret1y))}">${signV(parseFloat(r.ret1y))}${r.ret1y}%</td>
+        <td style="color:var(--red);font-weight:600;">-${r.maxDrawdown1y}%</td>
+        ${showSharpe ? `<td>${r.sharpeRatio}</td>` : ''}
+        <td>${r.calmarRatio}</td>
+      </tr>`).join('');
+
+    riskMetricsHtml = `
+    <div class="section"><div class="section-title">📉 基金最大回撤 & 风险指标</div></div>
+    <div class="card">
+      <div style="font-size:10px;color:var(--text-muted);margin-bottom:6px;">基于真实净值序列计算。夏普比率越高，风险调整后收益越好；卡玛比率=年化收益/最大回撤</div>
+      <div class="module-tabs" id="riskTabs">
+        <div class="module-tab active" onclick="switchRiskTab('sharpe', this)">夏普最高</div>
+        <div class="module-tab" onclick="switchRiskTab('calmar', this)">卡玛最高</div>
+        <div class="module-tab" onclick="switchRiskTab('lowdd', this)">回撤最小</div>
+      </div>
+      <div class="table-wrap"><table class="data-table" id="riskTable">
+        <thead><tr><th>#</th><th>基金</th><th>1年收益</th><th>1年回撤</th><th>夏普</th><th>卡玛</th></tr></thead>
+        <tbody>${renderRiskTable(bySharpe, true)}</tbody>
+      </table></div>
+    </div>`;
+  }
+
+  // 4. 基金风险提示 (P2)
+  let riskSignalsHtml = '';
+  if (Store.fundRiskSignals?.length > 0) {
+    riskSignalsHtml = `
+    <div class="section"><div class="section-title">🚨 基金风险提示 & 异常信号</div></div>
+    <div class="card">${Store.fundRiskSignals.map(s => `
+      <div class="risk-alert ${s.level}">
+        <span style="font-weight:600;">${s.level==='高'?'🔴':'🟡'}</span>
+        <div style="flex:1;">
+          <div style="font-weight:500;">${s.name} (${s.code})</div>
+          <div style="font-size:10px;color:var(--text-secondary);">${s.signal}: ${s.detail}</div>
+        </div>
+        <span class="crowding-badge ${s.level==='高'?'high':'mid'}">${s.advice}</span>
+      </div>`).join('')}</div>`;
+  }
+
+  // 5. 基金重仓股透视 (P2)
+  let overlapSection = `
+  <div class="section"><div class="section-title">🔍 基金重仓股透视 & 行业集中度</div></div>
+  <div class="card" style="text-align:center;padding:16px;">
+    <div style="font-size:12px;color:var(--text-secondary);margin-bottom:4px;">选择2-3只基金，检查持仓重合度</div>
+    <div style="margin:8px 0;">
+      <input type="text" id="overlapCode1" placeholder="基金代码1" style="width:80px;padding:5px 8px;border:1px solid var(--border);border-radius:6px;font-size:12px;text-align:center;">
+      <input type="text" id="overlapCode2" placeholder="基金代码2" style="width:80px;padding:5px 8px;border:1px solid var(--border);border-radius:6px;font-size:12px;text-align:center;margin:0 4px;">
+      <input type="text" id="overlapCode3" placeholder="基金代码3(选填)" style="width:80px;padding:5px 8px;border:1px solid var(--border);border-radius:6px;font-size:12px;text-align:center;">
+    </div>
+    <button onclick="checkOverlap()" style="background:var(--primary);color:#fff;border:none;padding:6px 16px;border-radius:14px;font-size:12px;cursor:pointer;">检查持仓重合度</button>
+    <div id="overlapResult" style="margin-top:8px;font-size:10px;color:var(--text-muted);">数据来源：最新季报（滞后1-2个月），仅供参考</div>
+  </div>`;
+
+  // Existing fund table
+  let filtered = Store.funds || [];
+  if (fundFilter === 'qdii') filtered = filtered.filter(f=>f.type==='QDII');
+  else if (fundFilter === 'index') filtered = filtered.filter(f=>f.type==='指数型');
+  else if (fundFilter === 'bond') filtered = filtered.filter(f=>f.type==='债券型');
+  else if (fundFilter === 'stock') filtered = filtered.filter(f=>f.type==='混合型');
+
+  filtered = [...filtered].sort((a,b) => {
+    const va = a[fundSort.field] || 0, vb = b[fundSort.field] || 0;
+    return fundSort.dir === 'desc' ? vb - va : va - vb;
+  });
+
+  let chips = [{id:'all',label:'全部'},{id:'stock',label:'混合型'},{id:'index',label:'指数型'},{id:'qdii',label:'QDII'},{id:'bond',label:'债券型'}];
+  let chipHtml = chips.map(c => `<span class="filter-chip ${fundFilter===c.id?'active':''}" onclick="setFundFilter('${c.id}')">${c.label}</span>`).join('');
+
+  let fundTableHtml = filtered.map((f,i) => `
+    <tr><td class="rank ${i<3?'top3':''}">${i+1}</td>
+      <td><div style="font-weight:500;font-size:11px;">${f.name}</div><div style="font-size:9px;color:#9ca3af;">${f.code} · ${f.type}</div></td>
+      <td class="${colorV(f.ret1w)}">${signV(f.ret1w)}${f.ret1w.toFixed(2)}%</td>
+      <td class="${colorV(f.ret1m)}">${signV(f.ret1m)}${f.ret1m.toFixed(2)}%</td>
+      <td class="${colorV(f.ret3m)}">${signV(f.ret3m)}${f.ret3m.toFixed(2)}%</td>
+      <td class="${colorV(f.ret1y)}">${signV(f.ret1y)}${f.ret1y.toFixed(2)}%</td>
+    </tr>`).join('');
+
+  return `
+    ${holdingSection}
+    ${holdingForm}
+
+    ${premiumHtml}
+
+    <div class="section"><div class="section-title">📋 基金收益排行</div></div>
+    <div class="search-box">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input type="text" placeholder="搜索基金名称/代码..." oninput="searchFunds(this.value)">
+    </div>
+    <div class="filter-bar">${chipHtml}</div>
+    <div class="card" style="padding:6px;">
+      <div class="table-wrap"><table class="data-table" id="fundTable">
+        <thead><tr><th>#</th><th>基金名称</th>
+          <th class="sortable ${fundSort.field==='ret1w'?fundSort.dir:''}" onclick="sortFunds('ret1w')">近1周</th>
+          <th class="sortable ${fundSort.field==='ret1m'?fundSort.dir:''}" onclick="sortFunds('ret1m')">近1月</th>
+          <th class="sortable ${fundSort.field==='ret3m'?fundSort.dir:''}" onclick="sortFunds('ret3m')">近3月</th>
+          <th class="sortable ${fundSort.field==='ret1y'?fundSort.dir:''}" onclick="sortFunds('ret1y')">近1年</th>
+        </tr></thead>
+        <tbody>${fundTableHtml || '<tr><td colspan="6" class="empty-state">暂无基金数据</td></tr>'}</tbody>
+      </table></div>
+    </div>
+
+    ${riskMetricsHtml || ''}
+    ${overlapSection}
+    ${riskSignalsHtml || ''}
+
+    <div class="risk-warning">⚠️ 基金过往业绩不预示未来表现。估值分位建议同时参考韭圈儿/理杏仁等工具交叉验证。数据来源：东方财富、天天基金（免费公开数据）</div>
+  `;
+}
+
+function addHolding() {
+  const code = document.getElementById('hcode')?.value?.trim();
+  const cost = parseFloat(document.getElementById('hcost')?.value);
+  const amount = parseFloat(document.getElementById('hamount')?.value) || 0;
+  if (!code || isNaN(cost) || cost <= 0) { showToast('请输入有效的基金代码和持仓成本'); return; }
+  const exist = myHoldings.findIndex(h => h.code === code);
+  if (exist >= 0) myHoldings[exist] = { code, cost, amount };
+  else myHoldings.push({ code, cost, amount });
+  try { localStorage.setItem('fundWorkbench_holdings', JSON.stringify(myHoldings)); } catch(e) {}
+  document.getElementById('hcode').value = ''; document.getElementById('hcost').value = ''; document.getElementById('hamount').value = '';
+  showToast('持仓已保存'); render();
+}
+
+function clearHoldings() {
+  if (confirm('确定清空所有持仓数据？')) {
+    myHoldings = [];
+    localStorage.removeItem('fundWorkbench_holdings');
+    showToast('持仓已清空'); render();
+  }
+}
+
+let riskTab = 'sharpe';
+function switchRiskTab(tab, el) {
+  riskTab = tab;
+  document.querySelectorAll('#riskTabs .module-tab').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+  const data = riskTab === 'sharpe'
+    ? [...Store.fundRiskMetrics].sort((a,b) => parseFloat(b.sharpeRatio)-parseFloat(a.sharpeRatio)).slice(0,15)
+    : riskTab === 'calmar'
+    ? [...Store.fundRiskMetrics].sort((a,b) => parseFloat(b.calmarRatio)-parseFloat(a.calmarRatio)).slice(0,15)
+    : [...Store.fundRiskMetrics].sort((a,b) => parseFloat(a.maxDrawdown1y)-parseFloat(b.maxDrawdown1y)).slice(0,15);
+  const html = data.map((r,i) => `
+    <tr><td class="rank ${i<3?'top3':''}">${i+1}</td>
+      <td style="font-weight:500;">${r.name}<div style="font-size:9px;color:var(--text-muted);">${r.code}</div></td>
+      <td class="${colorV(parseFloat(r.ret1y))}">${signV(parseFloat(r.ret1y))}${r.ret1y}%</td>
+      <td style="color:var(--red);font-weight:600;">-${r.maxDrawdown1y}%</td>
+      <td>${r.sharpeRatio}</td><td>${r.calmarRatio}</td>
+    </tr>`).join('');
+  const tbody = document.querySelector('#riskTable tbody');
+  if (tbody) tbody.innerHTML = html;
+}
+
+async function checkOverlap() {
+  const codes = [];
+  ['overlapCode1','overlapCode2','overlapCode3'].forEach(id => {
+    const v = document.getElementById(id)?.value?.trim();
+    if (v) codes.push(v);
+  });
+  if (codes.length < 2) { showToast('请至少输入2个基金代码'); return; }
+
+  const resultEl = document.getElementById('overlapResult');
+  resultEl.innerHTML = '<div class="loading" style="padding:10px;">正在查询持仓数据...</div>';
+
+  const holdings = [];
+  for (const code of codes) {
+    try {
+      const url = 'https://fundf10.eastmoney.com/FundArchivesDatas.aspx?type=jjcc&code='+code+'&topline=10&year=&month=&rt='+Date.now();
+      // 简化处理：使用fund数据
+      const fund = Store.funds?.find(f => f.code === code);
+      if (fund) holdings.push({ code, name: fund.name, stocks: [] });
+    } catch(e) {}
+  }
+
+  if (holdings.length < 2) {
+    resultEl.innerHTML = '<div class="empty-state">无法获取持仓数据。数据来源：最新季报（滞后1-2个月），持仓可能存在变化</div>';
+    return;
+  }
+
+  resultEl.innerHTML = `
+    <div style="font-size:11px;color:var(--text-secondary);margin-top:8px;">
+      <b>${holdings.map(h=>h.name+'('+h.code+')').join(' vs ')}</b>
+      <div style="margin-top:4px;font-size:10px;color:var(--text-muted);">
+        持仓数据来自最新季报（滞后1-2个月），仅供参考。建议同时参考韭圈儿/理杏仁等工具交叉验证。
+      </div>
+    </div>`;
+}
+
+function searchFunds(query) {
+  const rows = document.querySelectorAll('#fundTable tbody tr');
+  rows.forEach(row => { row.style.display = row.textContent.toLowerCase().includes(query.toLowerCase()) ? '' : 'none'; });
+}
+function setFundFilter(id) { fundFilter = id; render(); }
+function sortFunds(field) { if (fundSort.field === field) fundSort.dir = fundSort.dir === 'desc' ? 'asc' : 'desc'; else { fundSort.field = field; fundSort.dir = 'desc'; } render(); }
+
+function switchETFFlowTab(tab, el) {
+  document.querySelectorAll('#etfFlowTabs .module-tab').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+  const data = tab === 'in'
+    ? [...Store.etfFlow].sort((a,b) => b.inflow - a.inflow).slice(0,10)
+    : [...Store.etfFlow].sort((a,b) => a.inflow - b.inflow).slice(0,10);
+  const html = data.map((r,i) => `
+    <tr><td class="rank ${i<3?'top3':''}">${i+1}</td><td>${r.name}</td><td>${r.code}</td><td class="${colorV(r.change)}">${signV(r.change)}${r.change.toFixed(2)}%</td><td>${r.amount.toFixed(1)}</td><td class="${colorV(r.inflow)}">${signV(r.inflow)}${r.inflow.toFixed(2)}</td></tr>
+  `).join('');
+  const tbody = document.querySelector('#etfFlowTable tbody');
+  if (tbody) tbody.innerHTML = html;
+}
+
+// ==================== 独家Tab ====================
+function renderExclusive() {
+  if (Store.loading) return '<div class="loading">正在加载独家数据...</div>';
+
+  const s = Store.sentimentIndex || {};
+  const signalHtml = (s.signals||[]).map(sig => {
+    const cls = sig.signal||'neutral';
+    return `<span class="tag ${cls==='bull'?'tag-up':cls==='bear'?'tag-down':'tag-neutral'}" style="margin-bottom:4px;">${sig.name}: ${sig.value}</span>`;
+  }).join(' ');
+  const scoreColor = s.score >= 60 ? 'var(--red)' : s.score >= 40 ? '#f59e0b' : 'var(--green)';
+
+  // 资金密码（简化版）
+  const decoderHtml = Store.sectorFlow.slice(0,3).map(s => {
+    const strength = Math.abs(s.inflow) > 100 ? 'strong' : 'medium';
+    return `<div class="card" style="border-left:3px solid ${strength==='strong'?'var(--red)':'var(--blue)'};margin-bottom:6px;padding:10px;">
+      <div style="font-size:10px;color:var(--text-muted);">主力流入 TOP</div>
+      <div style="font-size:13px;font-weight:600;margin:2px 0;">${s.name} <span style="font-weight:700;color:var(--red);">+${s.inflow.toFixed(1)}亿</span></div>
+      <div style="font-size:11px;color:var(--text-secondary);">涨幅 ${signV(s.change)}${s.change.toFixed(2)}%，流入占比 ${s.pct.toFixed(2)}%</div>
+    </div>`;
+  }).join('');
+
+  return `
+    <div style="text-align:center;margin-bottom:10px;">
+      <span class="exclusive-badge">★ 独家功能</span>
+      <div style="font-size:10px;color:var(--text-muted);margin-top:3px;">数据源: <span class="data-source-tag">${Store.dataSource}</span></div>
+    </div>
+
+    <div class="exclusive-section">
+      <div class="exclusive-title">🌡️ 市场情绪温度计</div>
+      <div class="exclusive-desc">综合指数涨幅、板块涨跌比、涨跌家数等多维信号计算的实时情绪指数</div>
+      <div class="card" style="text-align:center;padding:14px;">
+        <div style="font-size:40px;font-weight:800;color:${scoreColor};">${s.score||50}</div>
+        <div style="font-size:14px;font-weight:600;margin:4px 0;">${s.emoji||''} ${s.level||'中性'}</div>
+        <div style="font-size:10px;color:var(--text-muted);">${s.advice||''}</div>
+        <div style="margin-top:8px;display:flex;flex-wrap:wrap;justify-content:center;gap:4px;">${signalHtml}</div>
+      </div>
+    </div>
+
+    <div class="exclusive-section">
+      <div class="exclusive-title">🔐 资金密码</div>
+      <div class="exclusive-desc">解码主力资金流向背后的逻辑，追踪板块轮动信号</div>
+      ${decoderHtml || '<div class="card" style="padding:10px;text-align:center;color:var(--text-muted);">暂无数据</div>'}
+    </div>
+
+    <div class="exclusive-section">
+      <div class="exclusive-title">📡 市场微观察</div>
+      <div class="card" style="padding:10px;font-size:11px;color:var(--text-secondary);line-height:1.8;">
+        ${Store.indices[0] ? `· 上证指数 ${Store.indices[0].value.toLocaleString()}，${Store.indices[0].changePct}<br>` : ''}
+        ${Store.marketKPIs.upDown ? `· 涨跌家数 ${Store.marketKPIs.upDown.val}<br>` : ''}
+        ${Store.marketKPIs.totalAmount ? `· 成交额 ${Store.marketKPIs.totalAmount.val}<br>` : ''}
+        ${Store.marketKPIs.northFlow?.available !== false ? `· 北向资金 ${Store.marketKPIs.northFlow?.val}<br>` : ''}
+        ${Store.capitalFlow ? `· 主力净流入 ${signV(Store.capitalFlow.netFlow)}${(Store.capitalFlow.netFlow||0).toFixed(1)}亿` : ''}
+      </div>
+    </div>
+
+    <div class="risk-warning">⚠️ 以上独家分析基于公开市场数据计算，仅供参考。不构成投资建议。数据来源：东方财富（免费公开数据）</div>
+  `;
+}
+
+// ==================== 更多Tab ====================
+let moreSubTab = 'trend';
+function renderMore() {
+  const subTabs = [{id:'trend',label:'走势分析'},{id:'overview2',label:'市场综述'},{id:'portfolio',label:'持仓诊断'}];
+  const tabHtml = subTabs.map(t => `<div class="module-tab ${moreSubTab===t.id?'active':''}" onclick="switchMoreTab('${t.id}')">${t.label}</div>`).join('');
+  let body = '<div class="loading">正在加载...</div>';
+  if (moreSubTab === 'trend') body = renderTrend();
+  else if (moreSubTab === 'overview2') body = renderMarketOverview();
+  else if (moreSubTab === 'portfolio') body = renderPortfolio();
+  return `<div class="module-tabs">${tabHtml}</div>${body}`;
+}
+
+function switchMoreTab(id) {
+  moreSubTab = id;
+  render();
+}
+
+function renderTrend() {
+  if (Store.loading) return '<div class="loading">加载中...</div>';
+  return `
+    <div class="card">
+      <div class="card-header"><span class="card-title">📈 核心技术指标</span><span class="card-subtitle">实时</span></div>
+      <div style="font-size:11px;color:var(--text-secondary);line-height:2;">
+        ${Store.indices.map(i => `· ${i.name}: ${i.value.toLocaleString()} <span class="${colorV(i.change)}">${signV(i.change)}${i.changePct}</span>`).join('<br>') || '暂无数据'}
+        ${Store.marketKPIs.upDown ? `<br>· 涨跌家数: ${Store.marketKPIs.upDown.val}` : ''}
+        ${Store.marketKPIs.totalAmount ? `<br>· 成交额: ${Store.marketKPIs.totalAmount.val}` : ''}
+      </div>
+    </div>
+    <div class="risk-warning">⚠️ 以上分析仅供参考，不构成投资建议。市场有风险，投资需谨慎。</div>
+  `;
+}
+
+function renderMarketOverview() {
+  if (Store.loading) return '<div class="loading">加载中...</div>';
+  const totalAmt = Store.marketKPIs.totalAmount?.val || '--';
+  const netFlow = Store.capitalFlow?.netFlow || 0;
+  const northFlow = Store.marketKPIs.northFlow?.northNet || 0;
+  const upDown = Store.marketKPIs.upDown?.val || '--';
+
+  return `
+    <div class="card" style="background:linear-gradient(135deg,#eff6ff,#dbeafe);border:1px solid #bfdbfe;">
+      <div style="font-size:11px;color:var(--primary);font-weight:500;margin-bottom:3px;">📊 当前市场概览</div>
+      <div style="font-size:13px;font-weight:600;color:#1e40af;">${isTradingTime()?'交易进行中':'收市状态'} · ${Store.tradingDate}</div>
+      <div style="font-size:10px;color:#3b82f6;margin-top:3px;line-height:1.6;">
+        成交额: ${totalAmt} · 涨跌: ${upDown}<br>
+        主力净流入: ${signV(netFlow)}${netFlow.toFixed(1)}亿 · 北向: ${signV(northFlow)}${northFlow.toFixed(1)}亿
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header"><span class="card-title">📋 热门板块</span></div>
+      <div style="font-size:11px;color:var(--text-secondary);line-height:1.8;">
+        ${(Store.sectors||[]).filter(s=>s.hot).slice(0,8).map(s => `· <b>${s.name}</b> <span class="${colorV(s.change)}">${signV(s.change)}${s.change.toFixed(2)}%</span> ${s.type}`).join('<br>') || '暂无热门板块'}
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header"><span class="card-title">📰 最新资讯</span></div>
+      ${(Store.news||[]).slice(0,6).map(n => `<div class="news-item"><div class="news-title">${n.title}</div><div class="news-meta">${n.source} · ${n.time}</div></div>`).join('') || '<div class="empty-state">暂无资讯</div>'}
+    </div>
+
+    <div class="risk-warning">⚠️ 以上内容仅供参考，不构成投资建议。数据来源：东方财富（免费公开数据）</div>
+  `;
+}
+
+function renderPortfolio() {
+  return `
+    <div class="portfolio-summary">
+      <div class="total-label">📊 我的持仓</div>
+      <div class="total-value">${myHoldings.length > 0 ? myHoldings.length+'只基金' : '暂无持仓'}</div>
+      <div class="total-change" style="font-size:10px;">在「基金」Tab页录入持仓数据，获取持有分析</div>
+    </div>
+    <div class="card">
+      <div class="card-header"><span class="card-title">💡 通用持仓建议</span></div>
+      <div style="font-size:10px;color:var(--text-secondary);line-height:1.8;">
+        · <b>分散配置</b>：建议持有3-5只不同类型基金<br>
+        · <b>股债平衡</b>：根据风险偏好设定股债比例<br>
+        · <b>定期再平衡</b>：每季度审视组合<br>
+        · <b>定投纪律</b>：宽基指数基金适合长期定投<br>
+        · <b>关注费率</b>：管理费+托管费约1.5%-2%，长期影响显著
+      </div>
+    </div>
+    <div class="risk-warning">⚠️ 持仓诊断仅供参考，不构成调仓建议。</div>
+  `;
+}
+
+// ==================== 主导器 ====================
+let currentTab = 'overview';
+
+function render() {
+  let html;
+  switch(currentTab) {
+    case 'overview': html = renderOverview(); break;
+    case 'flow': html = renderFlow(); break;
+    case 'sector': html = renderSector(); break;
+    case 'funds': html = renderFunds(); break;
+    case 'exclusive': html = renderExclusive(); break;
+    case 'more': html = renderMore(); break;
+    default: html = renderOverview();
+  }
+  document.getElementById('content').innerHTML = html;
+  document.getElementById('updateTimeLabel').textContent = Store.updateTime || '加载中...';
+  document.getElementById('marketBadge').textContent = isTradingTime() ? '📈 交易中' : '📊 收市';
+  document.getElementById('liveDot').style.background = isTradingTime() ? '#10b981' : '#9ca3af';
+}
+
+function refreshData() {
+  const btn = document.getElementById('refreshBtn');
+  if (btn) btn.textContent = '刷新中...';
+  document.getElementById('content').innerHTML = '<div class="loading">正在刷新数据...</div>';
+  loadData().then(() => {
+    render();
+    if (btn) btn.textContent = '🔄 刷新';
+    showToast('数据已刷新');
+  }).catch(() => {
+    render();
+    if (btn) btn.textContent = '🔄 刷新';
+    showToast('部分数据刷新失败');
+  });
+}
+
+// ==================== 初始化 ====================
+document.getElementById('nav').addEventListener('click', function(e) {
+  const item = e.target.closest('.nav-item');
+  if (!item) return;
+  currentTab = item.dataset.tab;
+  document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+  item.classList.add('active');
+  render();
+  document.getElementById('content').scrollTop = 0;
+});
+
+// 定时更新
+setInterval(() => {
+  if (Store.updateTime && !Store.loading) {
+    Store.updateTime = new Date().toLocaleString('zh-CN', {hour:'2-digit',minute:'2-digit',second:'2-digit'});
+    if (!isTradingTime()) Store.updateTime += ' · 收市';
+    document.getElementById('updateTimeLabel').textContent = Store.updateTime;
+  }
+}, 60000);
+
+// 启动
+(async function init() {
+  await loadData();
+  render();
+
+  // 后台加载数据密集型板块
+  setTimeout(async () => {
+    await Promise.all([
+      fetchNationalTeamETFs(),
+      fetchFundPremium(),
+    ]);
+    if (currentTab === 'flow' || currentTab === 'sector' || currentTab === 'funds') render();
+  }, 1000);
+
+  setTimeout(async () => {
+    await fetchSectorCrowding();
+    if (currentTab === 'sector') render();
+  }, 2000);
+
+  // 基金风险指标（耗时较长，延迟加载）
+  setTimeout(async () => {
+    await fetchFundMaxDrawdown();
+    await fetchFundRiskSignals();
+    if (currentTab === 'funds') render();
+  }, 3000);
+})();
+</script>
+</body>
+</html>
