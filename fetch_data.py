@@ -523,13 +523,14 @@ def fetch_fund_ranking(ft='all', pn=30):
 def fetch_all_funds():
     all_funds = []
     seen = set()
+    # 先按具体类型抓取, 确保 type 标签准确; 最后用 all 补充多样性
     configs = [
-        ('all', 50, None),
         ('gp', 20, '股票型'),
         ('hh', 20, '混合型'),
         ('zq', 15, '债券型'),
         ('qdii', 15, 'QDII'),
         ('zs', 15, '指数型'),
+        ('all', 50, None),
     ]
     for ft, pn, map_type in configs:
         try:
@@ -537,6 +538,7 @@ def fetch_all_funds():
             for f in funds:
                 if map_type:
                     f['type'] = map_type
+                # all 类型可能带有拼音缩写, 若已按具体类型收录则跳过
                 if f['code'] and f['code'] not in seen:
                     seen.add(f['code'])
                     all_funds.append(f)
@@ -594,6 +596,46 @@ def build_capital_flow(kpis, northbound, sectors):
 
 
 # ============================================================
+# 11.5 基金历史净值(用于详情页走势图)
+# ============================================================
+def fetch_fund_nav_history(fund_code, days=90):
+    """获取基金最近 days 天的历史净值, 供前端走势图使用"""
+    url = f'https://api.fund.eastmoney.com/f10/lsjz?fundCode={fund_code}&pageIndex=1&pageSize={days}'
+    headers = {**HEADERS, 'Referer': 'https://fundf10.eastmoney.com/'}
+    try:
+        req = urllib.request.Request(url, headers=headers)
+        with urllib.request.urlopen(req, timeout=TIMEOUT, context=SSL_CTX) as resp:
+            data = json.loads(resp.read().decode('utf-8'))
+        rows = data.get('Data', {}).get('LSJZList', [])
+        history = []
+        for row in reversed(rows):
+            nav = safe_float(row.get('DWJZ'))
+            if nav > 0:
+                history.append({'date': row.get('FSRQ', ''), 'nav': nav})
+        return history
+    except Exception as e:
+        print(f'[WARN] 基金 {fund_code} 历史净值获取失败: {e}')
+        return []
+
+
+def build_fund_histories(funds, max_per_fund=90):
+    """为前 N 只基金预取历史净值, 避免浏览器端API被Referer拦截"""
+    histories = {}
+    # 只预取有代表性的基金(按1年收益排序取前40, 覆盖各类型)
+    target = funds[:40]
+    for f in target:
+        code = f.get('code')
+        if not code:
+            continue
+        hist = fetch_fund_nav_history(code, max_per_fund)
+        if hist:
+            histories[code] = hist
+        time.sleep(0.15)
+    print(f'[INFO] 基金历史净值: {len(histories)} 只')
+    return histories
+
+
+# ============================================================
 # 12. 组装数据
 # ============================================================
 def build_data():
@@ -614,6 +656,8 @@ def build_data():
     crowding = fetch_sector_crowding(sectors)
     funds = fetch_all_funds()
     print(f'[INFO] 基金: {len(funds)} 条')
+
+    fund_histories = build_fund_histories(funds)
 
     news = fetch_news()
     print(f'[INFO] 新闻: {len(news)} 条')
@@ -671,6 +715,7 @@ def build_data():
         'nationalTeamETF': national_team,
         'sectorCrowding': crowding,
         'funds': funds,
+        'fundHistories': fund_histories,
         'fundPremium': fund_premium,
         'fundRiskMetrics': fund_risk,
         'news': news,

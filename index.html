@@ -228,7 +228,7 @@ body {
 .toast { position:fixed; top:70px; left:50%; transform:translateX(-50%); background:#1a1a2e; color:#fff; padding:8px 16px; border-radius:20px; font-size:12px; z-index:999; animation:fadeInOut 2.5s ease; pointer-events:none; }
 @keyframes fadeInOut { 0%{opacity:0;transform:translate(-50%,-10px);} 15%{opacity:1;transform:translate(-50%,0);} 75%{opacity:1;} 100%{opacity:0;} }
 </style>
-  <script src="data.js?v=3"></script>
+  <script src="data.js?v=4"></script>
 </head>
 <body>
 <div class="app" id="app">
@@ -533,8 +533,8 @@ async function fetchNationalTeamETFs() {
   if (typeof window.fundData !== 'undefined' && window.fundData.nationalTeamETF && window.fundData.nationalTeamETF.length > 0) {
     Store.nationalTeamETF = window.fundData.nationalTeamETF.map(it => ({
       name: it.name, code: it.code,
-      price: it.price || 0, change: parseFloat(it.changePct) || 0,
-      amount: it.amount || 0, totalValue: 0, shares: 0, totalShares: 0, available: true
+      price: parseFloat(it.price) || 0, change: parseFloat(it.changePct) || 0,
+      amount: parseFloat(it.amount) || 0, totalValue: 0, shares: 0, totalShares: 0, available: true
     }));
     return true;
   }
@@ -1061,25 +1061,24 @@ function renderFlow() {
   // 国家队ETF
   let ntHtml = '';
   if (Store.nationalTeamETF.length > 0) {
-    const totalFlow = Store.nationalTeamETF.reduce((s,r) => s + (r.shareChangePct||0), 0);
     const totalAmount = Store.nationalTeamETF.reduce((s,r) => s + (r.amount||0), 0);
     ntHtml = `
     <div class="section"><div class="section-title">🏛️ 国家队ETF资金追踪</div></div>
     <div class="card">
       <div class="table-wrap"><table class="data-table">
-        <thead><tr><th>ETF名称</th><th>代码</th><th>成交额(亿)</th><th>份额(亿份)</th><th>份额变化%</th><th>状态</th></tr></thead>
+        <thead><tr><th>ETF名称</th><th>代码</th><th>最新价</th><th>涨跌幅</th><th>成交额(亿)</th><th>份额变化%</th><th>状态</th></tr></thead>
         <tbody>${Store.nationalTeamETF.map(r => {
           const chg = r.shareChangePct;
           let status = '--', sc = '';
-          if (chg !== undefined && !isNaN(chg)) {
+          if (chg !== undefined && !isNaN(chg) && r.shares > 0) {
             if (chg > 2) { status = '加仓'; sc = 'up'; }
             else if (chg < -2) { status = '减仓'; sc = 'down'; }
             else { status = '平稳'; sc = ''; }
-          } else { status = '数据暂不可用'; }
-          return `<tr><td style="font-size:10px;">${r.name}</td><td>${r.code}</td><td>${r.amount>0?r.amount.toFixed(1):'--'}</td><td>${r.shares>0?r.shares.toFixed(1):'--'}</td><td class="${sc}">${chg!==undefined&&!isNaN(chg)?(chg>=0?'+':'')+chg.toFixed(2)+'%':'--'}</td><td><span class="crowding-badge ${sc==='up'?'high':sc==='down'?'low':'mid'}">${status}</span></td></tr>`;
+          } else { status = '份额数据暂不可用'; }
+          return `<tr><td style="font-size:10px;">${r.name}</td><td>${r.code}</td><td>${r.price>0?r.price.toFixed(3):'--'}</td><td class="${colorV(r.change)}">${signV(r.change)}${(r.change||0).toFixed(2)}%</td><td>${r.amount>0?r.amount.toFixed(1):'--'}</td><td class="${sc}">${chg!==undefined&&!isNaN(chg)&&r.shares>0?(chg>=0?'+':'')+chg.toFixed(2)+'%':'--'}</td><td><span class="crowding-badge ${sc==='up'?'high':sc==='down'?'low':'mid'}">${status}</span></td></tr>`;
         }).join('')}</tbody>
       </table></div>
-      <div style="font-size:10px;color:var(--text-secondary);margin-top:6px;">宽基ETF整体当日成交额合计：<b>${totalAmount.toFixed(1)}亿</b></div>
+      <div style="font-size:10px;color:var(--text-secondary);margin-top:6px;">宽基ETF当日成交额合计：<b>${totalAmount.toFixed(1)}亿</b> · 份额变化需盘中实时数据</div>
     </div>`;
   }
 
@@ -1129,7 +1128,7 @@ function renderFlow() {
 
     ${ntHtml}
 
-    <div class="section"><div class="section-title">🏭 行业资金流向排名</div></div>
+    <div class="section"><div class="section-title">🏭 行业资金流向排名 <span style="font-size:9px;color:var(--text-muted);font-weight:normal;">(基于成交额与涨跌幅估算)</span></div></div>
     <div class="card">
       <div class="table-wrap"><table class="data-table">
         <thead><tr><th>#</th><th>行业</th><th>净流入</th><th>涨跌幅</th></tr></thead>
@@ -1349,14 +1348,15 @@ function renderFunds() {
   if (fundFilter === 'qdii') filtered = filtered.filter(f=>f.type==='QDII');
   else if (fundFilter === 'index') filtered = filtered.filter(f=>f.type==='指数型');
   else if (fundFilter === 'bond') filtered = filtered.filter(f=>f.type==='债券型');
-  else if (fundFilter === 'stock') filtered = filtered.filter(f=>f.type==='混合型');
+  else if (fundFilter === 'mix') filtered = filtered.filter(f=>f.type==='混合型');
+  else if (fundFilter === 'stock') filtered = filtered.filter(f=>f.type==='股票型');
 
   filtered = [...filtered].sort((a,b) => {
     const va = a[fundSort.field] || 0, vb = b[fundSort.field] || 0;
     return fundSort.dir === 'desc' ? vb - va : va - vb;
   });
 
-  let chips = [{id:'all',label:'全部'},{id:'stock',label:'混合型'},{id:'index',label:'指数型'},{id:'qdii',label:'QDII'},{id:'bond',label:'债券型'}];
+  let chips = [{id:'all',label:'全部'},{id:'stock',label:'股票型'},{id:'mix',label:'混合型'},{id:'index',label:'指数型'},{id:'qdii',label:'QDII'},{id:'bond',label:'债券型'}];
   let chipHtml = chips.map(c => `<span class="filter-chip ${fundFilter===c.id?'active':''}" onclick="setFundFilter('${c.id}')">${c.label}</span>`).join('');
 
   let fundTableHtml = filtered.map((f,i) => `
@@ -1764,6 +1764,15 @@ function setFundChartRange(days) {
 }
 async function loadFundHistory(code) {
   currentFundHistory = [];
+  // 优先使用 data.js 预存的历史净值
+  if (typeof window.fundData !== 'undefined' && window.fundData.fundHistories && window.fundData.fundHistories[code]) {
+    currentFundHistory = window.fundData.fundHistories[code].map(it => ({
+      date: it.date, nav: parseFloat(it.nav) || 0
+    })).filter(x => x.nav > 0);
+    drawFundChart();
+    return;
+  }
+  // 兜底: 尝试实时API(可能因Referer被拦截)
   try {
     const d = await jsonp('https://api.fund.eastmoney.com/f10/lsjz?fundCode='+code+'&pageIndex=1&pageSize=400');
     if (d?.Data?.LSJZList) {
