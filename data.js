@@ -1,92 +1,92 @@
 // 基金分析工作台 - 数据层
 // 数据源: 腾讯行情 + 东方财富公开API
-// 自动生成于 2026-10-08 17:20:44
+// 自动生成于 2026-10-09 16:56:40
 // 交易日数据, 仅供参考
 window.fundData = {
-  "updateTime": "2026-10-08 17:20 · 收市",
+  "updateTime": "2026-10-09 16:56 · 收市",
   "marketStatus": "closed",
   "dataSource": "腾讯行情 + 东方财富",
-  "tradingDate": "2026-09-30",
+  "tradingDate": "2026-10-09",
   "indices": [
     {
       "name": "上证指数",
       "code": "000001",
-      "value": 3811.9,
-      "change": -30.29,
-      "changePct": "-0.79%",
-      "high": 3864.12,
-      "low": 3795.37,
-      "volume": 482201685.0,
-      "amount": 811183100000.0
+      "value": 3813.79,
+      "change": 1.89,
+      "changePct": "+0.05%",
+      "high": 3824.71,
+      "low": 3754.14,
+      "volume": 535149921.0,
+      "amount": 888561200000.0
     },
     {
       "name": "深证成指",
       "code": "399001",
-      "value": 12620.9,
-      "change": -266.72,
-      "changePct": "-2.07%",
-      "high": 12984.95,
-      "low": 12540.73,
-      "volume": 533168305.0,
-      "amount": 870943810000.0
+      "value": 12641.86,
+      "change": 20.96,
+      "changePct": "+0.17%",
+      "high": 12679.63,
+      "low": 12278.78,
+      "volume": 632657827.0,
+      "amount": 1011994220000.0
     },
     {
       "name": "创业板指",
       "code": "399006",
-      "value": 3036.66,
-      "change": -98.62,
-      "changePct": "-3.15%",
-      "high": 3168.4,
-      "low": 3012.03,
-      "volume": 148983938.0,
-      "amount": 422754970000.0
+      "value": 3043.33,
+      "change": 6.67,
+      "changePct": "+0.22%",
+      "high": 3053.38,
+      "low": 2932.8,
+      "volume": 191234801.0,
+      "amount": 492045400000.0
     },
     {
       "name": "科创50",
       "code": "000688",
-      "value": 1456.32,
-      "change": -73.69,
-      "changePct": "-4.82%",
-      "high": 1521.46,
-      "low": 1446.43,
-      "volume": 8787483.0,
-      "amount": 82397690000.0
+      "value": 1457.27,
+      "change": 0.95,
+      "changePct": "+0.07%",
+      "high": 1466.88,
+      "low": 1390.0,
+      "volume": 9540742.0,
+      "amount": 91972940000.0
     },
     {
       "name": "沪深300",
       "code": "000300",
-      "value": 4310.28,
-      "change": -47.34,
-      "changePct": "-1.09%",
-      "high": 4383.57,
-      "low": 4289.79,
-      "volume": 191552711.0,
-      "amount": 446208260000.0
+      "value": 4317.25,
+      "change": 6.97,
+      "changePct": "+0.16%",
+      "high": 4330.74,
+      "low": 4239.74,
+      "volume": 199187416.0,
+      "amount": 496179130000.0
     },
     {
       "name": "中证500",
       "code": "000905",
-      "value": 7248.43,
-      "change": -186.73,
-      "changePct": "-2.51%",
-      "high": 7461.24,
-      "low": 7206.06,
-      "volume": 145244450.0,
-      "amount": 292217160000.0
+      "value": 7251.01,
+      "change": 2.58,
+      "changePct": "+0.04%",
+      "high": 7277.14,
+      "low": 7048.45,
+      "volume": 164473084.0,
+      "amount": 331446260000.0
     }
   ],
   "marketKPIs": {
     "totalAmount": {
-      "val": "2.93万亿",
+      "val": "3.31万亿",
       "label": "成交额",
-      "rawAmount": 2925704990000.0,
+      "rawAmount": 3312199150000.0,
       "change": ""
     },
     "upDown": {
-      "val": "1,076/2,462",
+      "val": "3,094/1,452",
       "label": "涨/跌家数",
-      "rawUp": 1076,
-      "rawDown": 2462,
+      "rawUp": 3094,
+      "rawDown": 1452,
       "change": ""
     },
     "northFlow": {
@@ -100,15 +100,15 @@ window.fundData = {
     }
   },
   "capitalFlow": {
-    "totalInflow": 3.56,
+    "totalInflow": 16.03,
     "totalOutflow": 0,
-    "netFlow": 3.56,
+    "netFlow": 16.03,
     "netFlowTrend": [
-      0.71,
-      1.42,
-      2.14,
-      2.85,
-      3.56
+      3.21,
+      6.41,
+      9.62,
+      12.82,
+      16.03
     ],
     "northBound": {
       "net": 0.0,
@@ -127,421 +127,421 @@ window.fundData = {
   },
   "sectorFlow": [
     {
-      "name": "银行",
-      "inflow": 2.57,
-      "pct": 0.7
+      "name": "券商",
+      "inflow": 3.61,
+      "pct": 2.27
     },
     {
       "name": "煤炭",
-      "inflow": 1.77,
-      "pct": 1.83
-    },
-    {
-      "name": "钢铁",
-      "inflow": 0.14,
-      "pct": 0.18
-    },
-    {
-      "name": "白酒",
-      "inflow": 0.0,
-      "pct": 0.0
-    },
-    {
-      "name": "基建",
-      "inflow": -0.01,
-      "pct": -0.2
-    },
-    {
-      "name": "食品",
-      "inflow": -0.05,
-      "pct": -0.2
-    },
-    {
-      "name": "计算机",
-      "inflow": -0.06,
-      "pct": -2.31
-    },
-    {
-      "name": "游戏",
-      "inflow": -0.23,
-      "pct": -2.52
-    },
-    {
-      "name": "云计算",
-      "inflow": -0.26,
-      "pct": -2.81
-    },
-    {
-      "name": "家电",
-      "inflow": -0.31,
-      "pct": -1.22
-    },
-    {
-      "name": "农业",
-      "inflow": -0.33,
-      "pct": -0.97
-    },
-    {
-      "name": "光伏",
-      "inflow": -0.34,
-      "pct": -1.68
-    },
-    {
-      "name": "新能源车",
-      "inflow": -0.36,
-      "pct": -0.55
-    },
-    {
-      "name": "传媒",
-      "inflow": -0.51,
-      "pct": -2.66
-    },
-    {
-      "name": "新能源",
-      "inflow": -0.59,
-      "pct": -0.27
-    },
-    {
-      "name": "军工",
-      "inflow": -0.81,
-      "pct": -0.54
-    },
-    {
-      "name": "医药",
-      "inflow": -1.15,
-      "pct": -1.55
-    },
-    {
-      "name": "地产",
-      "inflow": -1.27,
-      "pct": -0.85
+      "inflow": 2.77,
+      "pct": 1.49
     },
     {
       "name": "有色",
-      "inflow": -1.37,
-      "pct": -0.99
+      "inflow": 2.32,
+      "pct": 2.31
     },
     {
-      "name": "券商",
-      "inflow": -2.32,
-      "pct": -1.63
+      "name": "创新药",
+      "inflow": 1.93,
+      "pct": 0.48
+    },
+    {
+      "name": "医疗",
+      "inflow": 1.57,
+      "pct": 0.59
+    },
+    {
+      "name": "传媒",
+      "inflow": 1.16,
+      "pct": 5.46
+    },
+    {
+      "name": "白酒",
+      "inflow": 1.0,
+      "pct": 0.48
+    },
+    {
+      "name": "新能源车",
+      "inflow": 0.7,
+      "pct": 1.86
+    },
+    {
+      "name": "人工智能",
+      "inflow": 0.56,
+      "pct": 0.32
+    },
+    {
+      "name": "新能源",
+      "inflow": 0.41,
+      "pct": 0.67
+    },
+    {
+      "name": "光伏",
+      "inflow": 0.39,
+      "pct": 0.26
+    },
+    {
+      "name": "游戏",
+      "inflow": 0.28,
+      "pct": 3.48
+    },
+    {
+      "name": "云计算",
+      "inflow": 0.24,
+      "pct": 1.38
+    },
+    {
+      "name": "农业",
+      "inflow": 0.22,
+      "pct": 1.68
+    },
+    {
+      "name": "钢铁",
+      "inflow": 0.2,
+      "pct": 0.27
+    },
+    {
+      "name": "家电",
+      "inflow": 0.17,
+      "pct": 0.44
+    },
+    {
+      "name": "计算机",
+      "inflow": 0.09,
+      "pct": 1.23
+    },
+    {
+      "name": "食品",
+      "inflow": 0.04,
+      "pct": 0.82
+    },
+    {
+      "name": "基建",
+      "inflow": 0.02,
+      "pct": 0.41
+    },
+    {
+      "name": "半导体",
+      "inflow": -4.66,
+      "pct": -0.33
     }
   ],
   "sectors": [
     {
-      "name": "煤炭",
-      "code": "515220",
-      "price": 1.279,
-      "changePct": 1.83,
-      "change": 0.023,
-      "turnover": 5.89
-    },
-    {
-      "name": "银行",
-      "code": "512800",
-      "price": 0.859,
-      "changePct": 0.7,
-      "change": 0.006,
-      "turnover": 8.57
-    },
-    {
-      "name": "钢铁",
-      "code": "515210",
-      "price": 1.129,
-      "changePct": 0.18,
-      "change": 0.002,
-      "turnover": 0.46
-    },
-    {
-      "name": "白酒",
-      "code": "512690",
-      "price": 0.417,
-      "changePct": 0.0,
-      "change": 0.0,
-      "turnover": 3.81
-    },
-    {
-      "name": "基建",
-      "code": "516950",
-      "price": 0.987,
-      "changePct": -0.2,
-      "change": -0.002,
-      "turnover": 0.05
-    },
-    {
-      "name": "食品",
-      "code": "515710",
-      "price": 0.49,
-      "changePct": -0.2,
-      "change": -0.001,
-      "turnover": 0.17
-    },
-    {
-      "name": "新能源",
-      "code": "516160",
-      "price": 2.234,
-      "changePct": -0.27,
-      "change": -0.006,
-      "turnover": 1.98
-    },
-    {
-      "name": "军工",
-      "code": "512660",
-      "price": 1.095,
-      "changePct": -0.54,
-      "change": -0.006,
-      "turnover": 2.71
-    },
-    {
-      "name": "新能源车",
-      "code": "515030",
-      "price": 1.448,
-      "changePct": -0.55,
-      "change": -0.008,
-      "turnover": 1.19
-    },
-    {
-      "name": "地产",
-      "code": "512200",
-      "price": 1.289,
-      "changePct": -0.85,
-      "change": -0.011,
-      "turnover": 4.24
-    },
-    {
-      "name": "农业",
-      "code": "159825",
-      "price": 0.715,
-      "changePct": -0.97,
-      "change": -0.007,
-      "turnover": 1.1
-    },
-    {
-      "name": "有色",
-      "code": "512400",
-      "price": 1.605,
-      "changePct": -0.99,
-      "change": -0.016,
-      "turnover": 4.58
-    },
-    {
-      "name": "家电",
-      "code": "159996",
-      "price": 1.378,
-      "changePct": -1.22,
-      "change": -0.017,
-      "turnover": 1.04
-    },
-    {
-      "name": "医药",
-      "code": "512010",
-      "price": 0.382,
-      "changePct": -1.55,
-      "change": -0.006,
-      "turnover": 3.83
-    },
-    {
-      "name": "券商",
-      "code": "512000",
-      "price": 0.484,
-      "changePct": -1.63,
-      "change": -0.008,
-      "turnover": 7.74
-    },
-    {
-      "name": "光伏",
-      "code": "515790",
-      "price": 0.763,
-      "changePct": -1.68,
-      "change": -0.013,
-      "turnover": 1.12
-    },
-    {
-      "name": "计算机",
-      "code": "512720",
-      "price": 1.057,
-      "changePct": -2.31,
-      "change": -0.025,
-      "turnover": 0.21
+      "name": "传媒",
+      "code": "512980",
+      "price": 0.811,
+      "changePct": 5.46,
+      "change": 0.042,
+      "turnover": 3.86
     },
     {
       "name": "游戏",
       "code": "516010",
-      "price": 1.006,
-      "changePct": -2.52,
-      "change": -0.026,
-      "turnover": 0.76
+      "price": 1.041,
+      "changePct": 3.48,
+      "change": 0.035,
+      "turnover": 0.95
     },
     {
-      "name": "传媒",
-      "code": "512980",
-      "price": 0.769,
-      "changePct": -2.66,
-      "change": -0.021,
-      "turnover": 1.71
+      "name": "有色",
+      "code": "512400",
+      "price": 1.642,
+      "changePct": 2.31,
+      "change": 0.037,
+      "turnover": 7.74
+    },
+    {
+      "name": "券商",
+      "code": "512000",
+      "price": 0.495,
+      "changePct": 2.27,
+      "change": 0.011,
+      "turnover": 12.04
+    },
+    {
+      "name": "新能源车",
+      "code": "515030",
+      "price": 1.475,
+      "changePct": 1.86,
+      "change": 0.027,
+      "turnover": 2.33
+    },
+    {
+      "name": "农业",
+      "code": "159825",
+      "price": 0.727,
+      "changePct": 1.68,
+      "change": 0.012,
+      "turnover": 0.73
+    },
+    {
+      "name": "煤炭",
+      "code": "515220",
+      "price": 1.298,
+      "changePct": 1.49,
+      "change": 0.019,
+      "turnover": 9.25
     },
     {
       "name": "云计算",
       "code": "516510",
-      "price": 1.52,
-      "changePct": -2.81,
-      "change": -0.044,
-      "turnover": 0.87
+      "price": 1.541,
+      "changePct": 1.38,
+      "change": 0.021,
+      "turnover": 0.81
+    },
+    {
+      "name": "计算机",
+      "code": "512720",
+      "price": 1.07,
+      "changePct": 1.23,
+      "change": 0.013,
+      "turnover": 0.29
+    },
+    {
+      "name": "食品",
+      "code": "515710",
+      "price": 0.494,
+      "changePct": 0.82,
+      "change": 0.004,
+      "turnover": 0.15
+    },
+    {
+      "name": "新能源",
+      "code": "516160",
+      "price": 2.249,
+      "changePct": 0.67,
+      "change": 0.015,
+      "turnover": 1.38
     },
     {
       "name": "医疗",
       "code": "512170",
-      "price": 0.339,
-      "changePct": -2.87,
-      "change": -0.01,
-      "turnover": 5.64
+      "price": 0.341,
+      "changePct": 0.59,
+      "change": 0.002,
+      "turnover": 5.23
     },
     {
-      "name": "人工智能",
-      "code": "515980",
-      "price": 0.925,
-      "changePct": -3.55,
-      "change": -0.034,
-      "turnover": 2.08
+      "name": "白酒",
+      "code": "512690",
+      "price": 0.419,
+      "changePct": 0.48,
+      "change": 0.002,
+      "turnover": 3.35
     },
     {
       "name": "创新药",
       "code": "159992",
-      "price": 0.839,
-      "changePct": -3.78,
-      "change": -0.033,
-      "turnover": 8.86
+      "price": 0.843,
+      "changePct": 0.48,
+      "change": 0.004,
+      "turnover": 6.42
     },
     {
-      "name": "电子",
-      "code": "515260",
-      "price": 0.748,
-      "changePct": -3.86,
-      "change": -0.03,
-      "turnover": 0.57
+      "name": "家电",
+      "code": "159996",
+      "price": 1.384,
+      "changePct": 0.44,
+      "change": 0.006,
+      "turnover": 0.58
+    },
+    {
+      "name": "基建",
+      "code": "516950",
+      "price": 0.991,
+      "changePct": 0.41,
+      "change": 0.004,
+      "turnover": 0.06
+    },
+    {
+      "name": "人工智能",
+      "code": "515980",
+      "price": 0.928,
+      "changePct": 0.32,
+      "change": 0.003,
+      "turnover": 1.88
+    },
+    {
+      "name": "钢铁",
+      "code": "515210",
+      "price": 1.132,
+      "changePct": 0.27,
+      "change": 0.003,
+      "turnover": 0.67
+    },
+    {
+      "name": "光伏",
+      "code": "515790",
+      "price": 0.765,
+      "changePct": 0.26,
+      "change": 0.002,
+      "turnover": 1.31
     },
     {
       "name": "半导体",
       "code": "512480",
-      "price": 0.914,
-      "changePct": -4.29,
-      "change": -0.041,
-      "turnover": 12.2
-    },
-    {
-      "name": "芯片",
-      "code": "159995",
-      "price": 1.005,
-      "changePct": -4.56,
-      "change": -0.048,
-      "turnover": 9.25
-    },
-    {
-      "name": "5G",
-      "code": "515050",
-      "price": 0.916,
-      "changePct": -5.08,
-      "change": -0.049,
-      "turnover": 9.68
+      "price": 0.911,
+      "changePct": -0.33,
+      "change": -0.003,
+      "turnover": 15.53
     },
     {
       "name": "通信",
       "code": "515880",
-      "price": 0.594,
-      "changePct": -5.11,
-      "change": -0.032,
-      "turnover": 33.6
+      "price": 0.592,
+      "changePct": -0.34,
+      "change": -0.002,
+      "turnover": 32.08
+    },
+    {
+      "name": "地产",
+      "code": "512200",
+      "price": 1.283,
+      "changePct": -0.47,
+      "change": -0.006,
+      "turnover": 3.71
+    },
+    {
+      "name": "医药",
+      "code": "512010",
+      "price": 0.38,
+      "changePct": -0.52,
+      "change": -0.002,
+      "turnover": 3.78
+    },
+    {
+      "name": "芯片",
+      "code": "159995",
+      "price": 0.999,
+      "changePct": -0.6,
+      "change": -0.006,
+      "turnover": 9.29
+    },
+    {
+      "name": "电子",
+      "code": "515260",
+      "price": 0.742,
+      "changePct": -0.8,
+      "change": -0.006,
+      "turnover": 0.6
+    },
+    {
+      "name": "银行",
+      "code": "512800",
+      "price": 0.85,
+      "changePct": -1.05,
+      "change": -0.009,
+      "turnover": 13.26
+    },
+    {
+      "name": "军工",
+      "code": "512660",
+      "price": 1.082,
+      "changePct": -1.19,
+      "change": -0.013,
+      "turnover": 3.86
+    },
+    {
+      "name": "5G",
+      "code": "515050",
+      "price": 0.905,
+      "changePct": -1.2,
+      "change": -0.011,
+      "turnover": 7.97
     }
   ],
   "etfFlow": [
     {
-      "name": "新能源ETF",
-      "code": "516160",
-      "price": 2.234,
-      "changePct": -0.27,
-      "amount": 1.98,
-      "netFlow": -0.5
-    },
-    {
-      "name": "医药ETF",
-      "code": "512010",
-      "price": 0.382,
-      "changePct": -1.55,
-      "amount": 3.83,
-      "netFlow": -0.96
-    },
-    {
-      "name": "沪深300ETF",
-      "code": "159919",
-      "price": 4.574,
-      "changePct": -1.23,
-      "amount": 4.9,
-      "netFlow": -1.22
-    },
-    {
-      "name": "沪深300ETF",
-      "code": "510310",
-      "price": 4.261,
-      "changePct": -1.02,
-      "amount": 5.2,
-      "netFlow": -1.3
-    },
-    {
-      "name": "券商ETF",
-      "code": "512000",
-      "price": 0.484,
-      "changePct": -1.63,
-      "amount": 7.74,
-      "netFlow": -1.93
-    },
-    {
-      "name": "上证50ETF",
-      "code": "510050",
-      "price": 2.918,
-      "changePct": -0.68,
-      "amount": 9.84,
-      "netFlow": -2.46
-    },
-    {
-      "name": "半导体ETF",
-      "code": "512480",
-      "price": 0.914,
-      "changePct": -4.29,
-      "amount": 12.2,
-      "netFlow": -3.05
+      "name": "科创50ETF",
+      "code": "588000",
+      "price": 1.541,
+      "changePct": 0.26,
+      "amount": 107.66,
+      "netFlow": 26.92
     },
     {
       "name": "中证500ETF",
       "code": "510500",
-      "price": 7.279,
-      "changePct": -2.58,
-      "amount": 22.99,
-      "netFlow": -5.75
+      "price": 7.282,
+      "changePct": 0.04,
+      "amount": 44.38,
+      "netFlow": 11.1
+    },
+    {
+      "name": "上证50ETF",
+      "code": "510050",
+      "price": 2.919,
+      "changePct": 0.03,
+      "amount": 25.61,
+      "netFlow": 6.4
+    },
+    {
+      "name": "沪深300ETF",
+      "code": "159919",
+      "price": 4.58,
+      "changePct": 0.13,
+      "amount": 12.09,
+      "netFlow": 3.02
+    },
+    {
+      "name": "券商ETF",
+      "code": "512000",
+      "price": 0.495,
+      "changePct": 2.27,
+      "amount": 12.04,
+      "netFlow": 3.01
+    },
+    {
+      "name": "沪深300ETF",
+      "code": "510310",
+      "price": 4.264,
+      "changePct": 0.07,
+      "amount": 10.02,
+      "netFlow": 2.5
+    },
+    {
+      "name": "新能源ETF",
+      "code": "516160",
+      "price": 2.249,
+      "changePct": 0.67,
+      "amount": 1.38,
+      "netFlow": 0.34
+    },
+    {
+      "name": "医药ETF",
+      "code": "512010",
+      "price": 0.38,
+      "changePct": -0.52,
+      "amount": 3.78,
+      "netFlow": -0.95
+    },
+    {
+      "name": "半导体ETF",
+      "code": "512480",
+      "price": 0.911,
+      "changePct": -0.33,
+      "amount": 15.53,
+      "netFlow": -3.88
     },
     {
       "name": "沪深300ETF",
       "code": "510300",
-      "price": 4.389,
-      "changePct": -0.97,
-      "amount": 33.08,
-      "netFlow": -8.27
-    },
-    {
-      "name": "科创50ETF",
-      "code": "588000",
-      "price": 1.537,
-      "changePct": -4.89,
-      "amount": 84.62,
-      "netFlow": -21.15
+      "price": 4.385,
+      "changePct": -0.09,
+      "amount": 55.65,
+      "netFlow": -13.91
     }
   ],
   "nationalTeamETF": [
     {
       "name": "华泰柏瑞沪深300ETF",
       "code": "510300",
-      "price": 4.389,
-      "changePct": -0.97,
-      "amount": 33.08,
+      "price": 4.385,
+      "changePct": -0.09,
+      "amount": 55.65,
       "share": "--",
       "shareChange": "--",
       "status": "正常"
@@ -549,9 +549,9 @@ window.fundData = {
     {
       "name": "华夏上证50ETF",
       "code": "510050",
-      "price": 2.918,
-      "changePct": -0.68,
-      "amount": 9.84,
+      "price": 2.919,
+      "changePct": 0.03,
+      "amount": 25.61,
       "share": "--",
       "shareChange": "--",
       "status": "正常"
@@ -559,9 +559,9 @@ window.fundData = {
     {
       "name": "南方中证500ETF",
       "code": "510500",
-      "price": 7.279,
-      "changePct": -2.58,
-      "amount": 22.99,
+      "price": 7.282,
+      "changePct": 0.04,
+      "amount": 44.38,
       "share": "--",
       "shareChange": "--",
       "status": "正常"
@@ -569,9 +569,9 @@ window.fundData = {
     {
       "name": "嘉实沪深300ETF",
       "code": "159919",
-      "price": 4.574,
-      "changePct": -1.23,
-      "amount": 4.9,
+      "price": 4.58,
+      "changePct": 0.13,
+      "amount": 12.09,
       "share": "--",
       "shareChange": "--",
       "status": "正常"
@@ -579,9 +579,9 @@ window.fundData = {
     {
       "name": "易方达沪深300ETF",
       "code": "510310",
-      "price": 4.261,
-      "changePct": -1.02,
-      "amount": 5.2,
+      "price": 4.264,
+      "changePct": 0.07,
+      "amount": 10.02,
       "share": "--",
       "shareChange": "--",
       "status": "正常"
@@ -589,144 +589,144 @@ window.fundData = {
   ],
   "sectorCrowding": [
     {
-      "name": "煤炭",
-      "turnover": 5.89,
-      "percentile": 25,
-      "level": "低",
-      "status": "低拥挤"
-    },
-    {
-      "name": "银行",
-      "turnover": 8.57,
-      "percentile": 25,
-      "level": "低",
-      "status": "低拥挤"
-    },
-    {
-      "name": "钢铁",
-      "turnover": 0.46,
-      "percentile": 25,
-      "level": "低",
-      "status": "低拥挤"
-    },
-    {
-      "name": "白酒",
-      "turnover": 3.81,
-      "percentile": 25,
-      "level": "低",
-      "status": "低拥挤"
-    },
-    {
-      "name": "基建",
-      "turnover": 0.05,
-      "percentile": 25,
-      "level": "低",
-      "status": "低拥挤"
-    },
-    {
-      "name": "食品",
-      "turnover": 0.17,
-      "percentile": 25,
-      "level": "低",
-      "status": "低拥挤"
-    },
-    {
-      "name": "新能源",
-      "turnover": 1.98,
-      "percentile": 25,
-      "level": "低",
-      "status": "低拥挤"
-    },
-    {
-      "name": "军工",
-      "turnover": 2.71,
-      "percentile": 25,
-      "level": "低",
-      "status": "低拥挤"
-    },
-    {
-      "name": "新能源车",
-      "turnover": 1.19,
-      "percentile": 25,
-      "level": "低",
-      "status": "低拥挤"
-    },
-    {
-      "name": "地产",
-      "turnover": 4.24,
-      "percentile": 25,
-      "level": "低",
-      "status": "低拥挤"
-    },
-    {
-      "name": "农业",
-      "turnover": 1.1,
-      "percentile": 25,
-      "level": "低",
-      "status": "低拥挤"
-    },
-    {
-      "name": "有色",
-      "turnover": 4.58,
-      "percentile": 25,
-      "level": "低",
-      "status": "低拥挤"
-    },
-    {
-      "name": "家电",
-      "turnover": 1.04,
-      "percentile": 25,
-      "level": "低",
-      "status": "低拥挤"
-    },
-    {
-      "name": "医药",
-      "turnover": 3.83,
-      "percentile": 25,
-      "level": "低",
-      "status": "低拥挤"
-    },
-    {
-      "name": "券商",
-      "turnover": 7.74,
-      "percentile": 25,
-      "level": "低",
-      "status": "低拥挤"
-    },
-    {
-      "name": "光伏",
-      "turnover": 1.12,
-      "percentile": 25,
-      "level": "低",
-      "status": "低拥挤"
-    },
-    {
-      "name": "计算机",
-      "turnover": 0.21,
+      "name": "传媒",
+      "turnover": 3.86,
       "percentile": 25,
       "level": "低",
       "status": "低拥挤"
     },
     {
       "name": "游戏",
-      "turnover": 0.76,
+      "turnover": 0.95,
       "percentile": 25,
       "level": "低",
       "status": "低拥挤"
     },
     {
-      "name": "传媒",
-      "turnover": 1.71,
+      "name": "有色",
+      "turnover": 7.74,
+      "percentile": 25,
+      "level": "低",
+      "status": "低拥挤"
+    },
+    {
+      "name": "券商",
+      "turnover": 12.04,
+      "percentile": 55,
+      "level": "中",
+      "status": "适中"
+    },
+    {
+      "name": "新能源车",
+      "turnover": 2.33,
+      "percentile": 25,
+      "level": "低",
+      "status": "低拥挤"
+    },
+    {
+      "name": "农业",
+      "turnover": 0.73,
+      "percentile": 25,
+      "level": "低",
+      "status": "低拥挤"
+    },
+    {
+      "name": "煤炭",
+      "turnover": 9.25,
       "percentile": 25,
       "level": "低",
       "status": "低拥挤"
     },
     {
       "name": "云计算",
-      "turnover": 0.87,
+      "turnover": 0.81,
       "percentile": 25,
       "level": "低",
       "status": "低拥挤"
+    },
+    {
+      "name": "计算机",
+      "turnover": 0.29,
+      "percentile": 25,
+      "level": "低",
+      "status": "低拥挤"
+    },
+    {
+      "name": "食品",
+      "turnover": 0.15,
+      "percentile": 25,
+      "level": "低",
+      "status": "低拥挤"
+    },
+    {
+      "name": "新能源",
+      "turnover": 1.38,
+      "percentile": 25,
+      "level": "低",
+      "status": "低拥挤"
+    },
+    {
+      "name": "医疗",
+      "turnover": 5.23,
+      "percentile": 25,
+      "level": "低",
+      "status": "低拥挤"
+    },
+    {
+      "name": "白酒",
+      "turnover": 3.35,
+      "percentile": 25,
+      "level": "低",
+      "status": "低拥挤"
+    },
+    {
+      "name": "创新药",
+      "turnover": 6.42,
+      "percentile": 25,
+      "level": "低",
+      "status": "低拥挤"
+    },
+    {
+      "name": "家电",
+      "turnover": 0.58,
+      "percentile": 25,
+      "level": "低",
+      "status": "低拥挤"
+    },
+    {
+      "name": "基建",
+      "turnover": 0.06,
+      "percentile": 25,
+      "level": "低",
+      "status": "低拥挤"
+    },
+    {
+      "name": "人工智能",
+      "turnover": 1.88,
+      "percentile": 25,
+      "level": "低",
+      "status": "低拥挤"
+    },
+    {
+      "name": "钢铁",
+      "turnover": 0.67,
+      "percentile": 25,
+      "level": "低",
+      "status": "低拥挤"
+    },
+    {
+      "name": "光伏",
+      "turnover": 1.31,
+      "percentile": 25,
+      "level": "低",
+      "status": "低拥挤"
+    },
+    {
+      "name": "半导体",
+      "turnover": 15.53,
+      "percentile": 55,
+      "level": "中",
+      "status": "适中"
     }
   ],
   "funds": [
@@ -734,1270 +734,1266 @@ window.fundData = {
       "code": "671030",
       "name": "西部利得事件驱动股票A",
       "type": "股票型",
-      "nav": 4.2451,
-      "ret1w": -4.04,
-      "ret1m": -4.04,
-      "ret3m": -8.43,
-      "ret6m": -14.79,
-      "ret1y": 0.65,
-      "ret2y": 7.62,
-      "ret3y": 87.59
+      "nav": 4.2108,
+      "ret1w": -0.81,
+      "ret1m": -4.82,
+      "ret3m": -9.23,
+      "ret6m": -18.38,
+      "ret1y": -0.66,
+      "ret2y": 5.03,
+      "ret3y": 102.38
     },
     {
       "code": "580008",
       "name": "东吴新产业精选股票A",
       "type": "股票型",
-      "nav": 3.7223,
-      "ret1w": -3.22,
-      "ret1m": -3.22,
-      "ret3m": -11.18,
-      "ret6m": -19.24,
-      "ret1y": -10.77,
-      "ret2y": -14.14,
-      "ret3y": 23.84
+      "nav": 3.6654,
+      "ret1w": -1.53,
+      "ret1m": -4.7,
+      "ret3m": -13.05,
+      "ret6m": -24.45,
+      "ret1y": -12.52,
+      "ret2y": -15.58,
+      "ret3y": 28.6
     },
     {
       "code": "540010",
       "name": "汇丰晋信科技先锋股票",
       "type": "股票型",
-      "nav": 5.1103,
-      "ret1w": -9.42,
-      "ret1m": -9.42,
-      "ret3m": -13.2,
-      "ret6m": -12.08,
-      "ret1y": 14.92,
-      "ret2y": 51.39,
-      "ret3y": 141.25
+      "nav": 5.0443,
+      "ret1w": -1.29,
+      "ret1m": -10.59,
+      "ret3m": -14.18,
+      "ret6m": -18.68,
+      "ret1y": 12.95,
+      "ret2y": 49.31,
+      "ret3y": 156.32
     },
     {
       "code": "540009",
       "name": "汇丰晋信消费红利股票",
       "type": "股票型",
-      "nav": 0.6912,
-      "ret1w": -0.85,
-      "ret1m": -0.85,
-      "ret3m": -3.84,
-      "ret6m": 4.25,
-      "ret1y": -7.86,
-      "ret2y": -15.97,
-      "ret3y": -13.72
+      "nav": 0.697,
+      "ret1w": 0.84,
+      "ret1m": -0.01,
+      "ret3m": -2.44,
+      "ret6m": 6.36,
+      "ret1y": -6.13,
+      "ret2y": -14.85,
+      "ret3y": -6.77
     },
     {
       "code": "540008",
       "name": "汇丰晋信低碳先锋股票A",
       "type": "股票型",
-      "nav": 1.9702,
-      "ret1w": -1.43,
-      "ret1m": -1.43,
-      "ret3m": -4.76,
-      "ret6m": -7.9,
-      "ret1y": -27.46,
-      "ret2y": -33.08,
-      "ret3y": -27.03
+      "nav": 2.0018,
+      "ret1w": 1.6,
+      "ret1m": 0.16,
+      "ret3m": -2.63,
+      "ret6m": -6.92,
+      "ret1y": -25.13,
+      "ret2y": -33.31,
+      "ret3y": -18.22
     },
     {
       "code": "540007",
       "name": "汇丰晋信中小盘股票",
       "type": "股票型",
-      "nav": 2.6793,
-      "ret1w": -1.11,
-      "ret1m": -1.11,
-      "ret3m": -1.65,
-      "ret6m": 1.43,
-      "ret1y": -24.26,
-      "ret2y": -20.59,
-      "ret3y": 3.24
+      "nav": 2.6661,
+      "ret1w": -0.49,
+      "ret1m": -1.59,
+      "ret3m": -2.76,
+      "ret6m": 1.77,
+      "ret1y": -23.12,
+      "ret2y": -23.16,
+      "ret3y": 14.19
     },
     {
       "code": "540006",
       "name": "汇丰晋信大盘股票A",
       "type": "股票型",
-      "nav": 5.2571,
-      "ret1w": -0.58,
-      "ret1m": -0.58,
-      "ret3m": -4.44,
-      "ret6m": 2.08,
-      "ret1y": -8.36,
-      "ret2y": 3.24,
-      "ret3y": 19.95
+      "nav": 5.2875,
+      "ret1w": 0.58,
+      "ret1m": -0.01,
+      "ret3m": -4.24,
+      "ret6m": 3.24,
+      "ret1y": -7.48,
+      "ret2y": 2.61,
+      "ret3y": 30.11
     },
     {
       "code": "519975",
       "name": "长信量化中小盘股票A",
       "type": "股票型",
-      "nav": 1.869,
-      "ret1w": -1.48,
-      "ret1m": -1.48,
-      "ret3m": -1.79,
-      "ret6m": -9.23,
-      "ret1y": -4.93,
-      "ret2y": 0.27,
-      "ret3y": 34.56
+      "nav": 1.866,
+      "ret1w": -0.16,
+      "ret1m": -1.63,
+      "ret3m": -2.46,
+      "ret6m": -10.33,
+      "ret1y": -4.75,
+      "ret2y": -1.17,
+      "ret3y": 46.81
     },
     {
       "code": "519965",
       "name": "长信量化多策略股票A",
       "type": "股票型",
-      "nav": 1.2764,
-      "ret1w": -1.41,
-      "ret1m": -1.41,
-      "ret3m": -4.48,
-      "ret6m": -10.47,
-      "ret1y": -5.28,
-      "ret2y": -0.19,
-      "ret3y": 10.85
+      "nav": 1.2767,
+      "ret1w": 0.02,
+      "ret1m": -1.38,
+      "ret3m": -4.89,
+      "ret6m": -12.08,
+      "ret1y": -4.68,
+      "ret2y": -1.18,
+      "ret3y": 20.37
     },
     {
       "code": "519935",
       "name": "长信创新驱动股票A",
       "type": "股票型",
-      "nav": 3.072,
-      "ret1w": -2.94,
-      "ret1m": -2.94,
-      "ret3m": -8.52,
-      "ret6m": -23.22,
-      "ret1y": 14.41,
-      "ret2y": 38.19,
-      "ret3y": 144.39
+      "nav": 3.018,
+      "ret1w": -1.76,
+      "ret1m": -4.64,
+      "ret3m": -9.88,
+      "ret6m": -28.58,
+      "ret1y": 12.07,
+      "ret2y": 35.82,
+      "ret3y": 147.58
     },
     {
       "code": "519714",
       "name": "交银消费新驱动股票",
       "type": "股票型",
-      "nav": 1.102,
-      "ret1w": 0.27,
-      "ret1m": 0.27,
-      "ret3m": -2.91,
-      "ret6m": 8.04,
-      "ret1y": -5.25,
-      "ret2y": -15.03,
-      "ret3y": -22.39
+      "nav": 1.115,
+      "ret1w": 1.18,
+      "ret1m": 1.46,
+      "ret3m": -0.71,
+      "ret6m": 11.06,
+      "ret1y": -3.04,
+      "ret2y": -13.43,
+      "ret3y": -14.69
     },
     {
       "code": "519673",
       "name": "银河康乐股票A",
       "type": "股票型",
-      "nav": 2.393,
-      "ret1w": -2.49,
-      "ret1m": -2.49,
-      "ret3m": -0.29,
-      "ret6m": 8.62,
-      "ret1y": -12.66,
-      "ret2y": -9.94,
-      "ret3y": 3.82
+      "nav": 2.443,
+      "ret1w": 2.09,
+      "ret1m": -0.45,
+      "ret3m": 3.34,
+      "ret6m": 11.6,
+      "ret1y": -8.64,
+      "ret2y": -8.47,
+      "ret3y": 17.11
     },
     {
       "code": "519606",
       "name": "国泰金鑫股票A",
       "type": "股票型",
-      "nav": 1.5454,
-      "ret1w": -3.54,
-      "ret1m": -3.54,
-      "ret3m": -7.91,
-      "ret6m": -32.44,
-      "ret1y": -46.66,
-      "ret2y": -46.47,
-      "ret3y": -19.07
+      "nav": 1.5361,
+      "ret1w": -0.6,
+      "ret1m": -4.12,
+      "ret3m": -7.7,
+      "ret6m": -37.28,
+      "ret1y": -47.06,
+      "ret2y": -47.01,
+      "ret3y": -14.57
     },
     {
       "code": "519193",
       "name": "万家消费成长",
       "type": "股票型",
-      "nav": 1.8717,
-      "ret1w": -0.69,
-      "ret1m": -0.69,
-      "ret3m": -4.09,
-      "ret6m": 0.75,
-      "ret1y": 3.12,
-      "ret2y": -7.24,
-      "ret3y": -12.28
+      "nav": 1.884,
+      "ret1w": 0.66,
+      "ret1m": -0.04,
+      "ret3m": -2.98,
+      "ret6m": 0.98,
+      "ret1y": 5.19,
+      "ret2y": -6.71,
+      "ret3y": -5.36
     },
     {
       "code": "501219",
       "name": "华夏智胜先锋股票(LOF)A",
       "type": "股票型",
-      "nav": 1.5943,
-      "ret1w": -1.88,
-      "ret1m": -1.88,
-      "ret3m": -4.14,
-      "ret6m": -6.93,
-      "ret1y": -5.14,
-      "ret2y": 3.65,
-      "ret3y": 32.77
+      "nav": 1.5888,
+      "ret1w": -0.34,
+      "ret1m": -2.22,
+      "ret3m": -4.7,
+      "ret6m": -9.73,
+      "ret1y": -4.75,
+      "ret2y": 2.1,
+      "ret3y": 42.65
     },
     {
       "code": "501201",
       "name": "红土创新科技创新股票(LOF)A",
       "type": "股票型",
-      "nav": 2.0783,
-      "ret1w": -6.3,
-      "ret1m": -6.3,
-      "ret3m": -12.67,
-      "ret6m": -31.54,
-      "ret1y": 4.5,
-      "ret2y": 50.32,
-      "ret3y": 105.55
+      "nav": 2.045,
+      "ret1w": -1.6,
+      "ret1m": -7.8,
+      "ret3m": -13.78,
+      "ret6m": -37.21,
+      "ret1y": 1.47,
+      "ret2y": 49.64,
+      "ret3y": 122.82
     },
     {
       "code": "450009",
       "name": "国富中小盘股票A",
       "type": "股票型",
-      "nav": 2.6435,
-      "ret1w": 0.13,
-      "ret1m": 0.13,
-      "ret3m": 1.78,
-      "ret6m": 11.66,
-      "ret1y": -0.79,
-      "ret2y": -1.95,
-      "ret3y": -1.88
+      "nav": 2.6323,
+      "ret1w": -0.42,
+      "ret1m": -0.3,
+      "ret3m": 1.59,
+      "ret6m": 11.54,
+      "ret1y": 0.26,
+      "ret2y": -2.13,
+      "ret3y": 5.6
     },
     {
       "code": "399011",
       "name": "中海医疗保健主题股票A",
       "type": "股票型",
-      "nav": 1.01,
-      "ret1w": -3.63,
-      "ret1m": -3.63,
-      "ret3m": -0.88,
-      "ret6m": -0.49,
-      "ret1y": -1.94,
-      "ret2y": -15.69,
-      "ret3y": -19.01
+      "nav": 1.004,
+      "ret1w": -0.59,
+      "ret1m": -4.2,
+      "ret3m": 0.9,
+      "ret6m": -4.2,
+      "ret1y": -1.08,
+      "ret2y": -15.13,
+      "ret3y": -13.15
     },
     {
       "code": "376510",
       "name": "摩根大盘蓝筹股票A",
       "type": "股票型",
-      "nav": 2.2974,
-      "ret1w": 0.29,
-      "ret1m": 0.29,
-      "ret3m": -1.92,
-      "ret6m": 4.36,
-      "ret1y": -5.93,
-      "ret2y": 3.55,
-      "ret3y": -4.77
+      "nav": 2.313,
+      "ret1w": 0.68,
+      "ret1m": 0.97,
+      "ret3m": -1.38,
+      "ret6m": 5.67,
+      "ret1y": -4.48,
+      "ret2y": 2.96,
+      "ret3y": 2.01
     },
     {
       "code": "360001",
       "name": "光大量化股票A",
       "type": "股票型",
-      "nav": 1.278,
-      "ret1w": -1.4,
-      "ret1m": -1.4,
-      "ret3m": -3.69,
-      "ret6m": -0.9,
-      "ret1y": 0.71,
-      "ret2y": 11.83,
-      "ret3y": 43.98
+      "nav": 1.2811,
+      "ret1w": 0.24,
+      "ret1m": -1.16,
+      "ret3m": -3.6,
+      "ret6m": -2.47,
+      "ret1y": 1.85,
+      "ret2y": 9.37,
+      "ret3y": 55.51
     },
     {
       "code": "970185",
       "name": "招商资管核心优势混合C",
       "type": "混合型",
-      "nav": 1.1562,
-      "ret1w": -2.03,
-      "ret1m": -2.03,
-      "ret3m": -7.99,
-      "ret6m": -16.77,
-      "ret1y": -10.81,
-      "ret2y": -1.96,
-      "ret3y": 17.17
+      "nav": 1.1449,
+      "ret1w": -0.98,
+      "ret1m": -2.99,
+      "ret3m": -9.18,
+      "ret6m": -19.46,
+      "ret1y": -11.8,
+      "ret2y": -4.1,
+      "ret3y": 22.07
     },
     {
       "code": "970184",
       "name": "招商资管核心优势混合A",
       "type": "混合型",
-      "nav": 1.2304,
-      "ret1w": -2.02,
-      "ret1m": -2.02,
-      "ret3m": -7.96,
-      "ret6m": -16.68,
-      "ret1y": -10.65,
-      "ret2y": -1.57,
-      "ret3y": 18.1
+      "nav": 1.2184,
+      "ret1w": -0.98,
+      "ret1m": -2.98,
+      "ret3m": -9.15,
+      "ret6m": -19.38,
+      "ret1y": -11.63,
+      "ret2y": -3.73,
+      "ret3y": 23.05
     },
     {
       "code": "970121",
       "name": "兴证资管金麒麟恒睿致远一年持有期混合C",
       "type": "混合型",
-      "nav": 1.0654,
-      "ret1w": -0.18,
-      "ret1m": -0.18,
-      "ret3m": -1.94,
-      "ret6m": -3.42,
-      "ret1y": -1.5,
-      "ret2y": -0.19,
-      "ret3y": 4.13
+      "nav": 1.0668,
+      "ret1w": 0.13,
+      "ret1m": -0.05,
+      "ret3m": -1.77,
+      "ret6m": -3.74,
+      "ret1y": -1.22,
+      "ret2y": -0.09,
+      "ret3y": 5.64
     },
     {
       "code": "970119",
       "name": "兴证资管金麒麟恒睿致远一年持有期混合A",
       "type": "混合型",
-      "nav": 1.0397,
-      "ret1w": -0.15,
-      "ret1m": -0.15,
-      "ret3m": -1.89,
-      "ret6m": -3.27,
-      "ret1y": -1.2,
-      "ret2y": 0.43,
-      "ret3y": 5.4
+      "nav": 1.0411,
+      "ret1w": 0.13,
+      "ret1m": -0.02,
+      "ret3m": -1.71,
+      "ret6m": -3.58,
+      "ret1y": -0.92,
+      "ret2y": 0.51,
+      "ret3y": 6.92
     },
     {
       "code": "970069",
       "name": "兴证资管金麒麟消费升级混合C",
       "type": "混合型",
-      "nav": 0.6954,
-      "ret1w": -0.7,
-      "ret1m": -0.7,
-      "ret3m": -3.55,
-      "ret6m": -3.31,
-      "ret1y": -11.76,
-      "ret2y": -15.67,
-      "ret3y": -8.97
+      "nav": 0.7024,
+      "ret1w": 1.01,
+      "ret1m": 0.3,
+      "ret3m": -2.08,
+      "ret6m": -1.33,
+      "ret1y": -10.55,
+      "ret2y": -14.96,
+      "ret3y": -3.73
     },
     {
       "code": "970067",
       "name": "兴证资管金麒麟消费升级混合A",
       "type": "混合型",
-      "nav": 0.7134,
-      "ret1w": -0.68,
-      "ret1m": -0.68,
-      "ret3m": -3.5,
-      "ret6m": -3.19,
-      "ret1y": -11.53,
-      "ret2y": -15.23,
-      "ret3y": -8.04
+      "nav": 0.7206,
+      "ret1w": 1.01,
+      "ret1m": 0.32,
+      "ret3m": -2.03,
+      "ret6m": -1.21,
+      "ret1y": -10.32,
+      "ret2y": -14.53,
+      "ret3y": -2.75
     },
     {
       "code": "959991",
       "name": "兴证资管金麒麟领先优势一年持有期混合A",
       "type": "混合型",
-      "nav": 2.5766,
-      "ret1w": -3.33,
-      "ret1m": -3.33,
-      "ret3m": -9.83,
-      "ret6m": -17.06,
-      "ret1y": 16.8,
-      "ret2y": 38.09,
-      "ret3y": 108.94
+      "nav": 2.5483,
+      "ret1w": -1.1,
+      "ret1m": -4.39,
+      "ret3m": -11.56,
+      "ret6m": -22.94,
+      "ret1y": 14.34,
+      "ret2y": 35.74,
+      "ret3y": 118.98
     },
     {
       "code": "952099",
       "name": "国泰海通君得鑫两年持有混合C",
       "type": "混合型",
-      "nav": 2.4084,
-      "ret1w": -2.25,
-      "ret1m": -2.25,
-      "ret3m": -3.39,
-      "ret6m": -9.34,
-      "ret1y": 0.73,
-      "ret2y": 6.91,
-      "ret3y": 47.05
+      "nav": 2.4179,
+      "ret1w": 0.39,
+      "ret1m": -1.87,
+      "ret3m": -2.41,
+      "ret6m": -11.31,
+      "ret1y": 0.54,
+      "ret2y": 4.66,
+      "ret3y": 57.64
     },
     {
       "code": "952035",
       "name": "国泰海通君得诚混合",
       "type": "混合型",
-      "nav": 0.7007,
-      "ret1w": -1.56,
-      "ret1m": -1.56,
-      "ret3m": -4.37,
+      "nav": 0.7106,
+      "ret1w": 1.41,
+      "ret1m": -0.17,
+      "ret3m": -2.55,
       "ret6m": -12.67,
-      "ret1y": -19.55,
-      "ret2y": -14.31,
-      "ret3y": -7.43
+      "ret1y": -18.53,
+      "ret2y": -14.29,
+      "ret3y": 0.95
     },
     {
       "code": "952004",
       "name": "国泰海通君得明混合A",
       "type": "混合型",
-      "nav": 4.0146,
-      "ret1w": -3.36,
-      "ret1m": -3.36,
-      "ret3m": -2.01,
-      "ret6m": -16.43,
-      "ret1y": 14.9,
-      "ret2y": 22.64,
-      "ret3y": 83.63
+      "nav": 4.044,
+      "ret1w": 0.73,
+      "ret1m": -2.66,
+      "ret3m": -0.43,
+      "ret6m": -19.52,
+      "ret1y": 14.68,
+      "ret2y": 20.53,
+      "ret3y": 95.29
     },
     {
       "code": "881007",
       "name": "招商资管智远成长混合C",
       "type": "混合型",
-      "nav": 0.4925,
-      "ret1w": -0.85,
-      "ret1m": -0.85,
-      "ret3m": -2.9,
-      "ret6m": -17.23,
-      "ret1y": -1.79,
-      "ret2y": 3.58,
-      "ret3y": 25.38
+      "nav": 0.4876,
+      "ret1w": -0.99,
+      "ret1m": -1.83,
+      "ret3m": -4.22,
+      "ret6m": -21.34,
+      "ret1y": -2.6,
+      "ret2y": 2.33,
+      "ret3y": 30.44
     },
     {
       "code": "880007",
       "name": "招商资管智远成长混合A",
       "type": "混合型",
-      "nav": 0.5021,
-      "ret1w": -0.85,
-      "ret1m": -0.85,
-      "ret3m": -2.86,
-      "ret6m": -17.15,
-      "ret1y": -1.61,
-      "ret2y": 4.0,
-      "ret3y": 26.38
+      "nav": 0.4971,
+      "ret1w": -1.0,
+      "ret1m": -1.84,
+      "ret3m": -4.2,
+      "ret6m": -21.27,
+      "ret1y": -2.41,
+      "ret2y": 2.73,
+      "ret3y": 31.47
     },
     {
       "code": "770001",
       "name": "德邦优化A",
       "type": "混合型",
-      "nav": 1.2725,
-      "ret1w": 0.37,
-      "ret1m": 0.37,
-      "ret3m": -0.77,
-      "ret6m": 2.62,
-      "ret1y": -1.68,
-      "ret2y": -1.0,
-      "ret3y": 1.28
+      "nav": 1.274,
+      "ret1w": 0.12,
+      "ret1m": 0.49,
+      "ret3m": -1.06,
+      "ret6m": 2.8,
+      "ret1y": -1.55,
+      "ret2y": -0.93,
+      "ret3y": 1.78
     },
     {
       "code": "762001",
       "name": "国金国鑫发起A",
       "type": "混合型",
-      "nav": 1.0994,
-      "ret1w": -0.55,
-      "ret1m": -0.55,
-      "ret3m": -2.06,
-      "ret6m": -2.46,
-      "ret1y": -6.54,
-      "ret2y": -5.2,
-      "ret3y": 0.31
+      "nav": 1.1089,
+      "ret1w": 0.86,
+      "ret1m": 0.31,
+      "ret3m": -0.85,
+      "ret6m": -2.28,
+      "ret1y": -5.41,
+      "ret2y": -5.62,
+      "ret3y": 4.67
     },
     {
       "code": "750005",
       "name": "安信平稳增长混合发起A",
       "type": "混合型",
-      "nav": 1.3044,
-      "ret1w": -1.18,
-      "ret1m": -1.18,
-      "ret3m": -5.27,
-      "ret6m": -18.35,
-      "ret1y": -6.57,
-      "ret2y": -24.49,
-      "ret3y": -10.66
+      "nav": 1.2915,
+      "ret1w": -0.99,
+      "ret1m": -2.16,
+      "ret3m": -6.96,
+      "ret6m": -21.1,
+      "ret1y": -7.73,
+      "ret2y": -25.11,
+      "ret3y": -5.81
     },
     {
       "code": "750001",
       "name": "安信灵活配置混合A",
       "type": "混合型",
-      "nav": 2.9123,
-      "ret1w": -0.24,
-      "ret1m": -0.24,
-      "ret3m": -4.07,
-      "ret6m": 1.97,
-      "ret1y": -8.79,
-      "ret2y": 2.9,
-      "ret3y": 24.37
+      "nav": 2.9094,
+      "ret1w": -0.1,
+      "ret1m": -0.34,
+      "ret3m": -4.4,
+      "ret6m": 0.38,
+      "ret1y": -8.54,
+      "ret2y": 2.01,
+      "ret3y": 31.68
     },
     {
       "code": "740001",
       "name": "长安宏观策略混合A",
       "type": "混合型",
-      "nav": 2.954,
-      "ret1w": -5.98,
-      "ret1m": -5.98,
-      "ret3m": -11.58,
-      "ret6m": -31.72,
-      "ret1y": 0.0,
-      "ret2y": 37.97,
-      "ret3y": 105.71
+      "nav": 2.918,
+      "ret1w": -1.22,
+      "ret1m": -7.13,
+      "ret3m": -12.5,
+      "ret6m": -37.11,
+      "ret1y": -3.06,
+      "ret2y": 36.04,
+      "ret3y": 111.6
     },
     {
       "code": "730002",
       "name": "方正富邦红利精选混合A",
       "type": "混合型",
-      "nav": 1.5341,
-      "ret1w": 1.01,
-      "ret1m": 1.01,
-      "ret3m": 1.44,
-      "ret6m": 8.3,
-      "ret1y": 2.86,
-      "ret2y": 3.81,
-      "ret3y": -5.91
+      "nav": 1.5287,
+      "ret1w": -0.35,
+      "ret1m": 0.66,
+      "ret3m": 0.81,
+      "ret6m": 8.65,
+      "ret1y": 3.44,
+      "ret2y": 2.98,
+      "ret3y": 0.28
     },
     {
       "code": "730001",
       "name": "方正富邦创新动力混合A",
       "type": "混合型",
-      "nav": 0.5817,
-      "ret1w": 0.55,
-      "ret1m": 0.55,
-      "ret3m": -8.08,
-      "ret6m": -23.86,
-      "ret1y": -9.83,
-      "ret2y": -6.28,
-      "ret3y": 2.96
+      "nav": 0.5654,
+      "ret1w": -2.8,
+      "ret1m": -2.26,
+      "ret3m": -9.45,
+      "ret6m": -29.32,
+      "ret1y": -11.7,
+      "ret2y": -9.9,
+      "ret3y": 6.16
     },
     {
       "code": "720001",
       "name": "财通价值动量混合A",
       "type": "混合型",
-      "nav": 13.078,
-      "ret1w": -3.88,
-      "ret1m": -3.88,
-      "ret3m": -9.86,
-      "ret6m": -19.26,
-      "ret1y": 35.06,
-      "ret2y": 85.11,
-      "ret3y": 212.27
+      "nav": 12.63,
+      "ret1w": -3.43,
+      "ret1m": -7.17,
+      "ret3m": -13.24,
+      "ret6m": -25.28,
+      "ret1y": 29.42,
+      "ret2y": 77.49,
+      "ret3y": 219.59
     },
     {
       "code": "970205",
       "name": "兴证资管金麒麟兴享增利六个月持有期债券C",
       "type": "债券型",
-      "nav": 1.0603,
-      "ret1w": -0.06,
-      "ret1m": -0.06,
-      "ret3m": -0.63,
-      "ret6m": -1.29,
-      "ret1y": -0.65,
-      "ret2y": 0.77,
-      "ret3y": 3.41
+      "nav": 1.0601,
+      "ret1w": -0.02,
+      "ret1m": -0.08,
+      "ret3m": -0.71,
+      "ret6m": -1.68,
+      "ret1y": -0.58,
+      "ret2y": 0.58,
+      "ret3y": 3.87
     },
     {
       "code": "970204",
       "name": "兴证资管金麒麟兴享增利六个月持有期债券A",
       "type": "债券型",
-      "nav": 1.1089,
-      "ret1w": -0.05,
-      "ret1m": -0.05,
-      "ret3m": -0.6,
-      "ret6m": -1.22,
-      "ret1y": -0.51,
-      "ret2y": 1.05,
-      "ret3y": 4.11
+      "nav": 1.1086,
+      "ret1w": -0.03,
+      "ret1m": -0.07,
+      "ret3m": -0.7,
+      "ret6m": -1.62,
+      "ret1y": -0.47,
+      "ret2y": 0.85,
+      "ret3y": 4.57
     },
     {
       "code": "970182",
       "name": "招商资管招朝鑫中短债债券C",
       "type": "债券型",
-      "nav": 1.0661,
-      "ret1w": 0.01,
-      "ret1m": 0.01,
-      "ret3m": 0.12,
-      "ret6m": 0.35,
-      "ret1y": 0.66,
-      "ret2y": 1.67,
-      "ret3y": 3.18
+      "nav": 1.0663,
+      "ret1w": 0.02,
+      "ret1m": 0.03,
+      "ret3m": 0.13,
+      "ret6m": 0.37,
+      "ret1y": 0.68,
+      "ret2y": 1.66,
+      "ret3y": 3.3
     },
     {
       "code": "970170",
       "name": "兴证资管金麒麟悦享添利30天滚动持有债券C",
       "type": "债券型",
-      "nav": 1.1004,
-      "ret1w": 0.02,
-      "ret1m": 0.02,
+      "nav": 1.1005,
+      "ret1w": 0.01,
+      "ret1m": 0.03,
       "ret3m": 0.12,
-      "ret6m": 0.33,
-      "ret1y": 0.71,
-      "ret2y": 1.59,
-      "ret3y": 3.99
+      "ret6m": 0.34,
+      "ret1y": 0.72,
+      "ret2y": 1.55,
+      "ret3y": 4.06
     },
     {
       "code": "970168",
       "name": "兴证资管金麒麟悦享添利30天滚动持有债券A",
       "type": "债券型",
-      "nav": 1.11,
+      "nav": 1.1102,
       "ret1w": 0.02,
-      "ret1m": 0.02,
+      "ret1m": 0.04,
       "ret3m": 0.14,
-      "ret6m": 0.38,
-      "ret1y": 0.82,
-      "ret2y": 1.8,
-      "ret3y": 4.42
+      "ret6m": 0.4,
+      "ret1y": 0.83,
+      "ret2y": 1.76,
+      "ret3y": 4.49
     },
     {
       "code": "970166",
       "name": "招商资管增益添彩一个月持有期中短债债券C",
       "type": "债券型",
-      "nav": 1.077,
-      "ret1w": 0.03,
-      "ret1m": 0.03,
-      "ret3m": 0.07,
-      "ret6m": 0.27,
-      "ret1y": 0.63,
-      "ret2y": 1.54,
-      "ret3y": 3.28
+      "nav": 1.0771,
+      "ret1w": 0.01,
+      "ret1m": 0.04,
+      "ret3m": 0.08,
+      "ret6m": 0.29,
+      "ret1y": 0.64,
+      "ret2y": 1.52,
+      "ret3y": 3.37
     },
     {
       "code": "970165",
       "name": "招商资管增益添彩一个月持有期中短债债券A",
       "type": "债券型",
-      "nav": 1.0918,
-      "ret1w": 0.04,
-      "ret1m": 0.04,
-      "ret3m": 0.1,
-      "ret6m": 0.35,
-      "ret1y": 0.78,
-      "ret2y": 1.87,
-      "ret3y": 3.94
+      "nav": 1.0919,
+      "ret1w": 0.01,
+      "ret1m": 0.05,
+      "ret3m": 0.11,
+      "ret6m": 0.36,
+      "ret1y": 0.79,
+      "ret2y": 1.84,
+      "ret3y": 4.03
     },
     {
       "code": "952320",
       "name": "国泰海通君得盈债券C",
       "type": "债券型",
-      "nav": 1.0442,
-      "ret1w": -0.71,
-      "ret1m": -0.71,
-      "ret3m": -2.08,
-      "ret6m": -4.08,
-      "ret1y": -1.11,
-      "ret2y": 3.46,
-      "ret3y": 7.96
+      "nav": 1.0444,
+      "ret1w": 0.02,
+      "ret1m": -0.69,
+      "ret3m": -2.16,
+      "ret6m": -5.04,
+      "ret1y": -0.88,
+      "ret2y": 3.2,
+      "ret3y": 9.4
     },
     {
       "code": "952024",
       "name": "国泰海通君得盛债券A",
       "type": "债券型",
-      "nav": 1.2021,
-      "ret1w": -0.73,
+      "nav": 1.2022,
+      "ret1w": 0.01,
       "ret1m": -0.73,
-      "ret3m": -1.71,
-      "ret6m": -3.62,
-      "ret1y": -1.0,
-      "ret2y": 1.45,
-      "ret3y": 3.26
+      "ret3m": -1.78,
+      "ret6m": -4.62,
+      "ret1y": -0.78,
+      "ret2y": 1.29,
+      "ret3y": 4.05
     },
     {
       "code": "952020",
       "name": "国泰海通君得盈债券A",
       "type": "债券型",
-      "nav": 1.0512,
-      "ret1w": -0.71,
-      "ret1m": -0.71,
-      "ret3m": -2.04,
-      "ret6m": -3.99,
-      "ret1y": -0.91,
-      "ret2y": 3.89,
-      "ret3y": 8.84
+      "nav": 1.0514,
+      "ret1w": 0.02,
+      "ret1m": -0.69,
+      "ret3m": -2.13,
+      "ret6m": -4.95,
+      "ret1y": -0.69,
+      "ret2y": 3.61,
+      "ret3y": 10.28
     },
     {
       "code": "952001",
       "name": "国泰海通君得利短债A",
       "type": "债券型",
-      "nav": 1.0441,
-      "ret1w": 0.03,
-      "ret1m": 0.03,
-      "ret3m": 0.16,
-      "ret6m": 0.42,
+      "nav": 1.0442,
+      "ret1w": 0.01,
+      "ret1m": 0.04,
+      "ret3m": 0.17,
+      "ret6m": 0.43,
       "ret1y": 0.83,
-      "ret2y": 1.87,
-      "ret3y": 3.73
+      "ret2y": 1.83,
+      "ret3y": 3.83
     },
     {
       "code": "890011",
       "name": "长江聚利债券型A",
       "type": "债券型",
-      "nav": 1.1475,
-      "ret1w": -0.92,
-      "ret1m": -0.92,
-      "ret3m": -1.97,
-      "ret6m": -3.88,
-      "ret1y": -4.76,
-      "ret2y": -3.11,
-      "ret3y": 2.87
+      "nav": 1.1461,
+      "ret1w": -0.12,
+      "ret1m": -1.04,
+      "ret3m": -2.19,
+      "ret6m": -4.41,
+      "ret1y": -4.68,
+      "ret2y": -3.45,
+      "ret3y": 4.62
     },
     {
       "code": "890005",
       "name": "长江尊利债券A",
       "type": "债券型",
-      "nav": 1.2043,
-      "ret1w": -0.03,
-      "ret1m": -0.03,
-      "ret3m": -0.86,
-      "ret6m": -1.24,
-      "ret1y": -1.45,
-      "ret2y": 0.8,
-      "ret3y": 8.81
+      "nav": 1.2047,
+      "ret1w": 0.03,
+      "ret1m": 0.0,
+      "ret3m": -0.84,
+      "ret6m": -1.33,
+      "ret1y": -1.37,
+      "ret2y": 0.6,
+      "ret3y": 10.81
     },
     {
       "code": "881013",
       "name": "招商资管智远增利债券C",
       "type": "债券型",
-      "nav": 1.1294,
-      "ret1w": -0.2,
-      "ret1m": -0.2,
-      "ret3m": -0.66,
-      "ret6m": -2.18,
-      "ret1y": 0.37,
-      "ret2y": 1.48,
-      "ret3y": 7.72
+      "nav": 1.1292,
+      "ret1w": -0.02,
+      "ret1m": -0.22,
+      "ret3m": -0.77,
+      "ret6m": -2.61,
+      "ret1y": 0.33,
+      "ret2y": 1.22,
+      "ret3y": 8.81
     },
     {
       "code": "881012",
       "name": "招商资管智远增利债券A",
       "type": "债券型",
-      "nav": 1.2007,
-      "ret1w": -0.2,
-      "ret1m": -0.2,
-      "ret3m": -0.63,
-      "ret6m": -2.09,
-      "ret1y": 0.57,
-      "ret2y": 1.9,
-      "ret3y": 8.61
+      "nav": 1.2005,
+      "ret1w": -0.02,
+      "ret1m": -0.22,
+      "ret3m": -0.74,
+      "ret6m": -2.51,
+      "ret1y": 0.53,
+      "ret2y": 1.63,
+      "ret3y": 9.71
     },
     {
       "code": "539002",
       "name": "建信新兴市场混合(QDII)A",
       "type": "QDII",
-      "nav": 2.498,
-      "ret1w": -0.2,
-      "ret1m": -0.79,
-      "ret3m": 5.94,
-      "ret6m": -12.26,
-      "ret1y": 53.16,
-      "ret2y": 89.24,
-      "ret3y": 157.0
+      "nav": 2.468,
+      "ret1w": -1.2,
+      "ret1m": -1.2,
+      "ret3m": -0.08,
+      "ret6m": 0.08,
+      "ret1y": 34.57,
+      "ret2y": 86.97,
+      "ret3y": 146.55
     },
     {
       "code": "519696",
       "name": "交银环球精选混合(QDII)A",
       "type": "QDII",
-      "nav": 3.002,
-      "ret1w": -0.08,
-      "ret1m": -0.49,
-      "ret3m": 0.59,
-      "ret6m": 3.06,
-      "ret1y": 13.54,
-      "ret2y": 5.31,
-      "ret3y": 29.8
+      "nav": 3.0297,
+      "ret1w": 0.92,
+      "ret1m": 0.92,
+      "ret3m": 1.35,
+      "ret6m": 4.31,
+      "ret1y": 11.71,
+      "ret2y": 6.28,
+      "ret3y": 30.65
     },
     {
       "code": "519601",
       "name": "海富通中国海外混合",
       "type": "QDII",
-      "nav": 1.8135,
-      "ret1w": 1.21,
-      "ret1m": -0.74,
-      "ret3m": -3.97,
-      "ret6m": -15.39,
-      "ret1y": -6.39,
-      "ret2y": -6.8,
-      "ret3y": 27.2
+      "nav": 1.7628,
+      "ret1w": -2.8,
+      "ret1m": -2.8,
+      "ret3m": -5.73,
+      "ret6m": -9.26,
+      "ret1y": -14.06,
+      "ret2y": -9.4,
+      "ret3y": 22.05
     },
     {
       "code": "501312",
       "name": "华宝海外科技股票(QDII-LOF)A",
       "type": "QDII",
-      "nav": 2.4897,
-      "ret1w": 0.02,
-      "ret1m": 0.31,
-      "ret3m": 3.64,
-      "ret6m": 2.2,
-      "ret1y": 33.82,
-      "ret2y": 24.32,
-      "ret3y": 78.83
+      "nav": 2.4434,
+      "ret1w": -1.86,
+      "ret1m": -1.86,
+      "ret3m": 1.38,
+      "ret6m": 4.8,
+      "ret1y": 25.02,
+      "ret2y": 22.01,
+      "ret3y": 74.82
     },
     {
       "code": "501300",
       "name": "海富通全球收益债券人民币",
       "type": "QDII",
-      "nav": 0.9121,
-      "ret1w": -0.23,
-      "ret1m": -0.77,
-      "ret3m": -2.56,
-      "ret6m": -3.43,
-      "ret1y": -4.67,
-      "ret2y": -6.31,
-      "ret3y": -3.06
+      "nav": 0.915,
+      "ret1w": 0.32,
+      "ret1m": 0.32,
+      "ret3m": -2.14,
+      "ret6m": -2.71,
+      "ret1y": -3.88,
+      "ret2y": -6.01,
+      "ret3y": -2.88
     },
     {
       "code": "501226",
       "name": "长城全球新能源车股票发起式(QDII)A",
       "type": "QDII",
-      "nav": 2.7308,
-      "ret1w": -0.01,
-      "ret1m": -0.35,
-      "ret3m": 4.19,
-      "ret6m": -12.69,
-      "ret1y": 39.06,
-      "ret2y": 45.81,
-      "ret3y": 98.21
+      "nav": 2.7032,
+      "ret1w": -1.01,
+      "ret1m": -1.01,
+      "ret3m": -0.45,
+      "ret6m": -2.13,
+      "ret1y": 25.29,
+      "ret2y": 44.34,
+      "ret3y": 91.62
     },
     {
       "code": "486002",
       "name": "工银全球精选股票(QDII)",
       "type": "QDII",
-      "nav": 4.537,
-      "ret1w": -0.22,
-      "ret1m": -0.44,
-      "ret3m": -1.69,
-      "ret6m": -2.91,
-      "ret1y": 8.08,
-      "ret2y": 4.06,
-      "ret3y": 20.22
+      "nav": 4.55,
+      "ret1w": 0.29,
+      "ret1m": 0.29,
+      "ret3m": -1.6,
+      "ret6m": -1.04,
+      "ret1y": 4.26,
+      "ret2y": 4.36,
+      "ret3y": 19.8
     },
     {
       "code": "470888",
       "name": "汇添富香港优势精选混合(QDII)A",
       "type": "QDII",
-      "nav": 1.248,
-      "ret1w": 4.09,
-      "ret1m": -0.32,
-      "ret3m": 1.13,
-      "ret6m": 11.53,
-      "ret1y": -7.42,
-      "ret2y": -20.2,
-      "ret3y": 85.99
+      "nav": 1.161,
+      "ret1w": -6.97,
+      "ret1m": -6.97,
+      "ret3m": -5.3,
+      "ret6m": -2.11,
+      "ret1y": -18.3,
+      "ret2y": -25.77,
+      "ret3y": 69.74
     },
     {
       "code": "460010",
       "name": "华泰柏瑞亚洲领导企业混合",
       "type": "QDII",
-      "nav": 0.961,
-      "ret1w": 1.59,
-      "ret1m": -2.93,
-      "ret3m": 0.1,
-      "ret6m": -2.54,
-      "ret1y": -9.25,
-      "ret2y": -24.39,
-      "ret3y": 4.23
+      "nav": 0.923,
+      "ret1w": -3.95,
+      "ret1m": -3.95,
+      "ret3m": -4.35,
+      "ret6m": -4.15,
+      "ret1y": -19.04,
+      "ret2y": -27.38,
+      "ret3y": -4.25
     },
     {
       "code": "457001",
       "name": "国富亚洲机会股票(QDII)A",
       "type": "QDII",
-      "nav": 2.9199,
-      "ret1w": 0.41,
-      "ret1m": -2.14,
-      "ret3m": 2.63,
-      "ret6m": -9.74,
-      "ret1y": 50.05,
-      "ret2y": 72.05,
-      "ret3y": 143.47
+      "nav": 2.9143,
+      "ret1w": -0.19,
+      "ret1m": -0.19,
+      "ret3m": -0.19,
+      "ret6m": -0.83,
+      "ret1y": 32.61,
+      "ret2y": 71.72,
+      "ret3y": 146.6
     },
     {
       "code": "378546",
       "name": "摩根全球天然资源混合(QDII)A",
       "type": "QDII",
-      "nav": 1.5333,
-      "ret1w": -0.34,
-      "ret1m": -2.86,
-      "ret3m": -5.72,
-      "ret6m": 11.75,
-      "ret1y": -1.04,
-      "ret2y": 23.72,
-      "ret3y": 47.5
+      "nav": 1.575,
+      "ret1w": 2.72,
+      "ret1m": 2.72,
+      "ret3m": -4.36,
+      "ret6m": 13.77,
+      "ret1y": 1.46,
+      "ret2y": 27.09,
+      "ret3y": 50.19
     },
     {
       "code": "378006",
       "name": "摩根全球新兴市场混合(QDII)",
       "type": "QDII",
-      "nav": 1.7343,
-      "ret1w": -0.14,
-      "ret1m": -1.94,
-      "ret3m": 0.24,
-      "ret6m": 0.59,
-      "ret1y": 20.18,
-      "ret2y": 24.56,
-      "ret3y": 51.48
+      "nav": 1.7279,
+      "ret1w": -0.37,
+      "ret1m": -0.37,
+      "ret3m": -2.73,
+      "ret6m": 2.23,
+      "ret1y": 11.05,
+      "ret2y": 24.1,
+      "ret3y": 50.93
+    },
+    {
+      "code": "377016",
+      "name": "摩根亚太优势混合(QDII)A",
+      "type": "QDII",
+      "nav": 1.2851,
+      "ret1w": -0.97,
+      "ret1m": -0.97,
+      "ret3m": -4.39,
+      "ret6m": -1.09,
+      "ret1y": 3.06,
+      "ret2y": 9.55,
+      "ret3y": 28.79
     },
     {
       "code": "320017",
       "name": "诺安全球收益不动产(QDII)A",
       "type": "QDII",
-      "nav": 1.214,
-      "ret1w": -1.06,
-      "ret1m": -2.1,
-      "ret3m": -6.54,
-      "ret6m": -7.68,
-      "ret1y": -1.3,
-      "ret2y": -3.42,
-      "ret3y": -14.59
+      "nav": 1.209,
+      "ret1w": -0.41,
+      "ret1m": -0.41,
+      "ret3m": -6.42,
+      "ret6m": -7.99,
+      "ret1y": -4.5,
+      "ret2y": -3.82,
+      "ret3y": -13.12
     },
     {
       "code": "320013",
       "name": "诺安全球黄金(QDII-FOF)A",
       "type": "QDII",
-      "nav": 1.979,
-      "ret1w": -0.35,
-      "ret1m": -2.99,
-      "ret3m": -6.78,
-      "ret6m": 1.7,
-      "ret1y": -13.09,
-      "ret2y": 0.66,
-      "ret3y": 42.56
-    },
-    {
-      "code": "270023",
-      "name": "广发全球精选股票(QDII)人民币A",
-      "type": "QDII",
-      "nav": 6.4134,
-      "ret1w": 0.14,
-      "ret1m": -1.22,
-      "ret3m": 2.3,
-      "ret6m": -14.89,
-      "ret1y": 32.89,
-      "ret2y": 38.72,
-      "ret3y": 73.87
+      "nav": 1.964,
+      "ret1w": -0.76,
+      "ret1m": -0.76,
+      "ret3m": -6.21,
+      "ret6m": 0.26,
+      "ret1y": -14.72,
+      "ret2y": -0.1,
+      "ret3y": 40.98
     },
     {
       "code": "952303",
       "name": "国泰海通中债1-3年政金债C",
       "type": "指数型",
-      "nav": 1.013,
-      "ret1w": -0.02,
-      "ret1m": -0.02,
-      "ret3m": 0.16,
-      "ret6m": 0.44,
-      "ret1y": 1.32,
-      "ret2y": 2.38,
-      "ret3y": 3.78
+      "nav": 1.0133,
+      "ret1w": 0.03,
+      "ret1m": 0.01,
+      "ret3m": 0.18,
+      "ret6m": 0.47,
+      "ret1y": 1.37,
+      "ret2y": 2.35,
+      "ret3y": 3.83
     },
     {
       "code": "952003",
       "name": "国泰海通中债1-3年政金债A",
       "type": "指数型",
-      "nav": 1.0121,
-      "ret1w": -0.02,
-      "ret1m": -0.02,
-      "ret3m": 0.17,
-      "ret6m": 0.47,
-      "ret1y": 1.33,
-      "ret2y": 2.46,
-      "ret3y": 3.96
+      "nav": 1.0124,
+      "ret1w": 0.03,
+      "ret1m": 0.01,
+      "ret3m": 0.2,
+      "ret6m": 0.51,
+      "ret1y": 1.39,
+      "ret2y": 2.42,
+      "ret3y": 4.0
     },
     {
       "code": "740101",
       "name": "长安沪深300非周期A",
       "type": "指数型",
-      "nav": 1.321,
-      "ret1w": -1.56,
-      "ret1m": -1.56,
-      "ret3m": -6.11,
-      "ret6m": -12.98,
-      "ret1y": -7.3,
-      "ret2y": -10.38,
-      "ret3y": -0.75
+      "nav": 1.32,
+      "ret1w": -0.08,
+      "ret1m": -1.64,
+      "ret3m": -6.25,
+      "ret6m": -15.82,
+      "ret1y": -7.04,
+      "ret2y": -11.65,
+      "ret3y": 6.62
     },
     {
       "code": "700002",
       "name": "平安深证300指数增强",
       "type": "指数型",
-      "nav": 2.6,
-      "ret1w": -1.81,
-      "ret1m": -1.81,
-      "ret3m": -7.51,
-      "ret6m": -13.42,
-      "ret1y": -6.91,
-      "ret2y": -5.01,
-      "ret3y": 13.59
+      "nav": 2.606,
+      "ret1w": 0.23,
+      "ret1m": -1.59,
+      "ret3m": -7.59,
+      "ret6m": -15.77,
+      "ret1y": -6.33,
+      "ret2y": -6.09,
+      "ret3y": 22.92
     },
     {
       "code": "690008",
       "name": "民生中证内地资源主题指数A",
       "type": "指数型",
-      "nav": 1.5604,
-      "ret1w": -0.33,
-      "ret1m": -0.33,
-      "ret3m": -7.87,
-      "ret6m": -0.82,
-      "ret1y": -13.86,
-      "ret2y": 9.02,
-      "ret3y": 35.45
+      "nav": 1.5874,
+      "ret1w": 1.73,
+      "ret1m": 1.4,
+      "ret3m": -7.68,
+      "ret6m": 0.93,
+      "ret1y": -11.9,
+      "ret2y": 4.13,
+      "ret3y": 48.49
     },
     {
       "code": "673101",
       "name": "西部利得沪深300指数增强C",
       "type": "指数型",
-      "nav": 2.0358,
-      "ret1w": -1.2,
-      "ret1m": -1.2,
-      "ret3m": -4.36,
-      "ret6m": -7.02,
-      "ret1y": -1.76,
-      "ret2y": 3.16,
-      "ret3y": 12.72
+      "nav": 2.0347,
+      "ret1w": -0.05,
+      "ret1m": -1.26,
+      "ret3m": -4.95,
+      "ret6m": -8.94,
+      "ret1y": -1.11,
+      "ret2y": 1.94,
+      "ret3y": 20.9
     },
     {
       "code": "673100",
       "name": "西部利得沪深300指数增强A",
       "type": "指数型",
-      "nav": 2.0949,
-      "ret1w": -1.2,
-      "ret1m": -1.2,
-      "ret3m": -4.33,
-      "ret6m": -6.93,
-      "ret1y": -1.56,
-      "ret2y": 3.58,
-      "ret3y": 13.62
+      "nav": 2.0938,
+      "ret1w": -0.05,
+      "ret1m": -1.25,
+      "ret3m": -4.91,
+      "ret6m": -8.85,
+      "ret1y": -0.91,
+      "ret2y": 2.36,
+      "ret3y": 21.87
     },
     {
       "code": "660011",
       "name": "农银中证500指数A",
       "type": "指数型",
-      "nav": 1.8772,
-      "ret1w": -2.41,
-      "ret1m": -2.41,
-      "ret3m": -6.38,
-      "ret6m": -12.95,
-      "ret1y": -7.81,
-      "ret2y": -1.44,
-      "ret3y": 19.32
+      "nav": 1.8777,
+      "ret1w": 0.03,
+      "ret1m": -2.39,
+      "ret3m": -6.33,
+      "ret6m": -15.46,
+      "ret1y": -7.26,
+      "ret2y": -3.08,
+      "ret3y": 26.73
     },
     {
       "code": "660008",
       "name": "农银沪深300指数A",
       "type": "指数型",
-      "nav": 1.6905,
-      "ret1w": -1.04,
-      "ret1m": -1.04,
-      "ret3m": -5.04,
-      "ret6m": -8.36,
-      "ret1y": -4.93,
-      "ret2y": -5.52,
-      "ret3y": 4.15
+      "nav": 1.6931,
+      "ret1w": 0.15,
+      "ret1m": -0.89,
+      "ret3m": -5.18,
+      "ret6m": -10.42,
+      "ret1y": -4.18,
+      "ret2y": -6.69,
+      "ret3y": 11.71
     },
     {
       "code": "590007",
       "name": "中邮中证500指数增强A",
       "type": "指数型",
-      "nav": 1.5236,
-      "ret1w": -1.2,
-      "ret1m": -1.2,
-      "ret3m": -4.15,
-      "ret6m": -3.54,
-      "ret1y": -7.36,
-      "ret2y": 2.77,
-      "ret3y": 21.35
+      "nav": 1.5326,
+      "ret1w": 0.59,
+      "ret1m": -0.62,
+      "ret3m": -3.59,
+      "ret6m": -3.98,
+      "ret1y": -6.44,
+      "ret2y": 1.47,
+      "ret3y": 31.26
     },
     {
       "code": "585001",
       "name": "东吴中证新兴指数",
       "type": "指数型",
-      "nav": 1.781,
-      "ret1w": -2.43,
-      "ret1m": -2.43,
-      "ret3m": -8.32,
-      "ret6m": -19.44,
-      "ret1y": -2.21,
-      "ret2y": -5.08,
-      "ret3y": 19.14
+      "nav": 1.7747,
+      "ret1w": -0.35,
+      "ret1m": -2.77,
+      "ret3m": -8.81,
+      "ret6m": -23.53,
+      "ret1y": -2.39,
+      "ret2y": -7.16,
+      "ret3y": 27.44
     },
     {
       "code": "540012",
       "name": "汇丰晋信恒生龙头指数A",
       "type": "指数型",
-      "nav": 2.047,
-      "ret1w": -0.59,
-      "ret1m": -0.59,
-      "ret3m": -4.8,
-      "ret6m": 0.24,
-      "ret1y": -5.27,
-      "ret2y": -7.03,
-      "ret3y": -0.28
+      "nav": 2.061,
+      "ret1w": 0.68,
+      "ret1m": 0.09,
+      "ret3m": -4.4,
+      "ret6m": -0.23,
+      "ret1y": -4.18,
+      "ret2y": -7.9,
+      "ret3y": 7.72
     },
     {
       "code": "539003",
       "name": "建信富时100指数(QDII)A人民币",
       "type": "指数型",
-      "nav": 1.4624,
-      "ret1w": -0.54,
-      "ret1m": -1.7,
-      "ret3m": -4.6,
-      "ret6m": 0.16,
-      "ret1y": 1.9,
-      "ret2y": 7.27,
-      "ret3y": 24.84
+      "nav": 1.4443,
+      "ret1w": -1.24,
+      "ret1m": -1.24,
+      "ret3m": -5.4,
+      "ret6m": -1.87,
+      "ret1y": -3.63,
+      "ret2y": 5.94,
+      "ret3y": 25.23
     },
     {
       "code": "539001",
       "name": "建信纳斯达克100指数(QDII)A人民币",
       "type": "指数型",
-      "nav": 3.5278,
-      "ret1w": 0.12,
-      "ret1m": -0.34,
-      "ret3m": 2.44,
-      "ret6m": -0.52,
-      "ret1y": 23.01,
-      "ret2y": 14.79,
-      "ret3y": 39.93
+      "nav": 3.5603,
+      "ret1w": 0.92,
+      "ret1m": 0.92,
+      "ret3m": 3.22,
+      "ret6m": 3.7,
+      "ret1y": 19.45,
+      "ret2y": 15.85,
+      "ret3y": 39.47
     },
     {
       "code": "530018",
       "name": "建信深证100指数增强",
       "type": "指数型",
-      "nav": 2.5364,
-      "ret1w": -1.57,
-      "ret1m": -1.57,
-      "ret3m": -7.43,
-      "ret6m": -13.68,
-      "ret1y": -7.18,
-      "ret2y": -5.27,
-      "ret3y": 8.77
+      "nav": 2.5457,
+      "ret1w": 0.37,
+      "ret1m": -1.21,
+      "ret3m": -7.5,
+      "ret6m": -15.95,
+      "ret1y": -6.41,
+      "ret2y": -5.86,
+      "ret3y": 18.3
     },
     {
       "code": "970195",
       "name": "兴证资管金麒麟3个月(FOF)C",
       "type": "XZZGJQL3GYFOFC",
-      "nav": 1.1347,
-      "ret1w": 0.54,
-      "ret1m": -5.04,
-      "ret3m": -5.0,
-      "ret6m": -17.08,
-      "ret1y": 1.64,
-      "ret2y": -0.11,
-      "ret3y": 35.65
+      "nav": 1.1302,
+      "ret1w": -0.4,
+      "ret1m": -5.12,
+      "ret3m": -5.56,
+      "ret6m": -19.12,
+      "ret1y": 2.6,
+      "ret2y": -1.48,
+      "ret3y": 26.76
     },
     {
       "code": "970194",
       "name": "兴证资管金麒麟3个月(FOF)A",
       "type": "XZZGJQL3GYFOFA",
-      "nav": 1.137,
-      "ret1w": 0.54,
-      "ret1m": -5.03,
-      "ret3m": -4.95,
-      "ret6m": -16.95,
-      "ret1y": 1.73,
-      "ret2y": 0.04,
-      "ret3y": 35.18
+      "nav": 1.1324,
+      "ret1w": -0.4,
+      "ret1m": -5.13,
+      "ret3m": -5.52,
+      "ret6m": -18.99,
+      "ret1y": 2.68,
+      "ret2y": -1.35,
+      "ret3y": 26.31
     },
     {
       "code": "952313",
       "name": "国泰海通君得益三个月持有混合(FOF)C",
       "type": "GTHTJDYSGYCYHHFOFC",
-      "nav": 1.3527,
-      "ret1w": -0.16,
-      "ret1m": -3.97,
-      "ret3m": -4.61,
-      "ret6m": -17.52,
-      "ret1y": -3.12,
-      "ret2y": -6.28,
-      "ret3y": 17.28
+      "nav": 1.3272,
+      "ret1w": -1.89,
+      "ret1m": -1.89,
+      "ret3m": -4.78,
+      "ret6m": -12.56,
+      "ret1y": -8.7,
+      "ret2y": -8.05,
+      "ret3y": 10.18
     },
     {
       "code": "952013",
       "name": "国泰海通君得益三个月持有混合(FOF)A",
       "type": "GTHTJDYSGYCYHHFOFA",
-      "nav": 1.3841,
-      "ret1w": -0.16,
-      "ret1m": -3.96,
-      "ret3m": -4.58,
-      "ret6m": -17.44,
-      "ret1y": -2.92,
-      "ret2y": -5.9,
-      "ret3y": 18.23
+      "nav": 1.3581,
+      "ret1w": -1.88,
+      "ret1m": -1.88,
+      "ret3m": -4.74,
+      "ret6m": -12.47,
+      "ret1y": -8.51,
+      "ret2y": -7.67,
+      "ret3y": 11.06
     },
     {
       "code": "890008",
       "name": "长江智选3个月持有混合(FOF)A",
       "type": "CJZX3GYCYHHFOFA",
-      "nav": 1.9211,
-      "ret1w": -0.51,
-      "ret1m": -5.34,
-      "ret3m": -6.27,
-      "ret6m": -28.46,
-      "ret1y": 0.58,
-      "ret2y": -0.57,
-      "ret3y": 34.05
+      "nav": 1.8827,
+      "ret1w": -2.0,
+      "ret1m": -2.0,
+      "ret3m": -6.5,
+      "ret6m": -22.06,
+      "ret1y": -6.43,
+      "ret2y": -2.56,
+      "ret3y": 25.67
     },
     {
       "code": "881011",
       "name": "招商资管睿丰三个月持有期债券C",
       "type": "ZSZGRFSGYCYQZQC",
-      "nav": 1.1597,
-      "ret1w": -0.13,
-      "ret1m": -0.13,
-      "ret3m": -0.4,
-      "ret6m": -0.7,
-      "ret1y": -0.21,
-      "ret2y": 1.07,
-      "ret3y": 5.62
+      "nav": 1.1604,
+      "ret1w": 0.06,
+      "ret1m": -0.07,
+      "ret3m": -0.25,
+      "ret6m": -0.8,
+      "ret1y": -0.13,
+      "ret2y": 1.02,
+      "ret3y": 6.76
     },
     {
       "code": "881010",
       "name": "招商资管睿丰三个月持有期债券A",
       "type": "ZSZGRFSGYCYQZQA",
-      "nav": 1.1798,
-      "ret1w": -0.13,
-      "ret1m": -0.13,
-      "ret3m": -0.37,
-      "ret6m": -0.62,
-      "ret1y": -0.06,
-      "ret2y": 1.38,
-      "ret3y": 6.26
+      "nav": 1.1806,
+      "ret1w": 0.07,
+      "ret1m": -0.06,
+      "ret3m": -0.22,
+      "ret6m": -0.71,
+      "ret1y": 0.03,
+      "ret2y": 1.33,
+      "ret3y": 7.42
     },
     {
       "code": "880002",
       "name": "招商资管招朝鑫中短债债券A",
       "type": "ZSZGZCXZDZZQA",
-      "nav": 1.0864,
-      "ret1w": 0.01,
-      "ret1m": 0.01,
-      "ret3m": 0.15,
-      "ret6m": 0.43,
-      "ret1y": 0.81,
-      "ret2y": 1.98,
-      "ret3y": 3.77
+      "nav": 1.0866,
+      "ret1w": 0.02,
+      "ret1m": 0.03,
+      "ret3m": 0.16,
+      "ret6m": 0.44,
+      "ret1y": 0.83,
+      "ret2y": 1.96,
+      "ret3y": 3.9
     },
     {
       "code": "750003",
       "name": "安信目标收益债券C",
       "type": "AXMBSYZQC",
-      "nav": 1.4098,
-      "ret1w": -0.02,
-      "ret1m": -0.02,
-      "ret3m": 0.0,
-      "ret6m": 0.02,
-      "ret1y": -0.03,
-      "ret2y": 0.66,
-      "ret3y": 5.62
+      "nav": 1.4101,
+      "ret1w": 0.02,
+      "ret1m": 0.0,
+      "ret3m": 0.03,
+      "ret6m": 0.06,
+      "ret1y": 0.01,
+      "ret2y": 0.65,
+      "ret3y": 7.71
     },
     {
       "code": "750002",
       "name": "安信目标收益债券A",
       "type": "AXMBSYZQA",
-      "nav": 1.4626,
-      "ret1w": -0.01,
-      "ret1m": -0.01,
-      "ret3m": 0.03,
-      "ret6m": 0.12,
-      "ret1y": 0.17,
-      "ret2y": 1.07,
-      "ret3y": 6.47
+      "nav": 1.4629,
+      "ret1w": 0.02,
+      "ret1m": 0.01,
+      "ret3m": 0.05,
+      "ret6m": 0.15,
+      "ret1y": 0.21,
+      "ret2y": 1.06,
+      "ret3y": 8.56
     },
     {
       "code": "720003",
       "name": "财通收益增强债券A",
       "type": "CTSYZQZQA",
-      "nav": 2.0293,
-      "ret1w": -1.62,
-      "ret1m": -1.62,
-      "ret3m": -3.77,
-      "ret6m": -6.82,
-      "ret1y": 7.8,
-      "ret2y": 15.22,
-      "ret3y": 38.33
+      "nav": 2.0243,
+      "ret1w": -0.25,
+      "ret1m": -1.87,
+      "ret3m": -3.97,
+      "ret6m": -8.29,
+      "ret1y": 7.7,
+      "ret2y": 14.3,
+      "ret3y": 44.46
     },
     {
       "code": "720002",
       "name": "财通可转债债券A",
       "type": "CTKZZZQA",
-      "nav": 1.1472,
-      "ret1w": -1.87,
-      "ret1m": -1.87,
-      "ret3m": -7.46,
-      "ret6m": -7.89,
-      "ret1y": -2.21,
-      "ret2y": -0.02,
-      "ret3y": 21.8
+      "nav": 1.1442,
+      "ret1w": -0.26,
+      "ret1m": -2.13,
+      "ret3m": -7.39,
+      "ret6m": -8.24,
+      "ret1y": -2.18,
+      "ret2y": -0.87,
+      "ret3y": 29.33
     }
   ],
   "fundHistories": {
     "671030": [
-      {
-        "date": "2026-09-03",
-        "nav": 4.6317
-      },
       {
         "date": "2026-09-04",
         "nav": 4.4762
@@ -2073,13 +2069,13 @@ window.fundData = {
       {
         "date": "2026-10-08",
         "nav": 4.2451
+      },
+      {
+        "date": "2026-10-09",
+        "nav": 4.2108
       }
     ],
     "580008": [
-      {
-        "date": "2026-09-03",
-        "nav": 4.0877
-      },
       {
         "date": "2026-09-04",
         "nav": 4.0311
@@ -2155,13 +2151,13 @@ window.fundData = {
       {
         "date": "2026-10-08",
         "nav": 3.7223
+      },
+      {
+        "date": "2026-10-09",
+        "nav": 3.6654
       }
     ],
     "540010": [
-      {
-        "date": "2026-09-03",
-        "nav": 5.5893
-      },
       {
         "date": "2026-09-04",
         "nav": 5.5255
@@ -2237,13 +2233,13 @@ window.fundData = {
       {
         "date": "2026-10-08",
         "nav": 5.1103
+      },
+      {
+        "date": "2026-10-09",
+        "nav": 5.0443
       }
     ],
     "540009": [
-      {
-        "date": "2026-09-03",
-        "nav": 0.7162
-      },
       {
         "date": "2026-09-04",
         "nav": 0.7259
@@ -2319,13 +2315,13 @@ window.fundData = {
       {
         "date": "2026-10-08",
         "nav": 0.6912
+      },
+      {
+        "date": "2026-10-09",
+        "nav": 0.697
       }
     ],
     "540008": [
-      {
-        "date": "2026-09-03",
-        "nav": 2.0392
-      },
       {
         "date": "2026-09-04",
         "nav": 2.0469
@@ -2401,13 +2397,13 @@ window.fundData = {
       {
         "date": "2026-10-08",
         "nav": 1.9702
+      },
+      {
+        "date": "2026-10-09",
+        "nav": 2.0018
       }
     ],
     "540007": [
-      {
-        "date": "2026-09-03",
-        "nav": 2.6797
-      },
       {
         "date": "2026-09-04",
         "nav": 2.689
@@ -2483,13 +2479,13 @@ window.fundData = {
       {
         "date": "2026-10-08",
         "nav": 2.6793
+      },
+      {
+        "date": "2026-10-09",
+        "nav": 2.6661
       }
     ],
     "540006": [
-      {
-        "date": "2026-09-03",
-        "nav": 5.5006
-      },
       {
         "date": "2026-09-04",
         "nav": 5.5184
@@ -2565,13 +2561,13 @@ window.fundData = {
       {
         "date": "2026-10-08",
         "nav": 5.2571
+      },
+      {
+        "date": "2026-10-09",
+        "nav": 5.2875
       }
     ],
     "519975": [
-      {
-        "date": "2026-09-03",
-        "nav": 1.909
-      },
       {
         "date": "2026-09-04",
         "nav": 1.884
@@ -2647,13 +2643,13 @@ window.fundData = {
       {
         "date": "2026-10-08",
         "nav": 1.869
+      },
+      {
+        "date": "2026-10-09",
+        "nav": 1.866
       }
     ],
     "519965": [
-      {
-        "date": "2026-09-03",
-        "nav": 1.341
-      },
       {
         "date": "2026-09-04",
         "nav": 1.3255
@@ -2729,13 +2725,13 @@ window.fundData = {
       {
         "date": "2026-10-08",
         "nav": 1.2764
+      },
+      {
+        "date": "2026-10-09",
+        "nav": 1.2767
       }
     ],
     "519935": [
-      {
-        "date": "2026-09-03",
-        "nav": 3.41
-      },
       {
         "date": "2026-09-04",
         "nav": 3.306
@@ -2811,13 +2807,13 @@ window.fundData = {
       {
         "date": "2026-10-08",
         "nav": 3.072
+      },
+      {
+        "date": "2026-10-09",
+        "nav": 3.018
       }
     ],
     "519714": [
-      {
-        "date": "2026-09-03",
-        "nav": 1.119
-      },
       {
         "date": "2026-09-04",
         "nav": 1.137
@@ -2893,13 +2889,13 @@ window.fundData = {
       {
         "date": "2026-10-08",
         "nav": 1.102
+      },
+      {
+        "date": "2026-10-09",
+        "nav": 1.115
       }
     ],
     "519673": [
-      {
-        "date": "2026-09-03",
-        "nav": 2.357
-      },
       {
         "date": "2026-09-04",
         "nav": 2.361
@@ -2975,13 +2971,13 @@ window.fundData = {
       {
         "date": "2026-10-08",
         "nav": 2.393
+      },
+      {
+        "date": "2026-10-09",
+        "nav": 2.443
       }
     ],
     "519606": [
-      {
-        "date": "2026-09-03",
-        "nav": 1.6787
-      },
       {
         "date": "2026-09-04",
         "nav": 1.626
@@ -3057,13 +3053,13 @@ window.fundData = {
       {
         "date": "2026-10-08",
         "nav": 1.5454
+      },
+      {
+        "date": "2026-10-09",
+        "nav": 1.5361
       }
     ],
     "519193": [
-      {
-        "date": "2026-09-03",
-        "nav": 1.9545
-      },
       {
         "date": "2026-09-04",
         "nav": 1.9766
@@ -3139,13 +3135,13 @@ window.fundData = {
       {
         "date": "2026-10-08",
         "nav": 1.8717
+      },
+      {
+        "date": "2026-10-09",
+        "nav": 1.884
       }
     ],
     "501219": [
-      {
-        "date": "2026-09-03",
-        "nav": 1.654
-      },
       {
         "date": "2026-09-04",
         "nav": 1.6309
@@ -3221,13 +3217,13 @@ window.fundData = {
       {
         "date": "2026-10-08",
         "nav": 1.5943
+      },
+      {
+        "date": "2026-10-09",
+        "nav": 1.5888
       }
     ],
     "501201": [
-      {
-        "date": "2026-09-03",
-        "nav": 2.3188
-      },
       {
         "date": "2026-09-04",
         "nav": 2.2426
@@ -3303,13 +3299,13 @@ window.fundData = {
       {
         "date": "2026-10-08",
         "nav": 2.0783
+      },
+      {
+        "date": "2026-10-09",
+        "nav": 2.045
       }
     ],
     "450009": [
-      {
-        "date": "2026-09-03",
-        "nav": 2.5666
-      },
       {
         "date": "2026-09-04",
         "nav": 2.5892
@@ -3385,13 +3381,13 @@ window.fundData = {
       {
         "date": "2026-10-08",
         "nav": 2.6435
+      },
+      {
+        "date": "2026-10-09",
+        "nav": 2.6323
       }
     ],
     "399011": [
-      {
-        "date": "2026-09-03",
-        "nav": 1.032
-      },
       {
         "date": "2026-09-04",
         "nav": 1.021
@@ -3467,13 +3463,13 @@ window.fundData = {
       {
         "date": "2026-10-08",
         "nav": 1.01
+      },
+      {
+        "date": "2026-10-09",
+        "nav": 1.004
       }
     ],
     "376510": [
-      {
-        "date": "2026-09-03",
-        "nav": 2.3571
-      },
       {
         "date": "2026-09-04",
         "nav": 2.3787
@@ -3549,13 +3545,13 @@ window.fundData = {
       {
         "date": "2026-10-08",
         "nav": 2.2974
+      },
+      {
+        "date": "2026-10-09",
+        "nav": 2.313
       }
     ],
     "360001": [
-      {
-        "date": "2026-09-03",
-        "nav": 1.3308
-      },
       {
         "date": "2026-09-04",
         "nav": 1.3184
@@ -3631,13 +3627,13 @@ window.fundData = {
       {
         "date": "2026-10-08",
         "nav": 1.278
+      },
+      {
+        "date": "2026-10-09",
+        "nav": 1.2811
       }
     ],
     "970185": [
-      {
-        "date": "2026-09-03",
-        "nav": 1.2514
-      },
       {
         "date": "2026-09-04",
         "nav": 1.2389
@@ -3713,13 +3709,13 @@ window.fundData = {
       {
         "date": "2026-10-08",
         "nav": 1.1562
+      },
+      {
+        "date": "2026-10-09",
+        "nav": 1.1449
       }
     ],
     "970184": [
-      {
-        "date": "2026-09-03",
-        "nav": 1.3311
-      },
       {
         "date": "2026-09-04",
         "nav": 1.3179
@@ -3795,13 +3791,13 @@ window.fundData = {
       {
         "date": "2026-10-08",
         "nav": 1.2304
+      },
+      {
+        "date": "2026-10-09",
+        "nav": 1.2184
       }
     ],
     "970121": [
-      {
-        "date": "2026-09-03",
-        "nav": 1.0848
-      },
       {
         "date": "2026-09-04",
         "nav": 1.0848
@@ -3877,13 +3873,13 @@ window.fundData = {
       {
         "date": "2026-10-08",
         "nav": 1.0654
+      },
+      {
+        "date": "2026-10-09",
+        "nav": 1.0668
       }
     ],
     "970119": [
-      {
-        "date": "2026-09-03",
-        "nav": 1.058
-      },
       {
         "date": "2026-09-04",
         "nav": 1.058
@@ -3959,13 +3955,13 @@ window.fundData = {
       {
         "date": "2026-10-08",
         "nav": 1.0397
+      },
+      {
+        "date": "2026-10-09",
+        "nav": 1.0411
       }
     ],
     "970069": [
-      {
-        "date": "2026-09-03",
-        "nav": 0.7214
-      },
       {
         "date": "2026-09-04",
         "nav": 0.7295
@@ -4041,13 +4037,13 @@ window.fundData = {
       {
         "date": "2026-10-08",
         "nav": 0.6954
+      },
+      {
+        "date": "2026-10-09",
+        "nav": 0.7024
       }
     ],
     "970067": [
-      {
-        "date": "2026-09-03",
-        "nav": 0.7397
-      },
       {
         "date": "2026-09-04",
         "nav": 0.748
@@ -4123,13 +4119,13 @@ window.fundData = {
       {
         "date": "2026-10-08",
         "nav": 0.7134
+      },
+      {
+        "date": "2026-10-09",
+        "nav": 0.7206
       }
     ],
     "959991": [
-      {
-        "date": "2026-09-03",
-        "nav": 2.7576
-      },
       {
         "date": "2026-09-04",
         "nav": 2.7068
@@ -4205,13 +4201,13 @@ window.fundData = {
       {
         "date": "2026-10-08",
         "nav": 2.5766
+      },
+      {
+        "date": "2026-10-09",
+        "nav": 2.5483
       }
     ],
     "952099": [
-      {
-        "date": "2026-09-03",
-        "nav": 2.5264
-      },
       {
         "date": "2026-09-04",
         "nav": 2.5079
@@ -4287,13 +4283,13 @@ window.fundData = {
       {
         "date": "2026-10-08",
         "nav": 2.4084
+      },
+      {
+        "date": "2026-10-09",
+        "nav": 2.4179
       }
     ],
     "952035": [
-      {
-        "date": "2026-09-03",
-        "nav": 0.7433
-      },
       {
         "date": "2026-09-04",
         "nav": 0.7431
@@ -4369,13 +4365,13 @@ window.fundData = {
       {
         "date": "2026-10-08",
         "nav": 0.7007
+      },
+      {
+        "date": "2026-10-09",
+        "nav": 0.7106
       }
     ],
     "952004": [
-      {
-        "date": "2026-09-03",
-        "nav": 4.1827
-      },
       {
         "date": "2026-09-04",
         "nav": 4.1262
@@ -4451,13 +4447,13 @@ window.fundData = {
       {
         "date": "2026-10-08",
         "nav": 4.0146
+      },
+      {
+        "date": "2026-10-09",
+        "nav": 4.044
       }
     ],
     "881007": [
-      {
-        "date": "2026-09-03",
-        "nav": 0.505
-      },
       {
         "date": "2026-09-04",
         "nav": 0.5026
@@ -4533,13 +4529,13 @@ window.fundData = {
       {
         "date": "2026-10-08",
         "nav": 0.4925
+      },
+      {
+        "date": "2026-10-09",
+        "nav": 0.4876
       }
     ],
     "880007": [
-      {
-        "date": "2026-09-03",
-        "nav": 0.5147
-      },
       {
         "date": "2026-09-04",
         "nav": 0.5122
@@ -4615,13 +4611,13 @@ window.fundData = {
       {
         "date": "2026-10-08",
         "nav": 0.5021
+      },
+      {
+        "date": "2026-10-09",
+        "nav": 0.4971
       }
     ],
     "770001": [
-      {
-        "date": "2026-09-03",
-        "nav": 1.2857
-      },
       {
         "date": "2026-09-04",
         "nav": 1.2868
@@ -4697,13 +4693,13 @@ window.fundData = {
       {
         "date": "2026-10-08",
         "nav": 1.2725
+      },
+      {
+        "date": "2026-10-09",
+        "nav": 1.274
       }
     ],
     "762001": [
-      {
-        "date": "2026-09-03",
-        "nav": 1.1274
-      },
       {
         "date": "2026-09-04",
         "nav": 1.1276
@@ -4779,13 +4775,13 @@ window.fundData = {
       {
         "date": "2026-10-08",
         "nav": 1.0994
+      },
+      {
+        "date": "2026-10-09",
+        "nav": 1.1089
       }
     ],
     "750005": [
-      {
-        "date": "2026-09-03",
-        "nav": 1.4014
-      },
       {
         "date": "2026-09-04",
         "nav": 1.3841
@@ -4861,13 +4857,13 @@ window.fundData = {
       {
         "date": "2026-10-08",
         "nav": 1.3044
+      },
+      {
+        "date": "2026-10-09",
+        "nav": 1.2915
       }
     ],
     "750001": [
-      {
-        "date": "2026-09-03",
-        "nav": 3.0325
-      },
       {
         "date": "2026-09-04",
         "nav": 3.0453
@@ -4943,13 +4939,13 @@ window.fundData = {
       {
         "date": "2026-10-08",
         "nav": 2.9123
+      },
+      {
+        "date": "2026-10-09",
+        "nav": 2.9094
       }
     ],
     "740001": [
-      {
-        "date": "2026-09-03",
-        "nav": 3.268
-      },
       {
         "date": "2026-09-04",
         "nav": 3.228
@@ -5025,13 +5021,13 @@ window.fundData = {
       {
         "date": "2026-10-08",
         "nav": 2.954
+      },
+      {
+        "date": "2026-10-09",
+        "nav": 2.918
       }
     ],
     "730002": [
-      {
-        "date": "2026-09-03",
-        "nav": 1.5155
-      },
       {
         "date": "2026-09-04",
         "nav": 1.5209
@@ -5107,13 +5103,13 @@ window.fundData = {
       {
         "date": "2026-10-08",
         "nav": 1.5341
+      },
+      {
+        "date": "2026-10-09",
+        "nav": 1.5287
       }
     ],
     "730001": [
-      {
-        "date": "2026-09-03",
-        "nav": 0.6403
-      },
       {
         "date": "2026-09-04",
         "nav": 0.6277
@@ -5189,13 +5185,13 @@ window.fundData = {
       {
         "date": "2026-10-08",
         "nav": 0.5817
+      },
+      {
+        "date": "2026-10-09",
+        "nav": 0.5654
       }
     ],
     "720001": [
-      {
-        "date": "2026-09-03",
-        "nav": 13.902
-      },
       {
         "date": "2026-09-04",
         "nav": 13.565
@@ -5271,6 +5267,10 @@ window.fundData = {
       {
         "date": "2026-10-08",
         "nav": 13.078
+      },
+      {
+        "date": "2026-10-09",
+        "nav": 12.63
       }
     ]
   },
@@ -5279,72 +5279,72 @@ window.fundData = {
       "code": "671030",
       "name": "西部利得事件驱动股票A",
       "type": "股票型",
-      "discount": 0.2,
-      "nav": 4.2451,
-      "price": 4.2451,
+      "discount": 0.24,
+      "nav": 4.2108,
+      "price": 4.2108,
       "signal": "正常"
     },
     {
       "code": "580008",
       "name": "东吴新产业精选股票A",
       "type": "股票型",
-      "discount": 0.16,
-      "nav": 3.7223,
-      "price": 3.7223,
+      "discount": 0.24,
+      "nav": 3.6654,
+      "price": 3.6654,
       "signal": "正常"
     },
     {
       "code": "540010",
       "name": "汇丰晋信科技先锋股票",
       "type": "股票型",
-      "discount": 0.47,
-      "nav": 5.1103,
-      "price": 5.1103,
+      "discount": 0.53,
+      "nav": 5.0443,
+      "price": 5.0443,
       "signal": "正常"
     },
     {
       "code": "540009",
       "name": "汇丰晋信消费红利股票",
       "type": "股票型",
-      "discount": 0.04,
-      "nav": 0.6912,
-      "price": 0.6912,
+      "discount": 0.0,
+      "nav": 0.697,
+      "price": 0.697,
       "signal": "正常"
     },
     {
       "code": "540008",
       "name": "汇丰晋信低碳先锋股票A",
       "type": "股票型",
-      "discount": 0.07,
-      "nav": 1.9702,
-      "price": 1.9702,
+      "discount": -0.01,
+      "nav": 2.0018,
+      "price": 2.0018,
       "signal": "正常"
     },
     {
       "code": "540007",
       "name": "汇丰晋信中小盘股票",
       "type": "股票型",
-      "discount": 0.06,
-      "nav": 2.6793,
-      "price": 2.6793,
+      "discount": 0.08,
+      "nav": 2.6661,
+      "price": 2.6661,
       "signal": "正常"
     },
     {
       "code": "540006",
       "name": "汇丰晋信大盘股票A",
       "type": "股票型",
-      "discount": 0.03,
-      "nav": 5.2571,
-      "price": 5.2571,
+      "discount": 0.0,
+      "nav": 5.2875,
+      "price": 5.2875,
       "signal": "正常"
     },
     {
       "code": "519975",
       "name": "长信量化中小盘股票A",
       "type": "股票型",
-      "discount": 0.07,
-      "nav": 1.869,
-      "price": 1.869,
+      "discount": 0.08,
+      "nav": 1.866,
+      "price": 1.866,
       "signal": "正常"
     },
     {
@@ -5352,107 +5352,107 @@ window.fundData = {
       "name": "长信量化多策略股票A",
       "type": "股票型",
       "discount": 0.07,
-      "nav": 1.2764,
-      "price": 1.2764,
+      "nav": 1.2767,
+      "price": 1.2767,
       "signal": "正常"
     },
     {
       "code": "519935",
       "name": "长信创新驱动股票A",
       "type": "股票型",
-      "discount": 0.15,
-      "nav": 3.072,
-      "price": 3.072,
+      "discount": 0.23,
+      "nav": 3.018,
+      "price": 3.018,
       "signal": "正常"
     },
     {
       "code": "519714",
       "name": "交银消费新驱动股票",
       "type": "股票型",
-      "discount": -0.01,
-      "nav": 1.102,
-      "price": 1.102,
+      "discount": -0.07,
+      "nav": 1.115,
+      "price": 1.115,
       "signal": "正常"
     },
     {
       "code": "519673",
       "name": "银河康乐股票A",
       "type": "股票型",
-      "discount": 0.12,
-      "nav": 2.393,
-      "price": 2.393,
+      "discount": 0.02,
+      "nav": 2.443,
+      "price": 2.443,
       "signal": "正常"
     },
     {
       "code": "519606",
       "name": "国泰金鑫股票A",
       "type": "股票型",
-      "discount": 0.18,
-      "nav": 1.5454,
-      "price": 1.5454,
+      "discount": 0.21,
+      "nav": 1.5361,
+      "price": 1.5361,
       "signal": "正常"
     },
     {
       "code": "519193",
       "name": "万家消费成长",
       "type": "股票型",
-      "discount": 0.03,
-      "nav": 1.8717,
-      "price": 1.8717,
+      "discount": 0.0,
+      "nav": 1.884,
+      "price": 1.884,
       "signal": "正常"
     },
     {
       "code": "501219",
       "name": "华夏智胜先锋股票(LOF)A",
       "type": "股票型",
-      "discount": 0.09,
-      "nav": 1.5943,
-      "price": 1.5943,
+      "discount": 0.11,
+      "nav": 1.5888,
+      "price": 1.5888,
       "signal": "正常"
     },
     {
       "code": "501201",
       "name": "红土创新科技创新股票(LOF)A",
       "type": "股票型",
-      "discount": 0.32,
-      "nav": 2.0783,
-      "price": 2.0783,
+      "discount": 0.39,
+      "nav": 2.045,
+      "price": 2.045,
       "signal": "正常"
     },
     {
       "code": "450009",
       "name": "国富中小盘股票A",
       "type": "股票型",
-      "discount": -0.01,
-      "nav": 2.6435,
-      "price": 2.6435,
+      "discount": 0.01,
+      "nav": 2.6323,
+      "price": 2.6323,
       "signal": "正常"
     },
     {
       "code": "399011",
       "name": "中海医疗保健主题股票A",
       "type": "股票型",
-      "discount": 0.18,
-      "nav": 1.01,
-      "price": 1.01,
+      "discount": 0.21,
+      "nav": 1.004,
+      "price": 1.004,
       "signal": "正常"
     },
     {
       "code": "376510",
       "name": "摩根大盘蓝筹股票A",
       "type": "股票型",
-      "discount": -0.01,
-      "nav": 2.2974,
-      "price": 2.2974,
+      "discount": -0.05,
+      "nav": 2.313,
+      "price": 2.313,
       "signal": "正常"
     },
     {
       "code": "360001",
       "name": "光大量化股票A",
       "type": "股票型",
-      "discount": 0.07,
-      "nav": 1.278,
-      "price": 1.278,
+      "discount": 0.06,
+      "nav": 1.2811,
+      "price": 1.2811,
       "signal": "正常"
     }
   ],
@@ -5461,239 +5461,239 @@ window.fundData = {
       "code": "671030",
       "name": "西部利得事件驱动股票A",
       "type": "股票型",
-      "maxDrawdown": 6.06,
-      "sharpe": 0.07,
-      "calmar": 0.07
+      "maxDrawdown": 7.23,
+      "sharpe": -0.07,
+      "calmar": -0.07
     },
     {
       "code": "580008",
       "name": "东吴新产业精选股票A",
       "type": "股票型",
-      "maxDrawdown": 4.83,
-      "sharpe": -1.31,
-      "calmar": -1.31
+      "maxDrawdown": 7.05,
+      "sharpe": -1.29,
+      "calmar": -1.29
     },
     {
       "code": "540010",
       "name": "汇丰晋信科技先锋股票",
       "type": "股票型",
-      "maxDrawdown": 14.13,
-      "sharpe": 1.03,
-      "calmar": 1.03
+      "maxDrawdown": 15.88,
+      "sharpe": 0.83,
+      "calmar": 0.83
     },
     {
       "code": "540009",
       "name": "汇丰晋信消费红利股票",
       "type": "股票型",
-      "maxDrawdown": 1.27,
-      "sharpe": -1.34,
-      "calmar": -1.34
+      "maxDrawdown": 0.01,
+      "sharpe": -1.22,
+      "calmar": -1.22
     },
     {
       "code": "540008",
       "name": "汇丰晋信低碳先锋股票A",
       "type": "股票型",
-      "maxDrawdown": 2.15,
-      "sharpe": -4.27,
-      "calmar": -4.27
+      "maxDrawdown": 0.24,
+      "sharpe": -4.87,
+      "calmar": -4.87
     },
     {
       "code": "540007",
       "name": "汇丰晋信中小盘股票",
       "type": "股票型",
-      "maxDrawdown": 1.67,
-      "sharpe": -3.97,
-      "calmar": -3.97
+      "maxDrawdown": 2.39,
+      "sharpe": -3.51,
+      "calmar": -3.51
     },
     {
       "code": "540006",
       "name": "汇丰晋信大盘股票A",
       "type": "股票型",
-      "maxDrawdown": 0.87,
-      "sharpe": -1.5,
-      "calmar": -1.5
+      "maxDrawdown": 0.01,
+      "sharpe": -1.49,
+      "calmar": -1.49
     },
     {
       "code": "519975",
       "name": "长信量化中小盘股票A",
       "type": "股票型",
-      "maxDrawdown": 2.22,
-      "sharpe": -0.76,
-      "calmar": -0.76
+      "maxDrawdown": 2.44,
+      "sharpe": -0.72,
+      "calmar": -0.72
     },
     {
       "code": "519965",
       "name": "长信量化多策略股票A",
       "type": "股票型",
-      "maxDrawdown": 2.11,
-      "sharpe": -0.82,
-      "calmar": -0.82
+      "maxDrawdown": 2.07,
+      "sharpe": -0.73,
+      "calmar": -0.73
     },
     {
       "code": "519935",
       "name": "长信创新驱动股票A",
       "type": "股票型",
-      "maxDrawdown": 4.41,
-      "sharpe": 1.81,
-      "calmar": 1.81
+      "maxDrawdown": 6.96,
+      "sharpe": 1.25,
+      "calmar": 1.25
     },
     {
       "code": "519714",
       "name": "交银消费新驱动股票",
       "type": "股票型",
-      "maxDrawdown": 0.41,
-      "sharpe": -1.0,
-      "calmar": -1.0
+      "maxDrawdown": 2.19,
+      "sharpe": -0.47,
+      "calmar": -0.47
     },
     {
       "code": "519673",
       "name": "银河康乐股票A",
       "type": "股票型",
-      "maxDrawdown": 3.74,
-      "sharpe": -1.69,
-      "calmar": -1.69
+      "maxDrawdown": 0.68,
+      "sharpe": -1.59,
+      "calmar": -1.59
     },
     {
       "code": "519606",
       "name": "国泰金鑫股票A",
       "type": "股票型",
-      "maxDrawdown": 5.31,
-      "sharpe": -5.46,
-      "calmar": -5.46
+      "maxDrawdown": 6.18,
+      "sharpe": -5.16,
+      "calmar": -5.16
     },
     {
       "code": "519193",
       "name": "万家消费成长",
       "type": "股票型",
-      "maxDrawdown": 1.03,
-      "sharpe": 0.55,
-      "calmar": 0.55
+      "maxDrawdown": 0.06,
+      "sharpe": 1.03,
+      "calmar": 1.03
     },
     {
       "code": "501219",
       "name": "华夏智胜先锋股票(LOF)A",
       "type": "股票型",
-      "maxDrawdown": 2.82,
-      "sharpe": -0.75,
-      "calmar": -0.75
+      "maxDrawdown": 3.33,
+      "sharpe": -0.66,
+      "calmar": -0.66
     },
     {
       "code": "501201",
       "name": "红土创新科技创新股票(LOF)A",
       "type": "股票型",
-      "maxDrawdown": 9.45,
-      "sharpe": 0.4,
-      "calmar": 0.4
+      "maxDrawdown": 11.7,
+      "sharpe": 0.11,
+      "calmar": 0.11
     },
     {
       "code": "450009",
       "name": "国富中小盘股票A",
       "type": "股票型",
-      "maxDrawdown": 0.2,
-      "sharpe": -0.15,
-      "calmar": -0.15
+      "maxDrawdown": 0.45,
+      "sharpe": 0.05,
+      "calmar": 0.05
     },
     {
       "code": "399011",
       "name": "中海医疗保健主题股票A",
       "type": "股票型",
-      "maxDrawdown": 5.45,
-      "sharpe": -0.22,
-      "calmar": -0.22
+      "maxDrawdown": 6.3,
+      "sharpe": -0.12,
+      "calmar": -0.12
     },
     {
       "code": "376510",
       "name": "摩根大盘蓝筹股票A",
       "type": "股票型",
-      "maxDrawdown": 0.43,
-      "sharpe": -1.12,
-      "calmar": -1.12
+      "maxDrawdown": 1.46,
+      "sharpe": -0.75,
+      "calmar": -0.75
     },
     {
       "code": "360001",
       "name": "光大量化股票A",
       "type": "股票型",
-      "maxDrawdown": 2.1,
-      "sharpe": 0.11,
-      "calmar": 0.11
+      "maxDrawdown": 1.74,
+      "sharpe": 0.3,
+      "calmar": 0.3
     }
   ],
   "news": [
     {
-      "title": "近日，国家卫生健康委、国家发展改革委联合印发《医疗康复护理扩容提升工程实施方案》（以下简称《方案》）。“《方案》对医疗器械、专科医疗赛道上市公司构成重大利好。”苏商银行特约研究员付一夫在接受《证券日报》记者采访时表示，这给相关行业带来三大核心机遇。一是康复护理设备需求放量。",
+      "title": "2026年前三季度，A股IPO市场出现了一些新动向：新股数量与募资规模同比增长，市场投融资活跃度提升。与此同时，审核从严、提质增效的监管主线一以贯之，硬科技企业成为新股供给的绝对主力。",
       "tag": "快讯",
       "source": "东方财富",
-      "time": "00:10",
+      "time": "00:49",
       "impact": "neutral"
     },
     {
-      "title": "10月7日，湖北省委常委、武汉市委书记盛阅春主持召开推进武汉区域科技创新中心建设工作专班会议，强调要健全工作机制，抓实重点任务，全力推动武汉区域科技创新中心建设取得更大实效。副省长陈平，市委副书记、市长熊征宇出席并讲话。会议听取了武汉区域科创中心建设进展、工作专班组建方案起草、今年重点工作清单编制等情况，相关单位作讨论发言。",
+      "title": "10月9日，记者从财政部获悉，按照党中央、国务院决策部署，近日财政部安排使用地方政府债务结存限额5500亿元，用于提高县区一般公共预算保障能力和支持地方扩大有效投资，规模较去年增加500亿元。",
       "tag": "快讯",
       "source": "东方财富",
-      "time": "23:58",
+      "time": "00:49",
       "impact": "neutral"
     },
     {
-      "title": "刚刚过去的十一黄金周，又交出一份飘红的消费数据。10月1日至6日，商务部重点监测的78个步行街（商圈）客流量、营业额同比分别增长2.5%、4.7%。但硬币的另一面，几乎每次黄金周都被吐槽的问题也再次发生。除了抢票、堵车、涨价、“看人头”等“传统节目”，今年又增加了一个高速充电难问题。",
+      "title": "房地产、基建投资持续走弱，令水泥行业进入深度调整期。当前行业亏损面已达60%，大量中小水泥企业陷入价格倒挂、库存高企、回款不畅的经营困局。据不完全统计，今年已有20余家水泥及粉磨企业进入破产相关程序，中小主体债务风险集中暴露，并向上游产业链传导。业内人士判断，短期行业回款与坏账环境难以根本性好转，仅存在局部小幅修复空间。",
       "tag": "快讯",
       "source": "东方财富",
-      "time": "23:37",
+      "time": "00:47",
       "impact": "neutral"
     },
     {
-      "title": "“保证每一个在大湾区打拼的湖南人10月8日都有班上。”10月7日晚，社交媒体上一张夜间高铁发车时刻表截图，引发大量转发与讨论。截图显示，短短41分钟时间里，从00:37到01:18，长沙南站密集发出8趟高铁，目的地指向同一个地方——广州南站。凌晨出发的“红眼高铁”，只是广州南站高负荷运转的一个切片。",
+      "title": "10月9日，中共中央、国务院印发《关于发展新质生产力的意见》（下称《意见》），围绕科技创新、产业融合、发展方式、体制机制、人才工作五大方面，部署19条重大发展改革任务，为发展新质生产力提供行动纲领。",
       "tag": "快讯",
       "source": "东方财富",
-      "time": "23:32",
+      "time": "00:47",
       "impact": "neutral"
     },
     {
-      "title": "征求意见稿立足发展与权益的平衡，目标是推动数字经济治理从事后整治转向事前规则化治理。据新华社报道，人力资源社会保障部10月8日发布《新就业形态劳动者权益保障办法（征求意见稿）》，从即日起至11月8日，向社会公开征求意见。这是我国首次以规章形式，将企业实施劳动管理、不完全符合确立劳动关系情形的新就业形态劳动者纳入劳动法律制度保障。",
+      "title": "2026年是“十五五”开局之年。财政部发布的上半年财政政策执行情况显示，面对国内外复杂环境带来的风险挑战，财政政策更加积极、精准发力，加强与其他政策协同联动。上半年，全国一般公共预算收入12.1万亿元，同比增长4.7%；全国一般公共预算支出14.33万亿元，同比增长1.5%，重点领域得到较好保障。有效投资加快形成实物工作量。",
       "tag": "快讯",
       "source": "东方财富",
-      "time": "23:01",
+      "time": "00:47",
       "impact": "neutral"
     },
     {
-      "title": "受八部门联合出台的《金融产品网络营销管理办法》（以下简称“930新规”）落地实施的影响，社交平台、短视频渠道上“秒批秒放”“低门槛、低利率”这类曾经刷屏的营销话术快速消失。近期，《每日经济新闻》记者（以下简称每经记者）观察发现，杭州银行、小赢卡贷、携程金融等机构的借贷广告重新回归社交平台信息流。",
+      "title": "10月9日，财政部官网公布2026年上半年中国财政政策执行情况报告。报告指出，2026年是“十五五”开局之年。面对国内外复杂环境带来的风险挑战，各地区各部门认真落实中央经济工作会议和《政府工作报告》部署，实施更加积极有为的宏观政策，我国经济呈现动能向新、结构向优的发展态势，高质量发展扎实推进。财政政策更加积极、精准发力，加强与其他政策协同联动，为实现“十五五”良好开局打下坚实基础。",
       "tag": "快讯",
       "source": "东方财富",
-      "time": "22:57",
+      "time": "00:24",
       "impact": "neutral"
     },
     {
-      "title": "这次超长假期，人们去了哪里，又把钱花在了什么地方？随着国庆假期收官，各项消费数据陆续出炉。交通运输部数据显示，10月1日至7日，全社会跨区域人员流动量达21.42亿人次，国内多个热门景区连续多日预约爆满。这个假期，文旅市场的火热在意料之中。由于中秋和国庆之间只隔了3个工作日，“请3休13”的拼假方式，让不少人提前出发，也把出行半径拉得更长。",
+      "title": "10月9日，苏州召开上海与苏州重点领域同城化发展工作推进会议，聚焦科创产业协同、通勤便捷高效、公共服务便利共享、生态环境共保联治等重点领域，苏州正细化一系列举措，并已形成初步方案。",
       "tag": "快讯",
       "source": "东方财富",
-      "time": "22:33",
+      "time": "00:08",
       "impact": "neutral"
     },
     {
-      "title": "10月1日深夜十一点，《华夏时报》记者看到，贵阳民生路步行街的人流还没有散去。当地特色“但家香酥鸭”的店铺前依旧有顾客等待排队点餐，旁边小十字第一家洋芋粑的小门店里，洋芋粑正在铁板上滋滋作响，“小份8元、大份10元”的吆喝声在街对面就能听到。这是今年国庆假期贵阳的一个普通夜晚。",
+      "title": "10月15日，第140届中国进出口商品交易会将在广州启幕。七十年前首届广交会开幕时，展出面积只有9600平方米，采购商1200余人。如今，它已是全球规模最大的综合性国际贸易盛会，从未中断。在这期间，广交会四易其址，却始终扎根广州。作为广交会的“主场城市”，广州以千年商都的开放基因，给了展会扎根的土壤；广交会的持续运转，又塑造了这座城市的空间格局、产业生态和全球连接能力。",
       "tag": "快讯",
       "source": "东方财富",
-      "time": "22:31",
+      "time": "00:07",
       "impact": "neutral"
     },
     {
-      "title": "○国家卫健委、国家发改委印发《医疗康复护理扩容提升工程实施方案》。其中提到，加快脑机接口、具身智能、仿生驱动等前沿技术布局。○人力资源社会保障部发布《新就业形态劳动者权益保障办法（征求意见稿）》，从即日起至11月8日，向社会公开征求意见。○中证协：上半年末外资持有境内股票4.66万亿元，环比增近30%。",
+      "title": "据国家发展改革委官网10月9日消息，近日，中共中央、国务院印发《关于发展新质生产力的意见》（以下简称《意见》），对加快发展新质生产力作出全面系统部署。国家发展改革委有关负责同志同日就《意见》答记者问，指出《意见》“为全国发展新质生产力确立了统一思想行动的标尺”。",
       "tag": "快讯",
       "source": "东方财富",
-      "time": "22:31",
+      "time": "23:48",
       "impact": "neutral"
     },
     {
-      "title": "今年国庆假期是9·28国常会定调“研究出台稳定房地产市场、促进就业增收等政策措施”、9·29房贷贴息政策落地后的首个长假，也是房企集中营销、居民看房选房的重要窗口。",
+      "title": "金秋布局正当时。近期，汇添富基金、建信基金、华宝基金、汇丰晋信基金、富国基金等多家基金公司举行秋季投资策略会，围绕国内宏观经济走势、权益市场前景以及大类资产配置等话题展开研判。",
       "tag": "快讯",
       "source": "东方财富",
-      "time": "22:22",
+      "time": "23:45",
       "impact": "neutral"
     }
   ],
   "sentimentIndex": {
-    "score": 42,
+    "score": 50,
     "label": "中性",
-    "upDownRatio": "1,076/2,462",
+    "upDownRatio": "3,094/1,452",
     "boardUpRatio": "0/0"
   },
   "capitalDecoder": [],
